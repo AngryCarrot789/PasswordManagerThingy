@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="PSWRDMGR.Controls.AccountListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PSWRDMGR.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="825">
+    <Grid>
+        <Label Content="{Binding AccountName}" 
+               Margin="5,5,195,0" 
+               VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="{Binding Email}" 
+               Margin="5,44,195,0" 
+               VerticalAlignment="Top" FontSize="15"/>
+        <Button Content="View Content" 
+                Margin="635,10,0,10" FontSize="16" Click="Button_Click" HorizontalAlignment="Left" Width="180" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
+
+    </Grid>
+</UserControl>
