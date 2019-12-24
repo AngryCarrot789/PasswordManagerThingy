@@ -9,19 +9,19 @@ namespace PSWRDMGR.Accounts
 {
     public static class Accounts
     {
-        public static string FolderPath = @"E:\pwrds";
+        public static string FolderPath = @"folderpathhere";
 
-        public static string AccNameLocation = @"E:\pwrds\accName.txt";
-        public static string EmailllLocation = @"E:\pwrds\email.txt";
-        public static string UsernamLocation = @"E:\pwrds\usrName.txt";
-        public static string PasswrdLocation = @"E:\pwrds\pssWrd.txt";
-        public static string DofBrthLocation = @"E:\pwrds\DtoBrth.txt";
-        public static string ScrtyInLocation = @"E:\pwrds\ScrtyInfo.txt";
-        public static string ExtrIn1Location = @"E:\pwrds\ExtInf1.txt";
-        public static string ExtrIn2Location = @"E:\pwrds\ExtInf2.txt";
-        public static string ExtrIn3Location = @"E:\pwrds\ExtInf3.txt";
-        public static string ExtrIn4Location = @"E:\pwrds\ExtInf4.txt";
-        public static string ExtrIn5Location = @"E:\pwrds\ExtInf5.txt";
+        public static string AccNameLocation = @"folderpathhere\accName.txt";
+        public static string EmailllLocation = @"folderpathhere\email.txt";
+        public static string UsernamLocation = @"folderpathhere\usrName.txt";
+        public static string PasswrdLocation = @"folderpathhere\pssWrd.txt";
+        public static string DofBrthLocation = @"folderpathhere\DtoBrth.txt";
+        public static string ScrtyInLocation = @"folderpathhere\ScrtyInfo.txt";
+        public static string ExtrIn1Location = @"folderpathhere\ExtInf1.txt";
+        public static string ExtrIn2Location = @"folderpathhere\ExtInf2.txt";
+        public static string ExtrIn3Location = @"folderpathhere\ExtInf3.txt";
+        public static string ExtrIn4Location = @"folderpathhere\ExtInf4.txt";
+        public static string ExtrIn5Location = @"folderpathhere\ExtInf5.txt";
         public static class AccountLoader
         {
             public static List<AccountModel> LoadFiles()
@@ -116,6 +116,48 @@ namespace PSWRDMGR.Accounts
                 File.WriteAllLines(ExtrIn3Location, NEWextinf3);
                 File.WriteAllLines(ExtrIn4Location, NEWextinf4);
                 File.WriteAllLines(ExtrIn5Location, NEWextinf5);
+            }
+
+            public static void SaveBackupFiles(List<AccountModel> accounts)
+            {
+                List<string> NEWaccname = new List<string>();
+                List<string> NEWemailss = new List<string>();
+                List<string> NEWusernam = new List<string>();
+                List<string> NEWpasswrd = new List<string>();
+                List<string> NEWdofbrth = new List<string>();
+                List<string> NEWscrtyin = new List<string>();
+                List<string> NEWextinf1 = new List<string>();
+                List<string> NEWextinf2 = new List<string>();
+                List<string> NEWextinf3 = new List<string>();
+                List<string> NEWextinf4 = new List<string>();
+                List<string> NEWextinf5 = new List<string>();
+
+                for (int i = 0; i < accounts.Count; i++)
+                {
+                    NEWaccname.Add(accounts[i].AccountName);
+                    NEWemailss.Add(accounts[i].Email);
+                    NEWusernam.Add(accounts[i].Username);
+                    NEWpasswrd.Add(accounts[i].Password);
+                    NEWdofbrth.Add(accounts[i].DateOfBirth);
+                    NEWscrtyin.Add(accounts[i].SecurityInfo);
+                    NEWextinf1.Add(accounts[i].ExtraInfo1);
+                    NEWextinf2.Add(accounts[i].ExtraInfo2);
+                    NEWextinf3.Add(accounts[i].ExtraInfo3);
+                    NEWextinf4.Add(accounts[i].ExtraInfo4);
+                    NEWextinf5.Add(accounts[i].ExtraInfo5);
+                }
+
+                File.WriteAllLines(@"E:\stuff\backupthingy\accName.txt", NEWaccname);
+                File.WriteAllLines(@"E:\stuff\backupthingy\email.txt", NEWemailss);
+                File.WriteAllLines(@"E:\stuff\backupthingy\usrName.txt", NEWusernam);
+                File.WriteAllLines(@"E:\stuff\backupthingy\pssWrd.txt", NEWpasswrd);
+                File.WriteAllLines(@"E:\stuff\backupthingy\DtoBrth.txt", NEWdofbrth);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ScrtyInfo.txt", NEWscrtyin);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf1.txt", NEWextinf1);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf2.txt", NEWextinf2);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf3.txt", NEWextinf3);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf4.txt", NEWextinf4);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf5.txt", NEWextinf5);
             }
         }
     }

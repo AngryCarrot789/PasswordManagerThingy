@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PSWRDMGR"
+        xmlns:local="clr-namespace:PSWRDMGR" Closing="Window_Closing"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
-        mc:Ignorable="d"
-        Title="Password/Account Manager" Height="600" Width="1100" Background="{DynamicResource BackgroundColour}">
+        mc:Ignorable="d" BorderThickness="0" KeyDown="Window_KeyDown"
+        MinWidth="1085" MaxWidth="1150"
+        Title="Password/Account Manager" Height="650" Width="1150" Background="{DynamicResource BackgroundColour}">
     <Window.DataContext>
         <viewmodels:MainViewModel/>
     </Window.DataContext>
@@ -22,7 +23,7 @@
             <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,65,10,0" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
                 <Grid Width="160">
                     <Image Source="Resources/Images/edit-11-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Edit Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <TextBlock Text="Edit Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,10,4"/>
                 </Grid>
             </Button>
             <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,130,10,0" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
@@ -31,18 +32,27 @@
                     <TextBlock Text="Deleta Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </Grid>
             </Button>
-            <Button Command="{Binding SaveAccountCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,10" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+            <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,10" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
                 <Grid Width="160">
                     <Image Source="Resources/Images/save-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                     <TextBlock Text="Save Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </Grid>
             </Button>
-            <Button Command="{Binding LoadAccountCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,75" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+            <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,75" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
                 <Grid Width="160">
                     <Image Source="Resources/Images/download-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                     <TextBlock Text="Load Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </Grid>
             </Button>
+            <CheckBox Content="Enable Load, Save and Backup" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,10,205" VerticalAlignment="Bottom" Height="24"/>
+            <Button Command="{Binding BackupAccountsCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,140" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+                <Grid Width="160">
+                    <Image Source="Resources/Images/data-transfer-upload-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,9,4"/>
+                </Grid>
+            </Button>
+            <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="10,195,82,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Button Command="{Binding SearchAccountCommand}" Content="Search" HorizontalAlignment="Right" Margin="0,195,10,0" VerticalAlignment="Top" Width="67" Height="32"/>
         </Grid>
         <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
             <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="231,0,0,0"/>
@@ -55,7 +65,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
+        <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" x:Name="lBox"
                  SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" Margin="232,60,0,0" FontFamily="Segoe UI Light" BorderBrush="{x:Null}"/>
     </Grid>
 </Window>

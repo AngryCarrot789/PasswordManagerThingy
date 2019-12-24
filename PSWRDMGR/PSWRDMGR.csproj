@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>lock-unlocked-128.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
@@ -146,6 +149,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\download-128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\lock-unlocked-128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="lock-unlocked-128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\data-transfer-upload-128.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

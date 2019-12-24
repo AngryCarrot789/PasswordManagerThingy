@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSWRDMGR.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,23 @@ namespace PSWRDMGR
         public MainWindow()
         {
             InitializeComponent();
+            (DataContext as MainViewModel).ScrollIntoView = eooe;
+        }
+
+        public void eooe()
+        {
+            lBox.ScrollIntoView(lBox.SelectedItem);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            (DataContext as MainViewModel).KeyDown(e.Key);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Environment.Exit(0);
         }
     }
 }

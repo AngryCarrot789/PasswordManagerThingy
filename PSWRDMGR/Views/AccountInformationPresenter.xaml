@@ -25,26 +25,26 @@
             <Label Content="Extra Info 5" HorizontalAlignment="Left" Margin="11,0,0,10" VerticalAlignment="Bottom" FontSize="16"/>
         </Grid>
         <Grid Margin="130,50,0,0">
-            <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"        Height="31" Margin="10,10,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"     Height="31" Margin="10,46,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"     Height="31" Margin="10,82,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"  Height="31" Margin="10,118,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding SecurityInfo, UpdateSourceTrigger=PropertyChanged}" Height="31" Margin="10,154,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding ExtraInfo1, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,154" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding ExtraInfo2, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,118" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding ExtraInfo3, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,82" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding ExtraInfo4, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,46" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <TextBox Text="{Binding ExtraInfo5, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,10" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="2" Content="Copy" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="3" Content="Copy" HorizontalAlignment="Right" Margin="0,46,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="4" Content="Copy" HorizontalAlignment="Right" Margin="0,82,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="5" Content="Copy" HorizontalAlignment="Right" Margin="0,118,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="6" Content="Copy" HorizontalAlignment="Right" Margin="0,154,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="7" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,154" VerticalAlignment="Bottom" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="8" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,118" VerticalAlignment="Bottom" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="9" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,82" VerticalAlignment="Bottom" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="10" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,46" VerticalAlignment="Bottom" Width="79" Height="31"/>
-            <Button Command="{Binding CopyToClipboardCommand}" CommandParameter="11" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="79" Height="31"/>
+            <TextBox x:Name="a" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"        Height="31" Margin="10,10,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="b" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"     Height="31" Margin="10,46,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="c" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"     Height="31" Margin="10,82,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="d" Text="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"  Height="31" Margin="10,118,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="ee" Text="{Binding SecurityInfo, UpdateSourceTrigger=PropertyChanged}" Height="31" Margin="10,154,94,0" VerticalAlignment="Top" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="f" Text="{Binding ExtraInfo1, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,154" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="g" Text="{Binding ExtraInfo2, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,118" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="h" Text="{Binding ExtraInfo3, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,82" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="i" Text="{Binding ExtraInfo4, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,46" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <TextBox x:Name="j" Text="{Binding ExtraInfo5, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="11,0,94,10" VerticalAlignment="Bottom" FontSize="18" Padding="2" IsReadOnly="True"/>
+            <Button Click="CopyTextClick" Uid="1" Content="Copy" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="2" Content="Copy" HorizontalAlignment="Right" Margin="0,46,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="3" Content="Copy" HorizontalAlignment="Right" Margin="0,82,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="4" Content="Copy" HorizontalAlignment="Right" Margin="0,118,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="5" Content="Copy" HorizontalAlignment="Right" Margin="0,154,10,0" VerticalAlignment="Top" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="6" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,154" VerticalAlignment="Bottom" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="7" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,118" VerticalAlignment="Bottom" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="8" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,82" VerticalAlignment="Bottom" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="9"  Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,46" VerticalAlignment="Bottom" Width="79" Height="31"/>
+            <Button Click="CopyTextClick" Uid="10" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="79" Height="31"/>
         </Grid>
     </Grid>
 </Window>

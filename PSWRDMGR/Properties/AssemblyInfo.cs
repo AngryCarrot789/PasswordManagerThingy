@@ -7,10 +7,10 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PSWRDMGR")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AccountManager")]
+[assembly: AssemblyDescription("Stores Accounts")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("theR")]
 [assembly: AssemblyProduct("PSWRDMGR")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
