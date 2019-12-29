@@ -5,67 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views" Closing="Window_Closing" Topmost="True"
         mc:Ignorable="d" KeyDown="Window_KeyDown" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
-        Title="Edit Account Window" Height="600" Width="800" Background="{DynamicResource BackgroundColour}">
+        Title="Edit Account Window" Height="660" Width="957.5" Background="{DynamicResource BackgroundColour}">
     <Grid>
         <Grid VerticalAlignment="Top" Height="50" Background="{DynamicResource ContainerBackground}">
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="129,0,0,0"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="159,0,0,0"/>
             <Label Content="Edit an Account" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"/>
         </Grid>
-        <Grid Margin="0,50,0,100" HorizontalAlignment="Left" Width="130" Background="{DynamicResource ContainerBackground}">
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0"/>
-            <Label Content="Email" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Username" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Password" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Date of Birth" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Security Info" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Extra Info 1" HorizontalAlignment="Left" Margin="11,0,0,154" VerticalAlignment="Bottom" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Extra Info 2" HorizontalAlignment="Left" Margin="11,0,0,118" VerticalAlignment="Bottom" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Extra Info 3" HorizontalAlignment="Left" Margin="11,0,0,82" VerticalAlignment="Bottom" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Extra Info 4" HorizontalAlignment="Left" Margin="11,0,0,46" VerticalAlignment="Bottom" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Extra Info 5" HorizontalAlignment="Left" Margin="11,0,0,10" VerticalAlignment="Bottom" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Label Content="Account Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol"/>
+        <Grid Margin="0,50,0,0" HorizontalAlignment="Left" Width="160" Background="{DynamicResource ContainerBackground}">
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="268" VerticalAlignment="Top"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="226" VerticalAlignment="Bottom"/>
+            <Label Content="Account Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Email" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Username" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Password" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Date of Birth" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Security Info" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Extra Info 1" HorizontalAlignment="Left" Margin="11,0,0,178" VerticalAlignment="Bottom" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Extra Info 2" HorizontalAlignment="Left" Margin="10,0,0,136" VerticalAlignment="Bottom" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Extra Info 3" HorizontalAlignment="Left" Margin="11,0,0,94" VerticalAlignment="Bottom" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Extra Info 4" HorizontalAlignment="Left" Margin="11,0,0,52" VerticalAlignment="Bottom" FontSize="20" FontFamily="Segoe UI Symbol"/>
+            <Label Content="Extra Info 5" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontSize="20" FontFamily="Segoe UI Symbol"/>
         </Grid>
-        <Grid Margin="130,50,0,100">
+        <Grid Margin="160,50,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="a" Text="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="10,10,180,0" VerticalAlignment="Top" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="b" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"         Height="31" Margin="10,46,180,0" VerticalAlignment="Top" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="c" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"      Height="31" Margin="10,82,180,0" VerticalAlignment="Top" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="d" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"      Height="31" Margin="10,118,180,0" VerticalAlignment="Top" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="ee" Text="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"   Height="31" Margin="10,154,180,0" VerticalAlignment="Top" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="f" Text="{Binding SecurityInfo, UpdateSourceTrigger=PropertyChanged}"  Height="31" Margin="10,190,180,0" VerticalAlignment="Top" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="g" Text="{Binding ExtraInfo1, UpdateSourceTrigger=PropertyChanged}"    Height="31" Margin="10,0,180,153" VerticalAlignment="Bottom" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="h" Text="{Binding ExtraInfo2, UpdateSourceTrigger=PropertyChanged}"    Height="31" Margin="10,0,180,117" VerticalAlignment="Bottom" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="i" Text="{Binding ExtraInfo3, UpdateSourceTrigger=PropertyChanged}"    Height="31" Margin="10,0,180,81" VerticalAlignment="Bottom" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="j" Text="{Binding ExtraInfo4, UpdateSourceTrigger=PropertyChanged}"    Height="31" Margin="10,0,180,45" VerticalAlignment="Bottom" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <TextBox x:Name="k" Text="{Binding ExtraInfo5, UpdateSourceTrigger=PropertyChanged}"    Height="31" Margin="10,0,180,9" VerticalAlignment="Bottom" FontSize="18" Padding="2" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="1"  Content="Clear" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="2"  Content="Clear" HorizontalAlignment="Right" Margin="0,46,10,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="3"  Content="Clear" HorizontalAlignment="Right" Margin="0,82,10,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="4"  Content="Clear" HorizontalAlignment="Right" Margin="0,118,10,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="5"  Content="Clear" HorizontalAlignment="Right" Margin="0,154,10,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="6"  Content="Clear" HorizontalAlignment="Right" Margin="0,190,10,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="7"  Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,153" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="8"  Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,117" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="9"  Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,81" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="10" Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,45" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="ClearTextClick" Uid="11" Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,9" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="1"  Content="Paste" HorizontalAlignment="Right" Margin="0,10,95,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="2"  Content="Paste" HorizontalAlignment="Right" Margin="0,46,95,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="3"  Content="Paste" HorizontalAlignment="Right" Margin="0,82,95,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="4"  Content="Paste" HorizontalAlignment="Right" Margin="0,118,95,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="5"  Content="Paste" HorizontalAlignment="Right" Margin="0,154,95,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="6"  Content="Paste" HorizontalAlignment="Right" Margin="0,190,95,0" VerticalAlignment="Top" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="7"  Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,153" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="8"  Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,117" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="9"  Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,81" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="10" Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,45" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-            <Button Click="PasteTextToBox" Uid="11" Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,9" VerticalAlignment="Bottom" Width="80" Height="31" FontSize="14" FontFamily="Segoe UI Symbol"/>
-        </Grid>
-        <Grid Background="{DynamicResource ContainerBackground}" Height="100" VerticalAlignment="Bottom">
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 0" Margin="129,0,0,0"/>
-            <Button Command="{Binding EditAccountCommand}" Content="Edit" Margin="10" FontSize="36" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
+            <TextBox x:Name="a" Text="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}"    Height="37" Margin="10,10,180,0"  VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="b" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"          Height="37" Margin="10,52,180,0"  VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="c" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"       Height="37" Margin="10,94,180,0"  VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="d" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"       Height="37" Margin="10,136,180,0" VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="ee" Text="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"   Height="37" Margin="10,178,180,0" VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="f" Text="{Binding SecurityInfo, UpdateSourceTrigger=PropertyChanged}"   Height="37" Margin="10,220,180,0" VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="g" Text="{Binding ExtraInfo1, UpdateSourceTrigger=PropertyChanged}"     Height="37" Margin="10,0,180,178" VerticalAlignment="Bottom" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="h" Text="{Binding ExtraInfo2, UpdateSourceTrigger=PropertyChanged}"     Height="37" Margin="10,0,180,136" VerticalAlignment="Bottom" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="i" Text="{Binding ExtraInfo3, UpdateSourceTrigger=PropertyChanged}"     Height="37" Margin="10,0,180,94"  VerticalAlignment="Bottom" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="j" Text="{Binding ExtraInfo4, UpdateSourceTrigger=PropertyChanged}"     Height="37" Margin="10,0,180,52"  VerticalAlignment="Bottom" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <TextBox x:Name="k" Text="{Binding ExtraInfo5, UpdateSourceTrigger=PropertyChanged}"     Height="37" Margin="10,0,180,10"   VerticalAlignment="Bottom" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="1"  Content="Clear" HorizontalAlignment="Right" Margin="0,10,10,0"  VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="2"  Content="Clear" HorizontalAlignment="Right" Margin="0,52,10,0"  VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="3"  Content="Clear" HorizontalAlignment="Right" Margin="0,94,10,0"  VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="4"  Content="Clear" HorizontalAlignment="Right" Margin="0,136,10,0" VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="5"  Content="Clear" HorizontalAlignment="Right" Margin="0,178,10,0" VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="6"  Content="Clear" HorizontalAlignment="Right" Margin="0,220,10,0" VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="7"  Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,178" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="8"  Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,136" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="9"  Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,94"  VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="10" Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,52"  VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="ClearTextClick" Uid="11" Content="Clear" HorizontalAlignment="Right" Margin="0,0,10,10"   VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="1"  Content="Paste" HorizontalAlignment="Right" Margin="0,10,95,0"  VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="2"  Content="Paste" HorizontalAlignment="Right" Margin="0,52,95,0"  VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="3"  Content="Paste" HorizontalAlignment="Right" Margin="0,94,95,0"  VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="4"  Content="Paste" HorizontalAlignment="Right" Margin="0,136,95,0" VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="5"  Content="Paste" HorizontalAlignment="Right" Margin="0,178,95,0" VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="6"  Content="Paste" HorizontalAlignment="Right" Margin="0,220,95,0" VerticalAlignment="Top" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="7"  Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,178" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="8"  Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,136" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="9"  Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,94" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="10" Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,52" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Button Click="PasteTextToBox" Uid="11" Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,10" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
+            <Border Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 1" Margin="0,267,0,225">
+                <Label Content="Edit Extra Information (Codes, Dates, Websites, etc)" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"/>
+
+            </Border>
         </Grid>
     </Grid>
 </Window>

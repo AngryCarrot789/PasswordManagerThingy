@@ -1,5 +1,4 @@
-﻿using PSWRDMGR.AccountStructures;
-using PSWRDMGR.Utilities;
+﻿using PSWRDMGR.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,34 +20,12 @@ namespace PSWRDMGR.Views
     /// </summary>
     public partial class EditAccountWindow : Window
     {
-        public EditAccountModel AccountModel = new EditAccountModel();
-        public Action EditAccountCallback { get; set; }
+        public AccountModel AccountModel = new AccountModel();
         public EditAccountWindow()
         {
             InitializeComponent();
-            AccountModel.EditAccountCommand = new Command(editAccCallback);
-            AccountModel.PasteFromClipboard = new CommandParam(pasteClipbrd);
             DataContext = AccountModel;
         }
-        private void pasteClipbrd(object index)
-        {
-            switch (int.Parse(index.ToString()))
-            {
-                case 1: AccountModel.AccountName = Clipboard.GetText(); break;
-                case 2: AccountModel.Email = Clipboard.GetText(); break;
-                case 3: AccountModel.Username = Clipboard.GetText(); break;
-                case 4: AccountModel.Password = Clipboard.GetText(); break;
-                case 5: AccountModel.DateOfBirth = Clipboard.GetText(); break;
-                case 6: AccountModel.SecurityInfo = Clipboard.GetText(); break;
-                case 7: AccountModel.ExtraInfo1 = Clipboard.GetText(); break;
-                case 8: AccountModel.ExtraInfo2 = Clipboard.GetText(); break;
-                case 9: AccountModel.ExtraInfo3 = Clipboard.GetText(); break;
-                case 10: AccountModel.ExtraInfo4 = Clipboard.GetText(); break;
-                case 11: AccountModel.ExtraInfo5 = Clipboard.GetText(); break;
-            }
-        }
-
-        private void editAccCallback() { EditAccountCallback?.Invoke(); }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {

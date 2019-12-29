@@ -1,4 +1,4 @@
-﻿using PSWRDMGR.AccountStructures;
+﻿
 using PSWRDMGR.Utilities;
 using System;
 using System.Collections.Generic;
@@ -21,33 +21,21 @@ namespace PSWRDMGR.Views
     /// </summary>
     public partial class NewAccountWindow : Window
     {
-        public AddAccountModel AccountModel = new AddAccountModel();
+        public AccountModel AccountModel = new AccountModel();
         public Action AddAccountCallback { get; set; }
         public NewAccountWindow()
         {
             InitializeComponent();
-            AccountModel.AddAccountCommand = new Command(addAccCallback);
-            AccountModel.PasteFromClipboard = new CommandParam(pasteClipbrd);
             DataContext = AccountModel;
         }
-        private void pasteClipbrd(object index)
+
+        public void ResetAccountContext()
         {
-            switch (int.Parse(index.ToString()))
-            {
-                case 1: AccountModel.AccountName = Clipboard.GetText(); break;
-                case 2: AccountModel.Email = Clipboard.GetText(); break;
-                case 3: AccountModel.Username = Clipboard.GetText(); break;
-                case 4: AccountModel.Password = Clipboard.GetText(); break;
-                case 5: AccountModel.DateOfBirth = Clipboard.GetText(); break;
-                case 6: AccountModel.SecurityInfo = Clipboard.GetText(); break;
-                case 7: AccountModel.ExtraInfo1 = Clipboard.GetText(); break;
-                case 8: AccountModel.ExtraInfo2 = Clipboard.GetText(); break;
-                case 9: AccountModel.ExtraInfo3 = Clipboard.GetText(); break;
-                case 10: AccountModel.ExtraInfo4 = Clipboard.GetText(); break;
-                case 11: AccountModel.ExtraInfo5 = Clipboard.GetText(); break;
-            }
+            AccountModel = new AccountModel();
+            this.DataContext = AccountModel;
         }
-        private void addAccCallback() { AddAccountCallback?.Invoke(); }
+
+        private void AddAccountCallbackFunc() { AddAccountCallback?.Invoke(); }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
@@ -59,7 +47,7 @@ namespace PSWRDMGR.Views
             switch (e.Key)
             {
                 case Key.Escape: this.Hide(); break;
-                case Key.Enter: addAccCallback(); this.Hide(); break;
+                case Key.Enter: AddAccountCallbackFunc(); this.Hide(); break;
             }
         }
 
@@ -97,6 +85,12 @@ namespace PSWRDMGR.Views
                 case 10: j.Text = ""; break;
                 case 11: k.Text = ""; break;
             }
+        }
+
+        private void AddAccountClick(object sender, RoutedEventArgs e)
+        {
+            AddAccountCallbackFunc();
+            this.Hide();
         }
     }
 }

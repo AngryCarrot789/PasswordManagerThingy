@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,34 +10,78 @@ namespace PSWRDMGR.Accounts
 {
     public static class Accounts
     {
-        public static string FolderPath = @"folderpathhere";
+        public static string FolderPath = @"E:\pwrds";
 
-        public static string AccNameLocation = @"folderpathhere\accName.txt";
-        public static string EmailllLocation = @"folderpathhere\email.txt";
-        public static string UsernamLocation = @"folderpathhere\usrName.txt";
-        public static string PasswrdLocation = @"folderpathhere\pssWrd.txt";
-        public static string DofBrthLocation = @"folderpathhere\DtoBrth.txt";
-        public static string ScrtyInLocation = @"folderpathhere\ScrtyInfo.txt";
-        public static string ExtrIn1Location = @"folderpathhere\ExtInf1.txt";
-        public static string ExtrIn2Location = @"folderpathhere\ExtInf2.txt";
-        public static string ExtrIn3Location = @"folderpathhere\ExtInf3.txt";
-        public static string ExtrIn4Location = @"folderpathhere\ExtInf4.txt";
-        public static string ExtrIn5Location = @"folderpathhere\ExtInf5.txt";
+        public static string AccNameName = "accName.txt";
+        public static string EmailllName = "email.txt";
+        public static string UsernamName = "usrName.txt";
+        public static string PasswrdName = "pssWrd.txt";
+        public static string DofBrthName = "DtoBrth.txt";
+        public static string ScrtyInName = "ScrtyInfo.txt";
+        public static string ExtrIn1Name = "ExtInf1.txt";
+        public static string ExtrIn2Name = "ExtInf2.txt";
+        public static string ExtrIn3Name = "ExtInf3.txt";
+        public static string ExtrIn4Name = "ExtInf4.txt";
+        public static string ExtrIn5Name = "ExtInf5.txt";
+
+        public static class AccountFileCreator
+        {
+            public static void CreateAccountsDirectoryAndFiles()
+            {
+                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog();
+                fbd.RootFolder = Environment.SpecialFolder.MyDocuments;
+
+                if (fbd.ShowDialog() == true)
+                {
+                    File.Create(Path.Combine(fbd.SelectedPath, AccNameName));
+                    File.Create(Path.Combine(fbd.SelectedPath, EmailllName));
+                    File.Create(Path.Combine(fbd.SelectedPath, UsernamName));
+                    File.Create(Path.Combine(fbd.SelectedPath, PasswrdName));
+                    File.Create(Path.Combine(fbd.SelectedPath, DofBrthName));
+                    File.Create(Path.Combine(fbd.SelectedPath, ScrtyInName));
+                    File.Create(Path.Combine(fbd.SelectedPath, ExtrIn1Name));
+                    File.Create(Path.Combine(fbd.SelectedPath, ExtrIn2Name));
+                    File.Create(Path.Combine(fbd.SelectedPath, ExtrIn3Name));
+                    File.Create(Path.Combine(fbd.SelectedPath, ExtrIn4Name));
+                    File.Create(Path.Combine(fbd.SelectedPath, ExtrIn5Name));
+                }
+            }
+        }
+
         public static class AccountLoader
         {
-            public static List<AccountModel> LoadFiles()
+            public static List<AccountModel> LoadCustomAccounts()
             {
-                List<string> accname = File.ReadAllLines(AccNameLocation).ToList();
-                List<string> emailss = File.ReadAllLines(EmailllLocation).ToList();
-                List<string> usernam = File.ReadAllLines(UsernamLocation).ToList();
-                List<string> passwrd = File.ReadAllLines(PasswrdLocation).ToList();
-                List<string> dofbrth = File.ReadAllLines(DofBrthLocation).ToList();
-                List<string> scrtyin = File.ReadAllLines(ScrtyInLocation).ToList();
-                List<string> extinf1 = File.ReadAllLines(ExtrIn1Location).ToList();
-                List<string> extinf2 = File.ReadAllLines(ExtrIn2Location).ToList();
-                List<string> extinf3 = File.ReadAllLines(ExtrIn3Location).ToList();
-                List<string> extinf4 = File.ReadAllLines(ExtrIn4Location).ToList();
-                List<string> extinf5 = File.ReadAllLines(ExtrIn5Location).ToList();
+                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog();
+                fbd.RootFolder = Environment.SpecialFolder.MyDocuments;
+
+                if (fbd.ShowDialog() == true)
+                {
+                    return LoadFiles(fbd.SelectedPath);
+                }
+
+                else
+                    return new List<AccountModel>()
+                    {
+                        new AccountModel() { AccountName = "Failed to load accounts from a", Email = "custom directory." }
+                    };
+            }
+
+            public static List<AccountModel> LoadFiles() { return LoadFiles(FolderPath); }
+
+            public static List<AccountModel> LoadFiles(string directoryLocation)
+            {
+                List<string> accname = File.ReadAllLines(Path.Combine(directoryLocation, AccNameName)).ToList();
+                List<string> emailss = File.ReadAllLines(Path.Combine(directoryLocation, EmailllName)).ToList();
+                List<string> usernam = File.ReadAllLines(Path.Combine(directoryLocation, UsernamName)).ToList();
+                List<string> passwrd = File.ReadAllLines(Path.Combine(directoryLocation, PasswrdName)).ToList();
+                List<string> dofbrth = File.ReadAllLines(Path.Combine(directoryLocation, DofBrthName)).ToList();
+                List<string> scrtyin = File.ReadAllLines(Path.Combine(directoryLocation, ScrtyInName)).ToList();
+                List<string> extinf1 = File.ReadAllLines(Path.Combine(directoryLocation, ExtrIn1Name)).ToList();
+                List<string> extinf2 = File.ReadAllLines(Path.Combine(directoryLocation, ExtrIn2Name)).ToList();
+                List<string> extinf3 = File.ReadAllLines(Path.Combine(directoryLocation, ExtrIn3Name)).ToList();
+                List<string> extinf4 = File.ReadAllLines(Path.Combine(directoryLocation, ExtrIn4Name)).ToList();
+                List<string> extinf5 = File.ReadAllLines(Path.Combine(directoryLocation, ExtrIn5Name)).ToList();
 
                 List<AccountModel> accounts = new List<AccountModel>();
 
@@ -64,7 +109,18 @@ namespace PSWRDMGR.Accounts
 
         public static class AccountSaver
         {
-            public static void SaveFiles(List<AccountModel> accounts)
+            public static void SaveCustomFiles(List<AccountModel> accounts)
+            {
+                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog();
+                fbd.RootFolder = Environment.SpecialFolder.MyDocuments;
+
+                if (fbd.ShowDialog() == true)
+                {
+                    SaveFiles(accounts, fbd.SelectedPath);
+                }
+            }
+            public static void SaveFiles(List<AccountModel> accounts) { SaveFiles(accounts, FolderPath); }
+            public static void SaveFiles(List<AccountModel> accounts, string directoryLocation)
             {
                 //List<string> accname = File.ReadAllLines(AccNameLocation).ToList();
                 //List<string> emailss = File.ReadAllLines(EmailllLocation).ToList();
@@ -105,17 +161,17 @@ namespace PSWRDMGR.Accounts
                     NEWextinf5.Add(accounts[i].ExtraInfo5);
                 }
 
-                File.WriteAllLines(AccNameLocation, NEWaccname);
-                File.WriteAllLines(EmailllLocation, NEWemailss);
-                File.WriteAllLines(UsernamLocation, NEWusernam);
-                File.WriteAllLines(PasswrdLocation, NEWpasswrd);
-                File.WriteAllLines(DofBrthLocation, NEWdofbrth);
-                File.WriteAllLines(ScrtyInLocation, NEWscrtyin);
-                File.WriteAllLines(ExtrIn1Location, NEWextinf1);
-                File.WriteAllLines(ExtrIn2Location, NEWextinf2);
-                File.WriteAllLines(ExtrIn3Location, NEWextinf3);
-                File.WriteAllLines(ExtrIn4Location, NEWextinf4);
-                File.WriteAllLines(ExtrIn5Location, NEWextinf5);
+                File.WriteAllLines(Path.Combine(directoryLocation, AccNameName), NEWaccname);
+                File.WriteAllLines(Path.Combine(directoryLocation, EmailllName), NEWemailss);
+                File.WriteAllLines(Path.Combine(directoryLocation, UsernamName), NEWusernam);
+                File.WriteAllLines(Path.Combine(directoryLocation, PasswrdName), NEWpasswrd);
+                File.WriteAllLines(Path.Combine(directoryLocation, DofBrthName), NEWdofbrth);
+                File.WriteAllLines(Path.Combine(directoryLocation, ScrtyInName), NEWscrtyin);
+                File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn1Name), NEWextinf1);
+                File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn2Name), NEWextinf2);
+                File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn3Name), NEWextinf3);
+                File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn4Name), NEWextinf4);
+                File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn5Name), NEWextinf5);
             }
 
             public static void SaveBackupFiles(List<AccountModel> accounts)

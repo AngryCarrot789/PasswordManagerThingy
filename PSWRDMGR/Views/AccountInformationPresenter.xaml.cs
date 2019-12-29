@@ -24,29 +24,7 @@ namespace PSWRDMGR.Views
         public AccountInformationPresenter()
         {
             InitializeComponent();
-            AccountModel.CopyToClipboardCommand = new CommandParam(pasteClipbrd);
             DataContext = AccountModel;
-        }
-
-        private void pasteClipbrd(object index)
-        {
-            string text = "";
-            switch (int.Parse(index.ToString()))
-            {
-                case 1: text = AccountModel.AccountName ; break;
-                case 2: text = AccountModel.Email       ; break;
-                case 3: text = AccountModel.Username    ; break;
-                case 4: text = AccountModel.Password    ; break;
-                case 5: text = AccountModel.DateOfBirth ; break;
-                case 6: text = AccountModel.SecurityInfo; break;
-                case 7: text = AccountModel.ExtraInfo1  ; break;
-                case 8: text = AccountModel.ExtraInfo2  ; break;
-                case 9: text = AccountModel.ExtraInfo3  ; break;
-                case 10: text = AccountModel.ExtraInfo4 ; break;
-                case 11: text = AccountModel.ExtraInfo5 ; break;
-            }
-            if (!string.IsNullOrEmpty(text))
-                Clipboard.SetText(text);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

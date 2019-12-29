@@ -22,6 +22,7 @@ namespace PSWRDMGR.Controls
     public partial class AccountListItem : UserControl
     {
         public Action<AccountModel> ShowContentCallback { get; set; }
+        private AccountModel AccountContext { get => this.DataContext as AccountModel; }
         public AccountListItem()
         {
             InitializeComponent();
@@ -29,7 +30,17 @@ namespace PSWRDMGR.Controls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ShowContentCallback?.Invoke(this.DataContext as AccountModel);
+            switch (int.Parse(((FrameworkElement)e.Source).Uid))
+            {
+                case 1: Clipboard.SetText(AccountContext.Username); break;
+                case 2: Clipboard.SetText(AccountContext.Password); break;
+                case 3: Clipboard.SetText(AccountContext.Email); break;
+            }
+        }
+
+        private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ShowContentCallback?.Invoke(AccountContext);
         }
     }
 }

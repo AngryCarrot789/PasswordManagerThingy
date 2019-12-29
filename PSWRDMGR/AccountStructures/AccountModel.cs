@@ -1,13 +1,4 @@
-﻿using PSWRDMGR.AccountStructures;
-using PSWRDMGR.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace PSWRDMGR
+﻿namespace PSWRDMGR
 {
     public class AccountModel
     {
@@ -22,26 +13,5 @@ namespace PSWRDMGR
         public string ExtraInfo3 { get; set; }
         public string ExtraInfo4 { get; set; }
         public string ExtraInfo5 { get; set; }
-        public ICommand CopyToClipboardCommand { get; set; }
-
-
-        public AddAccountModel Convert()
-        {
-            AddAccountModel aam = new AddAccountModel()
-            {
-                AccountName = this.AccountName,
-                Email = this.Email,
-                Username = this.Username,
-                Password = this.Password,
-                DateOfBirth = this.DateOfBirth,
-                SecurityInfo = this.SecurityInfo,
-                ExtraInfo1 = this.ExtraInfo1,
-                ExtraInfo2 = this.ExtraInfo2,
-                ExtraInfo3 = this.ExtraInfo3,
-                ExtraInfo4 = this.ExtraInfo4,
-                ExtraInfo5 = this.ExtraInfo5
-            };
-            return aam;
-        }
     }
 }

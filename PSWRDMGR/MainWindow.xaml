@@ -4,32 +4,189 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR" Closing="Window_Closing"
-        xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
+        xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels" ResizeMode="CanResizeWithGrip"
         mc:Ignorable="d" BorderThickness="0" KeyDown="Window_KeyDown"
-        MinWidth="1085" MaxWidth="1150"
-        Title="Password/Account Manager" Height="650" Width="1150" Background="{DynamicResource BackgroundColour}">
+        Title="Password/Account Manager" Height="700" Width="1190" Background="{DynamicResource BackgroundColour}">
+    <Window.Resources>
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+            <Setter Property="Background" Value="{StaticResource ControlBrightDefaultBackground}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ControlBrightDefaultBorderBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1,0"/>
+            <Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+            <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                            <Grid.RowDefinitions>
+                                <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                                <RowDefinition Height="0.00001*"/>
+                                <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1"/>
+                            <Button x:Name="PART_LineUpButton" 
+                                Command="{x:Static ScrollBar.LineUpCommand}" 
+                                IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Path x:Name="ArrowTop" Data="M 0,4 C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>
+                            </Button>
+                            <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollBarThumbVertical}"/>
+                                </Track.Thumb>
+                            </Track>
+                            <Button x:Name="PART_LineDownButton" 
+                                Command="{x:Static ScrollBar.LineDownCommand}"
+                                IsEnabled="{TemplateBinding IsMouseOver}" 
+                                Grid.Row="2">
+                                <Path x:Name="ArrowBottom" Data="M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3,4,3,3" Stretch="Uniform"/>
+                            </Button>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" Value="true"/>
+                                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Fill" TargetName="ArrowBottom" Value="{StaticResource ControlMouseOverBackground}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true"/>
+                                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Fill" TargetName="ArrowTop" Value="White"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" Value="true"/>
+                                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Fill" TargetName="ArrowBottom" Value="{StaticResource ScrollBar.MouseOver.Glyph}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true"/>
+                                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Fill" TargetName="ArrowTop" Value="{StaticResource ControlMouseOverBackground}"/>
+                            </MultiDataTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="ArrowTop" Value="{StaticResource ScrollBar.Disabled.Glyph}"/>
+                                <Setter Property="Fill" TargetName="ArrowBottom" Value="{StaticResource ScrollBar.Disabled.Glyph}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="Background" Value="{StaticResource ControlMouseOverBackground}"/>
+                    <Setter Property="MinWidth" Value="0"/>
+                    <Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+                    <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+                    <Setter Property="BorderThickness" Value="0,1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                                        <ColumnDefinition Width="0.00001*"/>
+                                        <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1"/>
+                                    <Button x:Name="PART_LineLeftButton" Command="{x:Static ScrollBar.LineLeftCommand}" IsEnabled="{TemplateBinding IsMouseOver}">
+                                        <Path x:Name="ArrowLeft" Data="M 3.18,7 C3.18,7 5,7 5,7 5,7 1.81,3.5 1.81,3.5 1.81,3.5 5,0 5,0 5,0 3.18,0 3.18,0 3.18,0 0,3.5 0,3.5 0,3.5 3.18,7 3.18,7 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3" Stretch="Uniform"/>
+                                    </Button>
+                                    <Track x:Name="PART_Track" Grid.Column="1" IsEnabled="{TemplateBinding IsMouseOver}">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource RepeatButtonTransparent}"/>
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource RepeatButtonTransparent}"/>
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumbHorizontal}"/>
+                                        </Track.Thumb>
+                                    </Track>
+                                    <Button x:Name="PART_LineRightButton" Grid.Column="2" Command="{x:Static ScrollBar.LineRightCommand}" IsEnabled="{TemplateBinding IsMouseOver}">
+                                        <Path x:Name="ArrowRight" Data="M 1.81,7 C1.81,7 0,7 0,7 0,7 3.18,3.5 3.18,3.5 3.18,3.5 0,0 0,0 0,0 1.81,0 1.81,0 1.81,0 5,3.5 5,3.5 5,3.5 1.81,7 1.81,7 z" Fill="{StaticResource ScrollBar.Static.Glyph}" Margin="3" Stretch="Uniform"/>
+                                    </Button>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineRightButton}" Value="true"/>
+                                            <Condition Binding="{Binding IsPressed, ElementName=PART_LineRightButton}" Value="true"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" TargetName="ArrowRight" Value="{StaticResource ScrollBar.Pressed.Glyph}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineLeftButton}" Value="true"/>
+                                            <Condition Binding="{Binding IsPressed, ElementName=PART_LineLeftButton}" Value="true"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" TargetName="ArrowLeft" Value="{StaticResource ScrollBar.Pressed.Glyph}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineRightButton}" Value="true"/>
+                                            <Condition Binding="{Binding IsPressed, ElementName=PART_LineRightButton}" Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" TargetName="ArrowRight" Value="{StaticResource ScrollBar.MouseOver.Glyph}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineLeftButton}" Value="true"/>
+                                            <Condition Binding="{Binding IsPressed, ElementName=PART_LineLeftButton}" Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" TargetName="ArrowLeft" Value="{StaticResource ScrollBar.MouseOver.Glyph}"/>
+                                    </MultiDataTrigger>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter Property="Fill" TargetName="ArrowLeft" Value="{StaticResource ScrollBar.Disabled.Glyph}"/>
+                                        <Setter Property="Fill" TargetName="ArrowRight" Value="{StaticResource ScrollBar.Disabled.Glyph}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Window.DataContext>
         <viewmodels:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid HorizontalAlignment="Left" Width="232" Margin="0,60,0,0">
-            <Border Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0"/>
-            <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,0" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+            <Border Background="{DynamicResource ContainerBackground}"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Margin="0,0,0,54"/>
+            <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,0" Height="70" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
                 <Grid Width="160">
                     <Image Source="Resources/Images/plus-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                     <TextBlock Text="Add Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </Grid>
             </Button>
-            <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,65,10,0" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+            <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,75,10,0" Height="70" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
                 <Grid Width="160">
                     <Image Source="Resources/Images/edit-11-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                     <TextBlock Text="Edit Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,10,4"/>
                 </Grid>
             </Button>
-            <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,130,10,0" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+            <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,150,10,0" Height="70" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
                 <Grid Width="160">
                     <Image Source="Resources/Images/delete-2-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Deleta Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <TextBlock Text="Delete Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </Grid>
             </Button>
             <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,10" Height="60" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
@@ -51,8 +208,18 @@
                     <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,9,4"/>
                 </Grid>
             </Button>
-            <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="10,195,82,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <Button Command="{Binding SearchAccountCommand}" Content="Search" HorizontalAlignment="Right" Margin="0,195,10,0" VerticalAlignment="Top" Width="67" Height="32"/>
+            <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="10,321,10,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Press enter to search for an account">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding SearchAccountCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <Label Content="Search for an account" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top"/>
+            <Button Command="{Binding ShowContentCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,225,10,0" Height="70" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+                <Grid Width="160">
+                    <Image Source="Resources/Images/product-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Show Account Info" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
         </Grid>
         <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
             <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="231,0,0,0"/>
@@ -65,7 +232,32 @@
                 </Grid>
             </Grid>
         </Grid>
-        <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" x:Name="lBox"
-                 SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" Margin="232,60,0,0" FontFamily="Segoe UI Light" BorderBrush="{x:Null}"/>
+        <Grid Margin="232,60,0,0">
+            <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" x:Name="lBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                 SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI Light" BorderBrush="{x:Null}" Margin="0,0,0,55">
+            </ListBox>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 0" Background="{DynamicResource ContainerBackground}" Height="55" VerticalAlignment="Bottom">
+                <Grid>
+                    <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up" Margin="108,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"   />
+                    <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="183,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,0,0,11" TextWrapping="Wrap" Text="Move Selected Account Position" VerticalAlignment="Bottom" Width="93"/>
+                    <Border Width="4" HorizontalAlignment="Right" Margin="0,0,132,0" Background="{DynamicResource ControlDefaultBorderBrush}"/>
+                    <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,95,12" VerticalAlignment="Bottom" FontSize="16"/>
+                    <Label Content="Accounts" HorizontalAlignment="Right" Margin="0,0,10,12" VerticalAlignment="Bottom" FontSize="16"/>
+                    <Grid Margin="354,0,137,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Save Custom Directory"   Command="{Binding SaveCustomDirectoryCommand}"  Margin="3,5,4,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" FontSize="13" Grid.Column="2"/>
+                        <Button Content="Load Custom Directory"   Command="{Binding LoadCustomDirectoryCommand}"  Margin="3,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" FontSize="13" Grid.Column="1"/>
+                        <Button Content="Create Custom Directory" Command="{Binding CreateCustomDirectoryCommand}"  Margin="0,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" FontSize="13"/>
+                    </Grid>
+                    <Border Width="4" HorizontalAlignment="Left" Margin="258,0,0,0" Background="{DynamicResource ControlDefaultBorderBrush}"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="267,12,0,12" TextWrapping="Wrap" Text="Custom Account Storage" Width="82" FontSize="11"/>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

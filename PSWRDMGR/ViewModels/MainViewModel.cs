@@ -16,12 +16,14 @@ namespace PSWRDMGR.ViewModels
     public class MainViewModel : BaseViewModel
     {
         //Private fields
-        private ObservableCollection<ListBoxItem> list = new ObservableCollection<ListBoxItem>();
+        private ObservableCollection<AccountListItem> list = new ObservableCollection<AccountListItem>();
         private int selectedIndex;
         private bool enableSaveLoad;
         private string srchAccText;
         //Public Fields
-        public ObservableCollection<ListBoxItem> AccountsList { get => list; set { list = value; RaisePropertyChanged(); } }
+        public bool AccountsArePresent => AccountsList.Count > 0;
+        public bool AccountIsSelected { get => SelectedIndex > -1; }
+        public ObservableCollection<AccountListItem> AccountsList { get => list; set { list = value; RaisePropertyChanged(); } }
         public int SelectedIndex { get => selectedIndex; set { selectedIndex = value; RaisePropertyChanged(); } }
         public bool EnableSaveAndLoad { get => enableSaveLoad; set { enableSaveLoad = value; RaisePropertyChanged(); } }
         public bool CTRLPressed;
@@ -31,7 +33,7 @@ namespace PSWRDMGR.ViewModels
         public NewAccountWindow NewAccountWndow{ get; set; }
         public EditAccountWindow EditAccountWndow { get; set; }
 
-        public AccountListItem SelectedAccountItem { get { try { return AccountsList[SelectedIndex].Content as AccountListItem; } catch { return null; } } }
+        public AccountListItem SelectedAccountItem { get { try { return AccountsList[SelectedIndex]; } catch { return null; } } }
         public AccountModel SelectedAccountStructure { get { try { return SelectedAccountItem.DataContext as AccountModel; } catch { return null; } } }
         public Action ScrollIntoView { get; set; }
         //Commands
@@ -43,8 +45,13 @@ namespace PSWRDMGR.ViewModels
         public ICommand LoadAccountCommand { get; set; }
         public ICommand BackupAccountsCommand { get; set; }
         public ICommand SearchAccountCommand { get; set; }
+        public ICommand MoveAccountPositionCommand { get; set; }
 
-        public MainViewModel()
+        public ICommand CreateCustomDirectoryCommand { get; set; }
+        public ICommand LoadCustomDirectoryCommand   { get; set; }
+        public ICommand SaveCustomDirectoryCommand   { get; set; }
+
+        private void SetupCommandBindings()
         {
             ShowContentCommand = new Command(ShowAccountContent);
             ShowAddAccountWindowCommand = new Command(ShowAddAccountWindow);
@@ -54,12 +61,21 @@ namespace PSWRDMGR.ViewModels
             LoadAccountCommand = new Command(LoadAccounts);
             BackupAccountsCommand = new Command(BackupAccounts);
             SearchAccountCommand = new Command(SearchAccount);
+            MoveAccountPositionCommand = new CommandParam(MoveAccPos);
+
+            CreateCustomDirectoryCommand = new Command(AccountFileCreator.CreateAccountsDirectoryAndFiles);
+            LoadCustomDirectoryCommand = new Command(LoadCustomAccounts);
+            SaveCustomDirectoryCommand = new Command(SaveCustomAccounts);
+        }
+
+        public MainViewModel()
+        {
+            SetupCommandBindings();
             AccountPresenter = new AccountInformationPresenter();
             NewAccountWndow = new NewAccountWindow();
             EditAccountWndow = new EditAccountWindow();
 
             NewAccountWndow.AddAccountCallback = this.AddAccount;
-            EditAccountWndow.EditAccountCallback = this.EditAccount;
 
             LoadAccounts();
         }
@@ -67,25 +83,29 @@ namespace PSWRDMGR.ViewModels
         public void SearchAccount()
         {
             //SearchAccountText
-            for (int i = 0; i < AccountsList.Count; i++)
+            int index = 0;
+            foreach(AccountListItem accItem in AccountsList)
             {
-                ListBoxItem item = AccountsList[i];
-                AccountModel m = (item.Content as AccountListItem).DataContext as AccountModel;
-                if (m.AccountName.Contains(SearchAccountText))
+                AccountModel account = accItem.DataContext as AccountModel;
+                if (!string.IsNullOrEmpty(SearchAccountText))
                 {
-                    SelectedIndex = i;
-                    ScrollIntoView?.Invoke();
+                    if (account.AccountName.ToLower().Contains(SearchAccountText.ToLower()))
+                    {
+                        SelectedIndex = index;
+                        ScrollIntoView?.Invoke();
+                        break;
+                    }
                 }
+                index++;
             }
-
         }
 
         public void BackupAccounts()
         {
             List<AccountModel> oeoe = new List<AccountModel>();
-            foreach (ListBoxItem item in AccountsList)
+            foreach (AccountListItem item in AccountsList)
             {
-                AccountModel m = (item.Content as AccountListItem).DataContext as AccountModel;
+                AccountModel m = item.DataContext as AccountModel;
                 oeoe.Add(m);
             }
             AccountSaver.SaveBackupFiles(oeoe);
@@ -110,18 +130,38 @@ namespace PSWRDMGR.ViewModels
         public void SaveAccounts()
         {
             List<AccountModel> oeoe = new List<AccountModel>();
-            foreach(ListBoxItem item in AccountsList)
+            foreach(AccountListItem item in AccountsList)
             {
-                AccountModel m = (item.Content as AccountListItem).DataContext as AccountModel;
+                AccountModel m = item.DataContext as AccountModel;
                 oeoe.Add(m);
             }
             AccountSaver.SaveFiles(oeoe);
+        }
+
+        public void SaveCustomAccounts()
+        {
+            List<AccountModel> oeoe = new List<AccountModel>();
+            foreach (AccountListItem item in AccountsList)
+            {
+                AccountModel m = item.DataContext as AccountModel;
+                oeoe.Add(m);
+            }
+            AccountSaver.SaveCustomFiles(oeoe);
         }
 
         public void LoadAccounts()
         {
             ClearAccountsList();
             foreach(AccountModel accounts in AccountLoader.LoadFiles())
+            {
+                AddAccount(accounts);
+            }
+        }
+
+        public void LoadCustomAccounts()
+        {
+            ClearAccountsList();
+            foreach (AccountModel accounts in AccountLoader.LoadCustomAccounts())
             {
                 AddAccount(accounts);
             }
@@ -148,6 +188,7 @@ namespace PSWRDMGR.ViewModels
 
         public void ShowAccountContent()
         {
+            AccountPresenter.DataContext = SelectedAccountStructure;
             AccountPresenter.Show();
         }
 
@@ -165,27 +206,38 @@ namespace PSWRDMGR.ViewModels
                 AccountPresenter.Show();
             }
         }
-        public void AddAccount() { AddAccount(NewAccountWndow.AccountModel.Convert()); }
-        public void EditAccount() { EditAccount(EditAccountWndow.AccountModel.Convert()); }
+
+        public void MoveAccPos(object upordown)
+        {
+            switch (int.Parse(upordown.ToString()))
+            {
+                case 0:
+                    if (SelectedIndex > 0)
+                    {
+                        AccountsList.Move(SelectedIndex, SelectedIndex - 1);
+                    }
+                    break;
+                //Down
+                case 1:
+                    if (SelectedIndex + 1 < AccountsList.Count())
+                    {
+                        AccountsList.Move(SelectedIndex, SelectedIndex + 1);
+                    }
+                    break;
+            }
+            ScrollIntoView();
+        }
+
+        public void AddAccount() { AddAccount(NewAccountWndow.AccountModel); }
         public void AddAccount(AccountModel accountContent)
         {
             AccountListItem ali = new AccountListItem();
             ali.DataContext = accountContent;
             ali.ShowContentCallback = this.ShowAccountContent;
 
-            ListBoxItem lbi = new ListBoxItem() { Content = ali };
-            AccountsList.Add(lbi);
-        }
+            AccountsList.Add(ali);
 
-        public void EditAccount(AccountModel accountContent)
-        {
-            if (accountContent != null)
-            {
-                SelectedAccountItem.DataContext = accountContent;
-            }
+            NewAccountWndow.ResetAccountContext();
         }
-
-        public bool AccountIsSelected => SelectedIndex >= 0;
-        public bool AccountsArePresent => AccountsList.Count > 0;
     }
 }

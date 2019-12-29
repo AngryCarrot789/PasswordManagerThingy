@@ -21,25 +21,33 @@ namespace PSWRDMGR
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainViewModel ViewModel { get => DataContext as MainViewModel; }
         public MainWindow()
         {
             InitializeComponent();
-            (DataContext as MainViewModel).ScrollIntoView = eooe;
+            ViewModel.ScrollIntoView = ScrollIntoViewThingy;
         }
 
-        public void eooe()
+        public void ScrollIntoViewThingy()
         {
             lBox.ScrollIntoView(lBox.SelectedItem);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            (DataContext as MainViewModel).KeyDown(e.Key);
+            ViewModel.KeyDown(e.Key);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
+            if (MessageBox.Show("Do you want to save all accounts in the accounts list, to the default storage location? " +
+                "(if you're debugging, this could replace all real accounts with a list of test accounts which would be bad)", 
+                "Save accounts to default/main accounts storage location?", 
+                MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                ViewModel.SaveAccounts();
+            }
             Environment.Exit(0);
         }
     }
