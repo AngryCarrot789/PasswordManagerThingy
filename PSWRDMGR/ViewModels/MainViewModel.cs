@@ -20,18 +20,23 @@ namespace PSWRDMGR.ViewModels
         private int selectedIndex;
         private bool enableSaveLoad;
         private string srchAccText;
+        private bool autoSave;
         //Public Fields
+        public AccountInformationPresenter AccountPresenter { get; set; }
+        public NewAccountWindow NewAccountWndow { get; set; }
+        public EditAccountWindow EditAccountWndow { get; set; }
+        public ControlsWindow ControlsWndow { get; set; }
+
+        //Some helpers
+        public bool[] KeysDown = new bool[200];
         public bool AccountsArePresent => AccountsList.Count > 0;
         public bool AccountIsSelected { get => SelectedIndex > -1; }
+
         public ObservableCollection<AccountListItem> AccountsList { get => list; set { list = value; RaisePropertyChanged(); } }
+        public bool AutosaveWhenClosing { get => autoSave; set { autoSave = value; RaisePropertyChanged(); } }
         public int SelectedIndex { get => selectedIndex; set { selectedIndex = value; RaisePropertyChanged(); } }
         public bool EnableSaveAndLoad { get => enableSaveLoad; set { enableSaveLoad = value; RaisePropertyChanged(); } }
-        public bool CTRLPressed;
-        public bool ALTPressed;
         public string SearchAccountText { get => srchAccText; set { srchAccText = value; RaisePropertyChanged(); } }
-        public AccountInformationPresenter AccountPresenter { get; set; }
-        public NewAccountWindow NewAccountWndow{ get; set; }
-        public EditAccountWindow EditAccountWndow { get; set; }
 
         public AccountListItem SelectedAccountItem { get { try { return AccountsList[SelectedIndex]; } catch { return null; } } }
         public AccountModel SelectedAccountStructure { get { try { return SelectedAccountItem.DataContext as AccountModel; } catch { return null; } } }
@@ -46,6 +51,7 @@ namespace PSWRDMGR.ViewModels
         public ICommand BackupAccountsCommand { get; set; }
         public ICommand SearchAccountCommand { get; set; }
         public ICommand MoveAccountPositionCommand { get; set; }
+        public ICommand ShowHelpWindowCommand { get; set; }
 
         public ICommand CreateCustomDirectoryCommand { get; set; }
         public ICommand LoadCustomDirectoryCommand   { get; set; }
@@ -62,6 +68,7 @@ namespace PSWRDMGR.ViewModels
             BackupAccountsCommand = new Command(BackupAccounts);
             SearchAccountCommand = new Command(SearchAccount);
             MoveAccountPositionCommand = new CommandParam(MoveAccPos);
+            ShowHelpWindowCommand = new Command(ShowHelpWindow);
 
             CreateCustomDirectoryCommand = new Command(AccountFileCreator.CreateAccountsDirectoryAndFiles);
             LoadCustomDirectoryCommand = new Command(LoadCustomAccounts);
@@ -74,6 +81,8 @@ namespace PSWRDMGR.ViewModels
             AccountPresenter = new AccountInformationPresenter();
             NewAccountWndow = new NewAccountWindow();
             EditAccountWndow = new EditAccountWindow();
+            AutosaveWhenClosing = true;
+            ControlsWndow = new ControlsWindow();
 
             NewAccountWndow.AddAccountCallback = this.AddAccount;
 
@@ -100,37 +109,38 @@ namespace PSWRDMGR.ViewModels
             }
         }
 
-        public void BackupAccounts()
+        //helper. converts the "index" of a Key to an int. e.g, A = 1, c = 3.
+        private int KeyInt(Key key) => Convert.ToInt32(key);
+
+        public void KeyDown(Key key, bool keyIsDown)
         {
-            List<AccountModel> oeoe = new List<AccountModel>();
-            foreach (AccountListItem item in AccountsList)
-            {
-                AccountModel m = item.DataContext as AccountModel;
-                oeoe.Add(m);
-            }
-            AccountSaver.SaveBackupFiles(oeoe);
+            KeysDown[KeyInt(key)] = keyIsDown;
+            ProcessKeyInputs();
         }
 
-        public void KeyDown(Key key)
+        public void ProcessKeyInputs()
         {
-            if (key == Key.LeftCtrl)
-                CTRLPressed = true;
-            else CTRLPressed = false;
-
-            if (key == Key.LeftAlt)
-                ALTPressed = true;
-            else ALTPressed = false;
-
-            switch (key)
+            if (KeysDown[KeyInt(Key.LeftCtrl)])
             {
-                case Key.Delete: DeleteSelectedAccount(); break;
+                //CTRL Pressed
+                if (KeysDown[KeyInt(Key.A)]) AddAccount();
+                if (KeysDown[KeyInt(Key.S)]) SaveAccounts();
+                if (KeysDown[KeyInt(Key.E)]) ShowEditAccountWindow();
+                if (KeysDown[KeyInt(Key.L)]) LoadAccounts();
+            }
+            else
+            {
+                //CTRL Released
+                if (KeysDown[KeyInt(Key.Delete)]) DeleteSelectedAccount();
             }
         }
+
+        #region Saving, Loading
 
         public void SaveAccounts()
         {
             List<AccountModel> oeoe = new List<AccountModel>();
-            foreach(AccountListItem item in AccountsList)
+            foreach (AccountListItem item in AccountsList)
             {
                 AccountModel m = item.DataContext as AccountModel;
                 oeoe.Add(m);
@@ -149,10 +159,21 @@ namespace PSWRDMGR.ViewModels
             AccountSaver.SaveCustomFiles(oeoe);
         }
 
+        public void BackupAccounts()
+        {
+            List<AccountModel> oeoe = new List<AccountModel>();
+            foreach (AccountListItem item in AccountsList)
+            {
+                AccountModel m = item.DataContext as AccountModel;
+                oeoe.Add(m);
+            }
+            AccountSaver.SaveBackupFiles(oeoe);
+        }
+
         public void LoadAccounts()
         {
             ClearAccountsList();
-            foreach(AccountModel accounts in AccountLoader.LoadFiles())
+            foreach (AccountModel accounts in AccountLoader.LoadFiles())
             {
                 AddAccount(accounts);
             }
@@ -165,6 +186,22 @@ namespace PSWRDMGR.ViewModels
             {
                 AddAccount(accounts);
             }
+        }
+
+        #endregion
+
+        #region Adding, Editing and Deleting Accounts
+
+        public void AddAccount() { AddAccount(NewAccountWndow.AccountModel); }
+        public void AddAccount(AccountModel accountContent)
+        {
+            AccountListItem ali = new AccountListItem();
+            ali.DataContext = accountContent;
+            ali.ShowContentCallback = this.ShowAccountContent;
+
+            AccountsList.Add(ali);
+
+            NewAccountWndow.ResetAccountContext();
         }
 
         public void DeleteSelectedAccount()
@@ -192,12 +229,6 @@ namespace PSWRDMGR.ViewModels
             AccountPresenter.Show();
         }
 
-        public void ClearAccountsList()
-        {
-            SelectedIndex = 0;
-            AccountsList.Clear();
-        }
-
         public void ShowAccountContent(AccountModel account)
         {
             if (account != null)
@@ -205,6 +236,20 @@ namespace PSWRDMGR.ViewModels
                 AccountPresenter.DataContext = account;
                 AccountPresenter.Show();
             }
+        }
+
+        public void ShowHelpWindow()
+        {
+            ControlsWndow.Show();
+        }
+
+        #endregion
+
+
+        public void ClearAccountsList()
+        {
+            SelectedIndex = 0;
+            AccountsList.Clear();
         }
 
         public void MoveAccPos(object upordown)
@@ -226,18 +271,6 @@ namespace PSWRDMGR.ViewModels
                     break;
             }
             ScrollIntoView();
-        }
-
-        public void AddAccount() { AddAccount(NewAccountWndow.AccountModel); }
-        public void AddAccount(AccountModel accountContent)
-        {
-            AccountListItem ali = new AccountListItem();
-            ali.DataContext = accountContent;
-            ali.ShowContentCallback = this.ShowAccountContent;
-
-            AccountsList.Add(ali);
-
-            NewAccountWndow.ResetAccountContext();
         }
     }
 }

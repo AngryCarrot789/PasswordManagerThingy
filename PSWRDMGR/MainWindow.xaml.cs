@@ -35,18 +35,29 @@ namespace PSWRDMGR
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            ViewModel.KeyDown(e.Key);
+            ViewModel.KeyDown(e.Key, true);
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            ViewModel.KeyDown(e.Key, false);
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
-            if (MessageBox.Show("Do you want to save all accounts in the accounts list, to the default storage location? " +
-                "(if you're debugging, this could replace all real accounts with a list of test accounts which would be bad)", 
-                "Save accounts to default/main accounts storage location?", 
-                MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            {
+            if (ViewModel.AutosaveWhenClosing)
                 ViewModel.SaveAccounts();
+            else
+            {
+                if (MessageBox.Show("Do you want to save all accounts in the accounts list, to the default storage location? " +
+                    "(if you're debugging, this could replace all real accounts with a list of test accounts which would be bad)",
+                    "Save accounts to default/main accounts storage location?",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    ViewModel.SaveAccounts();
+                }
             }
             Environment.Exit(0);
         }

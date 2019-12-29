@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR" Closing="Window_Closing"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels" ResizeMode="CanResizeWithGrip"
-        mc:Ignorable="d" BorderThickness="0" KeyDown="Window_KeyDown"
-        Title="Password/Account Manager" Height="700" Width="1190" Background="{DynamicResource BackgroundColour}">
+        mc:Ignorable="d" BorderThickness="0" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
+        Title="Password/Account Manager" Height="720" Width="1200" Background="{DynamicResource BackgroundColour}">
     <Window.Resources>
         <Style TargetType="{x:Type ScrollBar}">
             <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
@@ -220,6 +220,7 @@
                     <TextBlock Text="Show Account Info" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </Grid>
             </Button>
+            <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,10,229" VerticalAlignment="Bottom" Height="24"/>
         </Grid>
         <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
             <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="231,0,0,0"/>
@@ -236,28 +237,29 @@
             <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" x:Name="lBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                  SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI Light" BorderBrush="{x:Null}" Margin="0,0,0,55">
             </ListBox>
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 0" Background="{DynamicResource ContainerBackground}" Height="55" VerticalAlignment="Bottom">
-                <Grid>
-                    <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up" Margin="108,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"   />
-                    <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="183,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,0,0,11" TextWrapping="Wrap" Text="Move Selected Account Position" VerticalAlignment="Bottom" Width="93"/>
-                    <Border Width="4" HorizontalAlignment="Right" Margin="0,0,132,0" Background="{DynamicResource ControlDefaultBorderBrush}"/>
-                    <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,95,12" VerticalAlignment="Bottom" FontSize="16"/>
-                    <Label Content="Accounts" HorizontalAlignment="Right" Margin="0,0,10,12" VerticalAlignment="Bottom" FontSize="16"/>
-                    <Grid Margin="354,0,137,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Content="Save Custom Directory"   Command="{Binding SaveCustomDirectoryCommand}"  Margin="3,5,4,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" FontSize="13" Grid.Column="2"/>
-                        <Button Content="Load Custom Directory"   Command="{Binding LoadCustomDirectoryCommand}"  Margin="3,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" FontSize="13" Grid.Column="1"/>
-                        <Button Content="Create Custom Directory" Command="{Binding CreateCustomDirectoryCommand}"  Margin="0,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" FontSize="13"/>
-                    </Grid>
-                    <Border Width="4" HorizontalAlignment="Left" Margin="258,0,0,0" Background="{DynamicResource ControlDefaultBorderBrush}"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="267,12,0,12" TextWrapping="Wrap" Text="Custom Account Storage" Width="82" FontSize="11"/>
+            <Grid Height="55" VerticalAlignment="Bottom">
+                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 1 0" Background="{DynamicResource ContainerBackground}" HorizontalAlignment="Left" Width="258"/>
+                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 1 1 0" Background="{DynamicResource ContainerBackground}" Margin="263,0,270,0"/>
+                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 1 1 0" Background="{DynamicResource ContainerBackground}" HorizontalAlignment="Right" Width="132" Margin="0,0,133,0"/>
+                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 1 1 0" Background="{DynamicResource ContainerBackground}" HorizontalAlignment="Right" Width="128"/>
+                <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up" Margin="108,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"   />
+                <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="183,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"/>
+                <TextBlock HorizontalAlignment="Left" Margin="10,0,0,11" TextWrapping="Wrap" Text="Move Selected Account Position" VerticalAlignment="Bottom" Width="93"/>
+                <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,95,12" VerticalAlignment="Bottom" FontSize="16"/>
+                <Label Content="Accounts" HorizontalAlignment="Right" Margin="0,0,10,12" VerticalAlignment="Bottom" FontSize="16"/>
+                <Grid Margin="359,0,272,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Save Directory"   Command="{Binding SaveCustomDirectoryCommand}"  Margin="3,5,4,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="2"/>
+                    <Button Content="Load Directory"   Command="{Binding LoadCustomDirectoryCommand}"  Margin="3,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="1"/>
+                    <Button Content="Create Directory" Command="{Binding CreateCustomDirectoryCommand}"  Margin="0,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
                 </Grid>
-            </Border>
+                <TextBlock HorizontalAlignment="Left" Margin="272,12,0,12" TextWrapping="Wrap" Text="Custom Account Storage" Width="82" FontSize="11"/>
+                <Button Command="{Binding ShowHelpWindowCommand}" Content="   Help&#xD;&#xA;Window" Margin="0,5,141,5" HorizontalAlignment="Right" Width="117"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
