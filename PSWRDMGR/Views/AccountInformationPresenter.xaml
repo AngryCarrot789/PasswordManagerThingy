@@ -4,16 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views" Closing="Window_Closing"
-        mc:Ignorable="d" KeyDown="Window_KeyDown" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" Topmost="True"
-        Title="Account Information" Height="620.5" Width="750" Background="{DynamicResource BackgroundColour}">
+        mc:Ignorable="d" KeyDown="Window_KeyDown" ResizeMode="NoResize" Topmost="True" Focusable="True"
+        Title="Account Information" Height="600" Width="750" Background="{DynamicResource BackgroundColour}">
     <Grid>
         <Grid VerticalAlignment="Top" Height="50" Background="{DynamicResource ContainerBackground}">
             <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="149,0,0,0"/>
             <Label Content="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
         <Grid Margin="0,50,0,0" HorizontalAlignment="Left" Width="150" Background="{DynamicResource ContainerBackground}">
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="226" VerticalAlignment="Top"/>
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="226" VerticalAlignment="Bottom"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="227" VerticalAlignment="Top"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="227" VerticalAlignment="Bottom"/>
             <Label Content="Email" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
             <Label Content="Username" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontSize="20"/>
             <Label Content="Password" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" FontSize="20"/>
@@ -26,6 +26,7 @@
             <Label Content="Extra Info 5" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontSize="20"/>
         </Grid>
         <Grid Margin="150,50,0,0">
+            <Border BorderBrush="{DynamicResource ContainerBackground}" BorderThickness="1 1 0 0"/>
             <TextBox x:Name="a" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"         Height="37" Margin="10,10,94,0"  VerticalAlignment="Top" FontSize="20" Padding="3" IsReadOnly="True"/>
             <TextBox x:Name="b" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"      Height="37" Margin="10,52,94,0"  VerticalAlignment="Top" FontSize="20" Padding="3" IsReadOnly="True"/>
             <TextBox x:Name="c" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"      Height="37" Margin="10,94,94,0"  VerticalAlignment="Top" FontSize="20" Padding="3" IsReadOnly="True"/>
@@ -46,9 +47,11 @@
             <Button Click="CopyTextClick" Uid="8" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,94" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16"/>
             <Button Click="CopyTextClick" Uid="9"  Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="79" Height="37" FontSize="16"/>
             <Button Click="CopyTextClick" Uid="10" Content="Copy" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="79" Height="37" FontSize="16"/>
-            <Border Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 1" Margin="0,225,0,225">
-                <Label Content="View Extra Information (Codes, Dates, Websites, etc)" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"/>
-
+            <Border Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ContainerBackground}" BorderThickness="0 1 0 1" Margin="0,225,0,225">
+                <Grid>
+                    <Border BorderBrush="{StaticResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 1"/>
+                    <Label Content="View Extra Information (Codes, Dates, Websites, etc)" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"/>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

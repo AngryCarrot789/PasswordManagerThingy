@@ -30,12 +30,16 @@ namespace PSWRDMGR.Controls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            switch (int.Parse(((FrameworkElement)e.Source).Uid))
+            try
             {
-                case 1: Clipboard.SetText(AccountContext.Username); break;
-                case 2: Clipboard.SetText(AccountContext.Password); break;
-                case 3: Clipboard.SetText(AccountContext.Email); break;
+                switch (int.Parse(((FrameworkElement)e.Source).Uid))
+                {
+                    case 1: Clipboard.SetText(AccountContext.Username); break;
+                    case 2: Clipboard.SetText(AccountContext.Password); break;
+                    case 3: Clipboard.SetText(AccountContext.Email); break;
+                }
             }
+            catch(Exception ed) { MessageBox.Show($"Failed to copy information to clipboard. Error: {ed.Message}", "Err Clipboard Set"); }
         }
 
         private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)

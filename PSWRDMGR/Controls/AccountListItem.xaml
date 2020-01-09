@@ -9,9 +9,9 @@
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Uid="3" Click="Button_Click" Template="{DynamicResource FinalSubMenuItemTemplate}" Header="Copy Email"/>
-                <MenuItem Uid="2" Click="Button_Click" Template="{DynamicResource FinalSubMenuItemTemplate}" Header="Copy Password"/>
-                <MenuItem Uid="1" Click="Button_Click" Template="{DynamicResource FinalSubMenuItemTemplate}" Header="Copy Username"/>
+                <MenuItem Uid="3" Click="Button_Click" Template="{DynamicResource bbbb}" Header="Copy Email"/>
+                <MenuItem Uid="2" Click="Button_Click" Template="{DynamicResource bbbb}" Header="Copy Password"/>
+                <MenuItem Uid="1" Click="Button_Click" Template="{DynamicResource bbbb}" Header="Copy Username"/>
             </ContextMenu>
         </Grid.ContextMenu>
         <Label Content="{Binding AccountName}" 

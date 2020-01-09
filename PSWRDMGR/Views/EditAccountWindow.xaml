@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views" Closing="Window_Closing" Topmost="True"
         mc:Ignorable="d" KeyDown="Window_KeyDown" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
-        Title="Edit Account Window" Height="660" Width="957.5" Background="{DynamicResource BackgroundColour}">
+        Title="Edit Account Window" Height="625" Width="750" Background="{DynamicResource BackgroundColour}">
     <Grid>
         <Grid VerticalAlignment="Top" Height="50" Background="{DynamicResource ContainerBackground}">
             <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="159,0,0,0"/>
             <Label Content="Edit an Account" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"/>
         </Grid>
         <Grid Margin="0,50,0,0" HorizontalAlignment="Left" Width="160" Background="{DynamicResource ContainerBackground}">
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="268" VerticalAlignment="Top"/>
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="226" VerticalAlignment="Bottom"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="264" VerticalAlignment="Top"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Height="222" VerticalAlignment="Bottom"/>
             <Label Content="Account Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
             <Label Content="Email" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
             <Label Content="Username" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Symbol"/>
@@ -30,6 +30,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <Border BorderBrush="{DynamicResource ContainerBackground}" BorderThickness="1 1 0 0"/>
             <TextBox x:Name="a" Text="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}"    Height="37" Margin="10,10,180,0"  VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
             <TextBox x:Name="b" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"          Height="37" Margin="10,52,180,0"  VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
             <TextBox x:Name="c" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"       Height="37" Margin="10,94,180,0"  VerticalAlignment="Top" FontSize="20" Padding="3" FontFamily="Segoe UI Symbol"/>
@@ -63,9 +64,11 @@
             <Button Click="PasteTextToBox" Uid="9"  Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,94" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
             <Button Click="PasteTextToBox" Uid="10" Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,52" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
             <Button Click="PasteTextToBox" Uid="11" Content="Paste" HorizontalAlignment="Right" Margin="0,0,95,10" VerticalAlignment="Bottom" Width="80" Height="37" FontSize="16" FontFamily="Segoe UI Symbol"/>
-            <Border Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 1" Margin="0,267,0,225">
-                <Label Content="Edit Extra Information (Codes, Dates, Websites, etc)" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"/>
-
+            <Border Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ContainerBackground}" BorderThickness="0 1 0 1" Margin="0,262,0,220">
+                <Grid>
+                    <Border BorderBrush="{StaticResource ControlDefaultBorderBrush}" BorderThickness="0 1 0 1"/>
+                    <Label Content="Edit Extra Information (Codes, Dates, Websites, etc)" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"/>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

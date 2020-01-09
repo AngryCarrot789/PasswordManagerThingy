@@ -123,10 +123,11 @@ namespace PSWRDMGR.ViewModels
             if (KeysDown[KeyInt(Key.LeftCtrl)])
             {
                 //CTRL Pressed
-                if (KeysDown[KeyInt(Key.A)]) AddAccount();
-                if (KeysDown[KeyInt(Key.S)]) SaveAccounts();
+                if (KeysDown[KeyInt(Key.A)]) ShowAddAccountWindow();
+                if (KeysDown[KeyInt(Key.S)] && EnableSaveAndLoad) SaveAccounts();
                 if (KeysDown[KeyInt(Key.E)]) ShowEditAccountWindow();
-                if (KeysDown[KeyInt(Key.L)]) LoadAccounts();
+                if (KeysDown[KeyInt(Key.L)] && EnableSaveAndLoad) LoadAccounts();
+                if (KeysDown[KeyInt(Key.K)]) ShowAccountContent();
             }
             else
             {
@@ -256,6 +257,7 @@ namespace PSWRDMGR.ViewModels
         {
             switch (int.Parse(upordown.ToString()))
             {
+                //UP
                 case 0:
                     if (SelectedIndex > 0)
                     {

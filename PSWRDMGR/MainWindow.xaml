@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PSWRDMGR" Closing="Window_Closing"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels" ResizeMode="CanResizeWithGrip"
         mc:Ignorable="d" BorderThickness="0" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
-        Title="Password/Account Manager" Height="720" Width="1200" Background="{DynamicResource BackgroundColour}">
+        Title="Password/Account Manager" Height="730" Width="1280" Background="{DynamicResource BackgroundColour}">
     <Window.Resources>
         <Style TargetType="{x:Type ScrollBar}">
             <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
@@ -168,9 +168,85 @@
         <viewmodels:MainViewModel/>
     </Window.DataContext>
     <Grid>
+        <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="231,0,0,0"/>
+            <Grid>
+                <Grid HorizontalAlignment="Left" Width="250">
+                    <TextBlock Text="ToolBox" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Segoe UI Light"/>
+                </Grid>
+                <Grid Margin="232,0,0,0">
+                    <TextBlock Text="Accounts List" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Segoe UI Light"/>
+                    <Menu  VerticalAlignment="Bottom" Margin="0,0,0,1">
+                        <MenuItem Header="Accounts" FontSize="16">
+                            <MenuItem  Command="{Binding ShowAddAccountWindowCommand}" Header="Add Account" Template="{DynamicResource bbbb}" InputGestureText="Ctrl + A" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/plus-64.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding ShowEditAccountWindowCommand}" Header="Edit Account" Template="{DynamicResource bbbb}" InputGestureText="Ctrl + E" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/edit-11-64.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding DeleteAccountCommand}" Header="Delete Account" Template="{DynamicResource bbbb}" InputGestureText="Del" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/delete-2-64.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding ShowContentCommand}" Header="Show Account Info" Template="{DynamicResource bbbb}" InputGestureText="Ctrl + K" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/product-128.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator Style="{DynamicResource SeparatorStyle1}"/>
+                            <CheckBox Content="Autosave when Exiting" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}"/>
+                            <CheckBox IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Content="Allow Saving and Loading"/>
+                            <Separator Style="{DynamicResource SeparatorStyle1}"/>
+                            <MenuItem Command="{Binding SaveAccountCommand}" Header="Save Accounts" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Template="{DynamicResource bbbb}" InputGestureText="Ctrl + S" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/save-128.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding LoadAccountCommand}" Header="Load Account" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Template="{DynamicResource bbbb}" InputGestureText="Ctrl + L" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/download-128.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding BackupAccountsCommand}" Header="Save Backup Account" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Template="{DynamicResource bbbb}" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/data-transfer-upload-128.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Custom Accounts" FontSize="16">
+                            <MenuItem Command="{Binding CreateCustomDirectoryCommand}" Header="Create custom accounts directory" Template="{DynamicResource bbbb}" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/product-128.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding SaveCustomDirectoryCommand}" Header="Save custom accounts directory" Template="{DynamicResource bbbb}" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/save-128.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding LoadCustomDirectoryCommand}"  Header="Load custom accounts directory" Template="{DynamicResource bbbb}" Height="28">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Images/download-128.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Account Positions" FontSize="16" StaysOpenOnClick="True">
+                            <TextBlock Text="Move Selected Accounts Up/Down"/>
+                            <MenuItem Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Header="Move Up" Template="{DynamicResource bbbb}" Icon="↑" Height="28" StaysOpenOnClick="True"/>
+                            <MenuItem Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Header="Move Down" Template="{DynamicResource bbbb}" Icon="↓" Height="28" StaysOpenOnClick="True"/>
+                        </MenuItem>
+                    </Menu>
+                </Grid>
+            </Grid>
+        </Grid>
         <Grid HorizontalAlignment="Left" Width="232" Margin="0,60,0,0">
             <Border Background="{DynamicResource ContainerBackground}"/>
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Margin="0,0,0,54"/>
+            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Margin="0,0,0,59"/>
             <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,0" Height="70" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
                 <Grid Width="160">
                     <Image Source="Resources/Images/plus-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
@@ -222,43 +298,31 @@
             </Button>
             <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,10,229" VerticalAlignment="Bottom" Height="24"/>
         </Grid>
-        <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="231,0,0,0"/>
-            <Grid>
-                <Grid HorizontalAlignment="Left" Width="250">
-                    <TextBlock Text="ToolBox" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Segoe UI Light"/>
-                </Grid>
-                <Grid Margin="250,0,0,0">
-                    <TextBlock Text="Accounts List" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Segoe UI Light"/>
-                </Grid>
-            </Grid>
-        </Grid>
         <Grid Margin="232,60,0,0">
             <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" x:Name="lBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                  SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI Light" BorderBrush="{x:Null}" Margin="0,0,0,55">
             </ListBox>
-            <Grid Height="55" VerticalAlignment="Bottom">
-                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 1 0" Background="{DynamicResource ContainerBackground}" HorizontalAlignment="Left" Width="258"/>
-                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 1 1 0" Background="{DynamicResource ContainerBackground}" Margin="263,0,270,0"/>
-                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 1 1 0" Background="{DynamicResource ContainerBackground}" HorizontalAlignment="Right" Width="132" Margin="0,0,133,0"/>
-                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 1 1 0" Background="{DynamicResource ContainerBackground}" HorizontalAlignment="Right" Width="128"/>
+            <Grid Height="60" VerticalAlignment="Bottom">
+                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 1 0" Background="{DynamicResource ContainerBackground}"/>
                 <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up" Margin="108,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"   />
                 <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="183,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"/>
                 <TextBlock HorizontalAlignment="Left" Margin="10,0,0,11" TextWrapping="Wrap" Text="Move Selected Account Position" VerticalAlignment="Bottom" Width="93"/>
-                <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,95,12" VerticalAlignment="Bottom" FontSize="16"/>
-                <Label Content="Accounts" HorizontalAlignment="Right" Margin="0,0,10,12" VerticalAlignment="Bottom" FontSize="16"/>
-                <Grid Margin="359,0,272,0">
+                <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,95,14" VerticalAlignment="Bottom" FontSize="16"/>
+                <Label Content="Accounts" HorizontalAlignment="Right" Margin="0,0,10,14" VerticalAlignment="Bottom" FontSize="16"/>
+                <Grid Margin="315,0,267,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Save Directory"   Command="{Binding SaveCustomDirectoryCommand}"  Margin="3,5,4,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="2"/>
-                    <Button Content="Load Directory"   Command="{Binding LoadCustomDirectoryCommand}"  Margin="3,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="1"/>
+                    <Button Content="Save Directory"   Command="{Binding SaveCustomDirectoryCommand}"    Margin="3,5,4,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="2"/>
+                    <Button Content="Load Directory"   Command="{Binding LoadCustomDirectoryCommand}"    Margin="3,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="1"/>
                     <Button Content="Create Directory" Command="{Binding CreateCustomDirectoryCommand}"  Margin="0,5,2,5" FontFamily="Segoe UI Light" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
                 </Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="272,12,0,12" TextWrapping="Wrap" Text="Custom Account Storage" Width="82" FontSize="11"/>
+                <TextBlock HorizontalAlignment="Left" Margin="266,7,0,8" TextWrapping="Wrap" Text="Custom Account Storage" Width="44" FontSize="11"/>
                 <Button Command="{Binding ShowHelpWindowCommand}" Content="   Help&#xD;&#xA;Window" Margin="0,5,141,5" HorizontalAlignment="Right" Width="117"/>
+                <Border HorizontalAlignment="Right" BorderThickness="1 0 1 0" Margin="0,1,263,0" Width="4" Background="{DynamicResource ControlDefaultBorderBrush}" BorderBrush="{DynamicResource ControlDefaultBackground}"/>
+                <Border HorizontalAlignment="Left" BorderThickness="1 0 1 0" Margin="257,1,0,0" Width="4" Background="{DynamicResource ControlDefaultBorderBrush}" BorderBrush="{DynamicResource ControlDefaultBackground}"/>
             </Grid>
         </Grid>
     </Grid>
