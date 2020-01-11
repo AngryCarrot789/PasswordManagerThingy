@@ -26,6 +26,7 @@ namespace PSWRDMGR.ViewModels
         public NewAccountWindow NewAccountWndow { get; set; }
         public EditAccountWindow EditAccountWndow { get; set; }
         public ControlsWindow ControlsWndow { get; set; }
+        public SearchResultsWindow SearchWindow { get; set; }
 
         //Some helpers
         public bool[] KeysDown = new bool[200];
@@ -81,8 +82,9 @@ namespace PSWRDMGR.ViewModels
             AccountPresenter = new AccountInformationPresenter();
             NewAccountWndow = new NewAccountWindow();
             EditAccountWndow = new EditAccountWindow();
-            AutosaveWhenClosing = true;
             ControlsWndow = new ControlsWindow();
+            SearchWindow = new SearchResultsWindow();
+            AutosaveWhenClosing = true;
 
             NewAccountWndow.AddAccountCallback = this.AddAccount;
 
@@ -91,6 +93,8 @@ namespace PSWRDMGR.ViewModels
 
         public void SearchAccount()
         {
+            SearchWindow.SearchContext.ClearAccountsList();
+            ShowSearchWindow();
             //SearchAccountText
             int index = 0;
             foreach(AccountListItem accItem in AccountsList)
@@ -100,9 +104,9 @@ namespace PSWRDMGR.ViewModels
                 {
                     if (account.AccountName.ToLower().Contains(SearchAccountText.ToLower()))
                     {
-                        SelectedIndex = index;
-                        ScrollIntoView?.Invoke();
-                        break;
+                        SearchWindow.AddAccount(accItem);
+                        //SelectedIndex = index;
+                        //ScrollIntoView?.Invoke();
                     }
                 }
                 index++;
@@ -201,7 +205,6 @@ namespace PSWRDMGR.ViewModels
             ali.ShowContentCallback = this.ShowAccountContent;
 
             AccountsList.Add(ali);
-
             NewAccountWndow.ResetAccountContext();
         }
 
@@ -213,6 +216,7 @@ namespace PSWRDMGR.ViewModels
         public void ShowAddAccountWindow()
         {
             NewAccountWndow.Show();
+            NewAccountWndow.Focus();
         }
 
         public void ShowEditAccountWindow()
@@ -221,6 +225,7 @@ namespace PSWRDMGR.ViewModels
             {
                 EditAccountWndow.DataContext = SelectedAccountStructure;
                 EditAccountWndow.Show();
+                EditAccountWndow.Focus();
             }
         }
 
@@ -228,6 +233,7 @@ namespace PSWRDMGR.ViewModels
         {
             AccountPresenter.DataContext = SelectedAccountStructure;
             AccountPresenter.Show();
+            AccountPresenter.Focus();
         }
 
         public void ShowAccountContent(AccountModel account)
@@ -236,12 +242,20 @@ namespace PSWRDMGR.ViewModels
             {
                 AccountPresenter.DataContext = account;
                 AccountPresenter.Show();
+                AccountPresenter.Focus();
             }
         }
 
         public void ShowHelpWindow()
         {
             ControlsWndow.Show();
+            ControlsWndow.Focus();
+        }
+
+        public void ShowSearchWindow()
+        {
+            SearchWindow.Show();
+            SearchWindow.Focus();
         }
 
         #endregion

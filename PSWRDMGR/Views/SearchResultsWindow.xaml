@@ -1,0 +1,21 @@
+﻿<Window x:Class="PSWRDMGR.Views.SearchResultsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSWRDMGR.Views"
+        xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
+        mc:Ignorable="d"  Closing="Window_Closing" KeyDown="Window_KeyDown"
+        Title="Search Results" Height="500" Width="800" Background="{DynamicResource BackgroundColour}">
+    <Window.DataContext>
+        <viewmodels:SearchViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" 
+                 SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
+                 HorizontalAlignment="Stretch" 
+                 HorizontalContentAlignment="Stretch"
+                 FontFamily="Segoe UI Light" Margin="0,0,0,60"/>
+        <Button Content="Clear &amp; Close" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="40" Click="Button_Click"/>
+    </Grid>
+</Window>

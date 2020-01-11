@@ -22,6 +22,7 @@ namespace PSWRDMGR.Controls
     public partial class AccountListItem : UserControl
     {
         public Action<AccountModel> ShowContentCallback { get; set; }
+        public Action FocusCallback { get; set; }
         private AccountModel AccountContext { get => this.DataContext as AccountModel; }
         public AccountListItem()
         {
@@ -45,6 +46,7 @@ namespace PSWRDMGR.Controls
         private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowContentCallback?.Invoke(AccountContext);
+            FocusCallback?.Invoke();
         }
     }
 }

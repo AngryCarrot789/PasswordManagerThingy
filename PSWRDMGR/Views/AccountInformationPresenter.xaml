@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PSWRDMGR.Views" Closing="Window_Closing"
-        mc:Ignorable="d" KeyDown="Window_KeyDown" ResizeMode="NoResize" Topmost="True" Focusable="True"
+        xmlns:local="clr-namespace:PSWRDMGR.Views" Closing="Window_Closing" Focusable="True"
+        mc:Ignorable="d" KeyDown="Window_KeyDown" ResizeMode="NoResize" Topmost="True"
         Title="Account Information" Height="600" Width="750" Background="{DynamicResource BackgroundColour}">
     <Grid>
         <Grid VerticalAlignment="Top" Height="50" Background="{DynamicResource ContainerBackground}">
