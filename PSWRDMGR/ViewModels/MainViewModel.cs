@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static PSWRDMGR.Accounts.Accounts;
@@ -32,6 +33,12 @@ namespace PSWRDMGR.ViewModels
         public bool[] KeysDown = new bool[200];
         public bool AccountsArePresent => AccountsList.Count > 0;
         public bool AccountIsSelected { get => SelectedIndex > -1; }
+
+        public Action GetWindowVariables { get; set; }
+        public double WindowTop { get; set; }
+        public double WindowLeft { get; set; }
+        public double WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
 
         public ObservableCollection<AccountListItem> AccountsList { get => list; set { list = value; RaisePropertyChanged(); } }
         public bool AutosaveWhenClosing { get => autoSave; set { autoSave = value; RaisePropertyChanged(); } }
@@ -253,10 +260,40 @@ namespace PSWRDMGR.ViewModels
             ControlsWndow.Focus();
         }
 
+        /// <summary>
+        /// //////////////////////
+        /// </summary>
         public void ShowSearchWindow()
         {
             SearchWindow.Show();
             SearchWindow.Focus();
+
+            //double DesktopScreenWidth =  SystemParameters.PrimaryScreenWidth;
+            //double DesktopScreenHeight = SystemParameters.PrimaryScreenHeight;
+            //
+            //double WindowFromLeft = WindowLeft;
+            //double WindowFromTop = WindowTop;
+            //double WindowFromRight = DesktopScreenWidth - WindowFromLeft;
+            //double WindowFromBottom = DesktopScreenHeight - WindowFromTop;
+            //
+            //double leftOffset = 0;
+            //double topOffset = 26;
+            //26 is the height of the title bar for the mainwindow.
+            //trying to make the searchwindow contents in the direct centre... well
+            //the searchwindow and mainwindow title bar heights cancel eachother out
+            //so the content is in the centre (if you include title bars) without an offset but eh.
+
+            //double SearchWindowLeft = WindowLeft + ((WindowWidth - SearchWindow.Width) / 2) + leftOffset;
+            //double SearchWindowTop = WindowTop + ((WindowHeight - SearchWindow.Height) / 2) + topOffset;
+
+            //double windowCentreLeft = WindowWidth / 2;
+            //double windowCentreTop = WindowHeight / 2;
+
+            //double width = (screenWidth / 2) - (SearchWindowLeft / 2);
+            //double height = (screenHeight / 2) - (SearchWindowTop / 2);
+
+            //SearchWindow.Left = SearchWindowLeft;
+            //SearchWindow.Top = SearchWindowTop;
         }
 
         #endregion
@@ -289,5 +326,8 @@ namespace PSWRDMGR.ViewModels
             }
             ScrollIntoView();
         }
+
+        //public double GetCentralisedWindowTop(double windowheight) => WindowTop + ((WindowHeight - windowheight) / 2);
+        //public double GetCentralisedWindowLeft(double windowwidth) => WindowLeft + ((WindowWidth - windowwidth) / 2);
     }
 }

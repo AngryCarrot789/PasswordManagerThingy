@@ -27,6 +27,15 @@ namespace PSWRDMGR
         {
             InitializeComponent();
             ViewModel.ScrollIntoView = ScrollIntoViewThingy;
+            ViewModel.GetWindowVariables = SetViewModelVariables;
+        }
+
+        public void SetViewModelVariables()
+        {
+            ViewModel.WindowHeight = this.ActualHeight;
+            ViewModel.WindowWidth = this.ActualWidth;
+            ViewModel.WindowTop = this.Top;
+            ViewModel.WindowLeft= this.Left;
         }
 
         public void ScrollIntoViewThingy()

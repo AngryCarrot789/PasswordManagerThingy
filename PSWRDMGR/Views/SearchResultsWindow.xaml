@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views"
-        xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
+        xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels" ResizeMode="NoResize"
         mc:Ignorable="d"  Closing="Window_Closing" KeyDown="Window_KeyDown"
         Title="Search Results" Height="500" Width="800" Background="{DynamicResource BackgroundColour}">
     <Window.DataContext>
