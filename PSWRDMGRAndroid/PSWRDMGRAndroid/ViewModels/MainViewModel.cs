@@ -30,7 +30,7 @@ namespace AndroidVersion.ViewModels
             get => _accs;
             set => RaisePropertyChanged(ref _accs, value);
         }
-
+        //
         private async void GetPermissionStuff()
         {
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
