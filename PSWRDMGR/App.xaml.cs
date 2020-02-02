@@ -13,5 +13,28 @@ namespace PSWRDMGR
     /// </summary>
     public partial class App : Application
     {
+        public enum Theme
+        {
+            Dark, Light
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            MainWindow mWind = new MainWindow(this);
+            mWind.Show();
+        }
+
+        public void SetTheme(Theme theme)
+        {
+            string themeName = null;
+            switch (theme)
+            {
+                case Theme.Dark: themeName = "DarkTheme"; break;
+                case Theme.Light: themeName = "LightTheme"; break;
+            }
+
+            if (!string.IsNullOrEmpty(themeName))
+                this.Resources.MergedDictionaries[0].Source = new Uri($"/Themes/{themeName}.xaml", UriKind.Relative);
+        }
     }
 }

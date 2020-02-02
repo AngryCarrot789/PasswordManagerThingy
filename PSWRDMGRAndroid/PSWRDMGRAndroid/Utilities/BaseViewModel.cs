@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace PSWRDMGR.Utilities
+namespace AndroidVersion.Utilities
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

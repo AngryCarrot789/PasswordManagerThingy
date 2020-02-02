@@ -9,9 +9,9 @@
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Uid="3" Click="Button_Click" Template="{DynamicResource bbbb}" Header="Copy Email"/>
-                <MenuItem Uid="2" Click="Button_Click" Template="{DynamicResource bbbb}" Header="Copy Password"/>
-                <MenuItem Uid="1" Click="Button_Click" Template="{DynamicResource bbbb}" Header="Copy Username"/>
+                <MenuItem Uid="3" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Email"/>
+                <MenuItem Uid="2" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Password"/>
+                <MenuItem Uid="1" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Username"/>
             </ContextMenu>
         </Grid.ContextMenu>
         <Label Content="{Binding AccountName}" 
@@ -20,9 +20,9 @@
         <Label Content="{Binding Email}" 
                Margin="7,37,400,0" 
                VerticalAlignment="Top" FontSize="15"/>
-        <Button Uid="1" Content="Copy Username" Margin="0,10,264,10" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="131" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
-        <Button Uid="2" Content="Copy Password" Margin="0,10,137,10" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="125" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
-        <Button Uid="3" Content="Copy Email"    Margin="0,10,10,10" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="125" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
+        <Button Uid="1" Content="Copy Username" Margin="0,10,264,10" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="131"/>
+        <Button Uid="2" Content="Copy Password" Margin="0,10,137,10" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="125"/>
+        <Button Uid="3" Content="Copy Email"    Margin="0,10,10,10" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="125" />
 
     </Grid>
 </UserControl>

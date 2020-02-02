@@ -22,6 +22,8 @@ namespace PSWRDMGR.ViewModels
         private bool enableSaveLoad;
         private string srchAccText;
         private bool autoSave;
+        private string themeName;
+        private bool darkThemeEnabled;
         //Public Fields
         public AccountInformationPresenter AccountPresenter { get; set; }
         public NewAccountWindow NewAccountWndow { get; set; }
@@ -34,21 +36,58 @@ namespace PSWRDMGR.ViewModels
         public bool AccountsArePresent => AccountsList.Count > 0;
         public bool AccountIsSelected { get => SelectedIndex > -1; }
 
-        public Action GetWindowVariables { get; set; }
-        public double WindowTop { get; set; }
-        public double WindowLeft { get; set; }
-        public double WindowWidth { get; set; }
-        public double WindowHeight { get; set; }
+        //public Action GetWindowVariables { get; set; }
+        //public double WindowTop { get; set; }
+        //public double WindowLeft { get; set; }
+        //public double WindowWidth { get; set; }
+        //public double WindowHeight { get; set; }
 
-        public ObservableCollection<AccountListItem> AccountsList { get => list; set { list = value; RaisePropertyChanged(); } }
-        public bool AutosaveWhenClosing { get => autoSave; set { autoSave = value; RaisePropertyChanged(); } }
-        public int SelectedIndex { get => selectedIndex; set { selectedIndex = value; RaisePropertyChanged(); } }
-        public bool EnableSaveAndLoad { get => enableSaveLoad; set { enableSaveLoad = value; RaisePropertyChanged(); } }
-        public string SearchAccountText { get => srchAccText; set { srchAccText = value; RaisePropertyChanged(); } }
+        public ObservableCollection<AccountListItem> AccountsList
+        {
+            get => list;
+            set => RaisePropertyChanged(ref list, value);
+        }
+        public bool AutosaveWhenClosing
+        {
+            get => autoSave;
+            set => RaisePropertyChanged(ref autoSave, value);
+        }
+        public int SelectedIndex
+        {
+            get => selectedIndex;
+            set => RaisePropertyChanged(ref selectedIndex, value);
+        }
+        public bool EnableSaveAndLoad
+        {
+            get => enableSaveLoad;
+            set => RaisePropertyChanged(ref enableSaveLoad, value);
+        }
+        public string SearchAccountText
+        {
+            get => srchAccText;
+            set => RaisePropertyChanged(ref srchAccText, value);
+        }
+        public string ThemeName
+        {
+            get => themeName;
+            set => RaisePropertyChanged(ref themeName, value);
+        }
+        public bool DarkThemeEnabled
+        {
+            get => darkThemeEnabled;
+            set
+            {
+                RaisePropertyChanged(ref darkThemeEnabled, value);
+                MainWindow.SetTheme(value ? App.Theme.Dark : App.Theme.Light);
+                if (value) ThemeName = "Dark"; else ThemeName = "Light";
+            }
+        }
 
         public AccountListItem SelectedAccountItem { get { try { return AccountsList[SelectedIndex]; } catch { return null; } } }
         public AccountModel SelectedAccountStructure { get { try { return SelectedAccountItem.DataContext as AccountModel; } catch { return null; } } }
+
         public Action ScrollIntoView { get; set; }
+        public Action<bool> SetThemeDark { get; set; }
         //Commands
         public ICommand ShowContentCommand { get; set; }
         public ICommand ShowAddAccountWindowCommand { get; set; }
@@ -92,6 +131,7 @@ namespace PSWRDMGR.ViewModels
             ControlsWndow = new ControlsWindow();
             SearchWindow = new SearchResultsWindow();
             AutosaveWhenClosing = true;
+            DarkThemeEnabled = true;
 
             NewAccountWndow.AddAccountCallback = this.AddAccount;
 

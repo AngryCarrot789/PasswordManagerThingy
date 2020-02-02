@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static PSWRDMGR.App;
 
 namespace PSWRDMGR
 {
@@ -22,21 +23,28 @@ namespace PSWRDMGR
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static App CurrentApp;
         public MainViewModel ViewModel { get => DataContext as MainViewModel; }
-        public MainWindow()
+        public MainWindow(App currAp)
         {
+            CurrentApp = currAp;
             InitializeComponent();
             ViewModel.ScrollIntoView = ScrollIntoViewThingy;
-            ViewModel.GetWindowVariables = SetViewModelVariables;
+            //ViewModel.GetWindowVariables = SetViewModelVariables;
         }
 
-        public void SetViewModelVariables()
+        public static void SetTheme(Theme theme)
         {
-            ViewModel.WindowHeight = this.ActualHeight;
-            ViewModel.WindowWidth = this.ActualWidth;
-            ViewModel.WindowTop = this.Top;
-            ViewModel.WindowLeft= this.Left;
+            CurrentApp.SetTheme(theme);
         }
+
+        //public void SetViewModelVariables()
+        //{
+        //    ViewModel.WindowHeight = this.ActualHeight;
+        //    ViewModel.WindowWidth = this.ActualWidth;
+        //    ViewModel.WindowTop = this.Top;
+        //    ViewModel.WindowLeft= this.Left;
+        //}
 
         public void ScrollIntoViewThingy()
         {
