@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Company>TheR</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -10,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
   </ItemGroup>
 
@@ -21,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\AccountListViewItem.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
+    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>

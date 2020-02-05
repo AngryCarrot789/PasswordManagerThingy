@@ -13,5 +13,10 @@
         public string ExtraInfo3 { get; set; }
         public string ExtraInfo4 { get; set; }
         public string ExtraInfo5 { get; set; }
+
+        public override string ToString()
+        {
+            return AccountName;
+        }
     }
 }

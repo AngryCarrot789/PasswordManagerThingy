@@ -367,6 +367,15 @@ namespace PSWRDMGR.ViewModels
             ScrollIntoView();
         }
 
+        public void CloseAllWindows()
+        {
+            AccountPresenter.Close();
+            NewAccountWndow.Close();
+            EditAccountWndow.Close();
+            ControlsWndow.Close();
+            SearchWindow.Close();
+        }
+
         //public double GetCentralisedWindowTop(double windowheight) => WindowTop + ((WindowHeight - windowheight) / 2);
         //public double GetCentralisedWindowLeft(double windowwidth) => WindowLeft + ((WindowWidth - windowwidth) / 2);
     }

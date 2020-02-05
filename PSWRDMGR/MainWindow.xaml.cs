@@ -30,6 +30,8 @@ namespace PSWRDMGR
             CurrentApp = currAp;
             InitializeComponent();
             ViewModel.ScrollIntoView = ScrollIntoViewThingy;
+
+            LoadSettings();
             //ViewModel.GetWindowVariables = SetViewModelVariables;
         }
 
@@ -64,7 +66,7 @@ namespace PSWRDMGR
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = true;
+            //e.Cancel = true;
             if (ViewModel.AutosaveWhenClosing)
                 ViewModel.SaveAccounts();
             else
@@ -77,7 +79,50 @@ namespace PSWRDMGR
                     ViewModel.SaveAccounts();
                 }
             }
-            Environment.Exit(0);
+            ViewModel.CloseAllWindows();
+
+            SaveSettings();
+            //this.Close();
+            //Environment.Exit(0);
+        }
+
+        public void SaveSettings()
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                // Use the RestoreBounds as the current values will be 0, 0 and the size of the screen
+                Properties.Settings.Default.Top = RestoreBounds.Top;
+                Properties.Settings.Default.Left = RestoreBounds.Left;
+                Properties.Settings.Default.Height = RestoreBounds.Height;
+                Properties.Settings.Default.Width = RestoreBounds.Width;
+                Properties.Settings.Default.Maximized = true;
+            }
+            else
+            {
+                Properties.Settings.Default.Top = this.Top;
+                Properties.Settings.Default.Left = this.Left;
+                Properties.Settings.Default.Height = this.Height;
+                Properties.Settings.Default.Width = this.Width;
+                Properties.Settings.Default.Maximized = false;
+            }
+
+            Properties.Settings.Default.IsDarkTheme = ViewModel.DarkThemeEnabled;
+
+            Properties.Settings.Default.Save();
+        }
+
+        public void LoadSettings()
+        {
+            this.Top = Properties.Settings.Default.Top;
+            this.Left = Properties.Settings.Default.Left;
+            this.Height = Properties.Settings.Default.Height;
+            this.Width = Properties.Settings.Default.Width;
+            ViewModel.DarkThemeEnabled =  Properties.Settings.Default.IsDarkTheme;
+            // Very quick and dirty - but it does the job
+            if (Properties.Settings.Default.Maximized)
+            {
+                WindowState = WindowState.Maximized;
+            }
         }
     }
 }

@@ -52,6 +52,9 @@
   <PropertyGroup>
     <ApplicationIcon>lock-unlocked-128.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'n|AnyCPU'">
+    <OutputPath>bin\n\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL">
       <HintPath>..\packages\Ookii.Dialogs.1.0\lib\net35\Ookii.Dialogs.Wpf.dll</HintPath>

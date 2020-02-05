@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace PSWRDMGRAndroid
+namespace AndroidPSWRDMGR
 {
     public partial class MainPage : ContentPage
     {

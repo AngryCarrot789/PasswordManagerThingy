@@ -12,95 +12,115 @@
     </Window.DataContext>
     <Grid>
         <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="231,0,0,0"/>
             <Grid>
                 <Grid HorizontalAlignment="Left" Width="250">
                     <TextBlock Text="ToolBox" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Segoe UI"/>
                 </Grid>
-                <Grid Margin="232,0,0,0">
-                    <TextBlock Text="Accounts List" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Segoe UI"/>
-                </Grid>
+                <TextBlock Margin="232,0,0,0" Text="Accounts List" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Segoe UI"/>
             </Grid>
         </Grid>
-        <Grid HorizontalAlignment="Left" Width="232" Margin="0,60,0,0">
-            <Border Background="{DynamicResource ContainerBackground}"/>
-            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 1 0" Margin="0,0,0,59"/>
-            <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,0" Height="70" FontFamily="Segoe UI">
-                <Grid Width="160">
-                    <Image Source="Resources/Images/plus-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Add Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Grid Margin="0,60,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12*" MaxWidth="275" MinWidth="240"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1"/>
+                <Border Background="{DynamicResource ContainerBackground}"/>
+                <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,0,8,0" Height="70" FontFamily="Segoe UI">
+                    <Grid Width="160">
+                        <Image Source="Resources/Images/plus-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Add Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Button>
+                <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,75,8,0" Height="70" FontFamily="Segoe UI">
+                    <Grid Width="160">
+                        <Image Source="Resources/Images/edit-11-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Edit Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,10,4"/>
+                    </Grid>
+                </Button>
+                <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,150,8,0" Height="70" FontFamily="Segoe UI">
+                    <Grid Width="160">
+                        <Image Source="Resources/Images/delete-2-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Delete Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Button>
+                <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,8,10" Height="60" FontFamily="Segoe UI">
+                    <Grid Width="160">
+                        <Image Source="Resources/Images/save-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Save Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Button>
+                <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,8,75" Height="60" FontFamily="Segoe UI">
+                    <Grid Width="160">
+                        <Image Source="Resources/Images/download-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Load Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Button>
+                <CheckBox Content="Enable Load, Save and Backup" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,8,205" VerticalAlignment="Bottom" Height="24" FontSize="14"/>
+                <Button Command="{Binding BackupAccountsCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,8,140" Height="60" FontFamily="Segoe UI">
+                    <Grid Width="160">
+                        <Image Source="Resources/Images/data-transfer-upload-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,9,4"/>
+                    </Grid>
+                </Button>
+                <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="10,321,8,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Press enter to search for an account">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchAccountCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Label Content="Search for an account" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top"/>
+                <Button Command="{Binding ShowContentCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,225,8,0" Height="70" FontFamily="Segoe UI">
+                    <Grid Width="160">
+                        <Image Source="Resources/Images/product-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Show Account Info" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,-10,4"/>
+                    </Grid>
+                </Button>
+                <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,8,234" VerticalAlignment="Bottom" Height="24" FontSize="14"/>
+                <CheckBox Content="{Binding ThemeName}" IsChecked="{Binding DarkThemeEnabled, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,8,263" VerticalAlignment="Bottom" Height="24" FontSize="14"/>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource ContainerBackground}"/>
+
+            <Grid Grid.Column="2" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="11*" MinHeight="65" MaxHeight="100"/>
+                </Grid.RowDefinitions>
+                <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
+                         x:Name="lBox" HorizontalAlignment="Stretch" 
+                         HorizontalContentAlignment="Stretch"
+                         BorderThickness="1 1 0 1"
+                         Grid.Row="0"
+                         SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
+                         BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
+
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource ContainerBackground}"/>
+
+                <Grid Grid.Row="2" Background="{DynamicResource ContainerBackground}">
+                    <Border/>
+                    <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up" Margin="108,3,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"   />
+                    <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="183,3,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Text="Move Selected Account Position" Width="93"/>
+                    <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,95,14" VerticalAlignment="Bottom" FontSize="16"/>
+                    <Label Content="Accounts" HorizontalAlignment="Right" Margin="0,0,10,14" VerticalAlignment="Bottom" FontSize="16"/>
+                    <Grid Margin="315,0,267,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Save Directory"   Command="{Binding SaveCustomDirectoryCommand}"    Margin="3,3,4,5" FontFamily="Segoe UI" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="2"/>
+                        <Button Content="Load Directory"   Command="{Binding LoadCustomDirectoryCommand}"    Margin="3,3,2,5" FontFamily="Segoe UI" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="1"/>
+                        <Button Content="Create Directory" Command="{Binding CreateCustomDirectoryCommand}"  Margin="0,3,2,5" FontFamily="Segoe UI" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
+                    </Grid>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="266,7,0,8" TextWrapping="Wrap" Text="Custom Account Storage" Width="44" FontSize="11"/>
+                    <Button Command="{Binding ShowHelpWindowCommand}" Content="   Help&#xD;&#xA;Window" Margin="0,3,141,5" HorizontalAlignment="Right" Width="117"/>
+                    <Border HorizontalAlignment="Right" BorderThickness="1 0 1 0" Margin="0,-2,263,0" Width="4" Background="{DynamicResource ControlDefaultBorderBrush}" BorderBrush="{DynamicResource ControlDefaultBackground}"/>
+                    <Border HorizontalAlignment="Left" BorderThickness="1 0 1 0" Margin="257,-2,0,0" Width="4" Background="{DynamicResource ControlDefaultBorderBrush}" BorderBrush="{DynamicResource ControlDefaultBackground}"/>
                 </Grid>
-            </Button>
-            <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,75,10,0" Height="70" FontFamily="Segoe UI">
-                <Grid Width="160">
-                    <Image Source="Resources/Images/edit-11-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Edit Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,10,4"/>
-                </Grid>
-            </Button>
-            <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,150,10,0" Height="70" FontFamily="Segoe UI">
-                <Grid Width="160">
-                    <Image Source="Resources/Images/delete-2-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Delete Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                </Grid>
-            </Button>
-            <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,10" Height="60" FontFamily="Segoe UI">
-                <Grid Width="160">
-                    <Image Source="Resources/Images/save-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Save Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                </Grid>
-            </Button>
-            <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,75" Height="60" FontFamily="Segoe UI">
-                <Grid Width="160">
-                    <Image Source="Resources/Images/download-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Load Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                </Grid>
-            </Button>
-            <CheckBox Content="Enable Load, Save and Backup" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,10,205" VerticalAlignment="Bottom" Height="24" FontSize="14"/>
-            <Button Command="{Binding BackupAccountsCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="10,0,10,140" Height="60" FontFamily="Segoe UI">
-                <Grid Width="160">
-                    <Image Source="Resources/Images/data-transfer-upload-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,9,4"/>
-                </Grid>
-            </Button>
-            <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="10,321,10,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Press enter to search for an account">
-                <TextBox.InputBindings>
-                    <KeyBinding Key="Enter" Command="{Binding SearchAccountCommand}"/>
-                </TextBox.InputBindings>
-            </TextBox>
-            <Label Content="Search for an account" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top"/>
-            <Button Command="{Binding ShowContentCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="10,225,10,0" Height="70" FontFamily="Segoe UI">
-                <Grid Width="160">
-                    <Image Source="Resources/Images/product-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Show Account Info" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                </Grid>
-            </Button>
-            <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,10,234" VerticalAlignment="Bottom" Height="24" FontSize="14"/>
-            <CheckBox Content="{Binding ThemeName}" IsChecked="{Binding DarkThemeEnabled, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,10,263" VerticalAlignment="Bottom" Height="24" FontSize="14"/>
-        </Grid>
-        <Grid Margin="232,60,0,0">
-            <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" x:Name="lBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                 SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{x:Null}" Margin="0,0,0,60"/>
-            <Grid Height="60" VerticalAlignment="Bottom">
-                <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 1 1 0" Background="{DynamicResource ContainerBackground}"/>
-                <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up" Margin="108,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"   />
-                <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="183,4,0,5" FontSize="16" HorizontalAlignment="Left" Width="70"/>
-                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Text="Move Selected Account Position" Width="93"/>
-                <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,95,14" VerticalAlignment="Bottom" FontSize="16"/>
-                <Label Content="Accounts" HorizontalAlignment="Right" Margin="0,0,10,14" VerticalAlignment="Bottom" FontSize="16"/>
-                <Grid Margin="315,0,267,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Save Directory"   Command="{Binding SaveCustomDirectoryCommand}"    Margin="3,5,4,5" FontFamily="Segoe UI" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="2"/>
-                    <Button Content="Load Directory"   Command="{Binding LoadCustomDirectoryCommand}"    Margin="3,5,2,5" FontFamily="Segoe UI" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Grid.Column="1"/>
-                    <Button Content="Create Directory" Command="{Binding CreateCustomDirectoryCommand}"  Margin="0,5,2,5" FontFamily="Segoe UI" Background="{DynamicResource ControlDefaultBackground}" BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
-                </Grid>
-                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="266,7,0,8" TextWrapping="Wrap" Text="Custom Account Storage" Width="44" FontSize="11"/>
-                <Button Command="{Binding ShowHelpWindowCommand}" Content="   Help&#xD;&#xA;Window" Margin="0,5,141,5" HorizontalAlignment="Right" Width="117"/>
-                <Border HorizontalAlignment="Right" BorderThickness="1 0 1 0" Margin="0,1,263,0" Width="4" Background="{DynamicResource ControlDefaultBorderBrush}" BorderBrush="{DynamicResource ControlDefaultBackground}"/>
-                <Border HorizontalAlignment="Left" BorderThickness="1 0 1 0" Margin="257,1,0,0" Width="4" Background="{DynamicResource ControlDefaultBorderBrush}" BorderBrush="{DynamicResource ControlDefaultBackground}"/>
             </Grid>
         </Grid>
     </Grid>
