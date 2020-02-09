@@ -7,10 +7,10 @@ namespace PSWRDMGR.Utilities
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //public void RaisePropertyChanged([CallerMemberName] string propName = null)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        //}
+        public void RaisePropertyChanged([CallerMemberName] string propName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
 
         /// <summary>
         /// Does the raisepropertychanged thingy, and also sets the private fields for you. much easier.

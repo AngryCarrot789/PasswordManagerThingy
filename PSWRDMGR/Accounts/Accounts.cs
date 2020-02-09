@@ -1,4 +1,5 @@
 ﻿using Ookii.Dialogs.Wpf;
+using PSWRDMGR.AccountStructures;
 using System;
 using System.Collections.Generic;
 using System.IO;

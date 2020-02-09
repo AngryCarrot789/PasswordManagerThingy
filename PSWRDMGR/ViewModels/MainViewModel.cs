@@ -1,4 +1,5 @@
-﻿using PSWRDMGR.Controls;
+﻿using PSWRDMGR.AccountStructures;
+using PSWRDMGR.Controls;
 using PSWRDMGR.Utilities;
 using PSWRDMGR.Views;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using static PSWRDMGR.Accounts.Accounts;
 
 namespace PSWRDMGR.ViewModels
@@ -24,10 +26,10 @@ namespace PSWRDMGR.ViewModels
         private bool autoSave;
         private string themeName;
         private bool darkThemeEnabled;
+        private bool contentPanelShowing;
+        private double contentPanelWidth;
         //Public Fields
-        public AccountInformationPresenter AccountPresenter { get; set; }
         public NewAccountWindow NewAccountWndow { get; set; }
-        public EditAccountWindow EditAccountWndow { get; set; }
         public ControlsWindow ControlsWndow { get; set; }
         public SearchResultsWindow SearchWindow { get; set; }
 
@@ -42,6 +44,8 @@ namespace PSWRDMGR.ViewModels
         //public double WindowWidth { get; set; }
         //public double WindowHeight { get; set; }
 
+        #region Public Fields
+
         public ObservableCollection<AccountListItem> AccountsList
         {
             get => list;
@@ -55,7 +59,7 @@ namespace PSWRDMGR.ViewModels
         public int SelectedIndex
         {
             get => selectedIndex;
-            set => RaisePropertyChanged(ref selectedIndex, value);
+            set { RaisePropertyChanged(ref selectedIndex, value); UpdateSelectedItem(); }
         }
         public bool EnableSaveAndLoad
         {
@@ -82,14 +86,42 @@ namespace PSWRDMGR.ViewModels
                 if (value) ThemeName = "Dark"; else ThemeName = "Light";
             }
         }
+        public bool ContentPanelShowing
+        {
+            get => contentPanelShowing;
+            set => RaisePropertyChanged(ref contentPanelShowing, value);
+        }
+        public double ContentPanelWidth
+        {
+            get => contentPanelWidth;
+            set => RaisePropertyChanged(ref contentPanelWidth, value);
+        }
+        private void UpdateSelectedItem()
+        {
+            if (SelectedAccountItem != null && SelectedAccountItem.DataContext != null)
+            {
+                SelectedAccountStructure = SelectedAccountItem.DataContext as AccountModel;
+            }
+        }
+
+        #endregion
 
         public AccountListItem SelectedAccountItem { get { try { return AccountsList[SelectedIndex]; } catch { return null; } } }
-        public AccountModel SelectedAccountStructure { get { try { return SelectedAccountItem.DataContext as AccountModel; } catch { return null; } } }
+
+        private AccountModel _selectedAccStr = new AccountModel();
+        public AccountModel SelectedAccountStructure
+        {
+            get => _selectedAccStr;
+            set => RaisePropertyChanged(ref _selectedAccStr, value);
+        }
+        //public AccountModel SelectedAccountStructure { get { try { return SelectedAccountItem.DataContext as AccountModel; } catch { return null; } } }
 
         public Action ScrollIntoView { get; set; }
         public Action<bool> SetThemeDark { get; set; }
+
         //Commands
-        public ICommand ShowContentCommand { get; set; }
+
+        #region ICommands
         public ICommand ShowAddAccountWindowCommand { get; set; }
         public ICommand ShowEditAccountWindowCommand { get; set; }
         public ICommand DeleteAccountCommand { get; set; }
@@ -99,14 +131,16 @@ namespace PSWRDMGR.ViewModels
         public ICommand SearchAccountCommand { get; set; }
         public ICommand MoveAccountPositionCommand { get; set; }
         public ICommand ShowHelpWindowCommand { get; set; }
+        public ICommand AutoShowContentPanelCommand { get; set; }
+        public ICommand CopyDetailsCommand { get; set; }
 
         public ICommand CreateCustomDirectoryCommand { get; set; }
-        public ICommand LoadCustomDirectoryCommand   { get; set; }
-        public ICommand SaveCustomDirectoryCommand   { get; set; }
+        public ICommand LoadCustomDirectoryCommand { get; set; }
+        public ICommand SaveCustomDirectoryCommand { get; set; }
+        #endregion
 
         private void SetupCommandBindings()
         {
-            ShowContentCommand = new Command(ShowAccountContent);
             ShowAddAccountWindowCommand = new Command(ShowAddAccountWindow);
             ShowEditAccountWindowCommand = new Command(ShowEditAccountWindow);
             DeleteAccountCommand = new Command(DeleteSelectedAccount);
@@ -116,6 +150,8 @@ namespace PSWRDMGR.ViewModels
             SearchAccountCommand = new Command(SearchAccount);
             MoveAccountPositionCommand = new CommandParam(MoveAccPos);
             ShowHelpWindowCommand = new Command(ShowHelpWindow);
+            AutoShowContentPanelCommand = new Command(SetContentPanelVisibility);
+            CopyDetailsCommand = new CommandParam(CopyDetailsToClipboard);
 
             CreateCustomDirectoryCommand = new Command(AccountFileCreator.CreateAccountsDirectoryAndFiles);
             LoadCustomDirectoryCommand = new Command(LoadCustomAccounts);
@@ -125,17 +161,18 @@ namespace PSWRDMGR.ViewModels
         public MainViewModel()
         {
             SetupCommandBindings();
-            AccountPresenter = new AccountInformationPresenter();
             NewAccountWndow = new NewAccountWindow();
-            EditAccountWndow = new EditAccountWindow();
             ControlsWndow = new ControlsWindow();
             SearchWindow = new SearchResultsWindow();
+            ContentPanelWidth = 0;
             AutosaveWhenClosing = true;
             DarkThemeEnabled = true;
 
             NewAccountWndow.AddAccountCallback = this.AddAccount;
 
             LoadAccounts();
+
+            UpdateSelectedItem();
         }
 
         public void SearchAccount()
@@ -144,14 +181,19 @@ namespace PSWRDMGR.ViewModels
             ShowSearchWindow();
             //SearchAccountText
             int index = 0;
-            foreach(AccountListItem accItem in AccountsList)
+            foreach (AccountListItem accItem in AccountsList)
             {
                 AccountModel account = accItem.DataContext as AccountModel;
                 if (!string.IsNullOrEmpty(SearchAccountText))
                 {
                     if (account.AccountName.ToLower().Contains(SearchAccountText.ToLower()))
                     {
-                        SearchWindow.AddAccount(accItem);
+                        AccountListItem ali = new AccountListItem();
+                        ali.DataContext = account;//AccountModel.Duplicate(account);
+                        ali.ShowContentCallback = this.ShowAccountContent;
+                        ali.EditContentCallback = this.ShowEditAccountWindow;
+
+                        SearchWindow.AddAccount(ali);
                         //SelectedIndex = index;
                         //ScrollIntoView?.Invoke();
                     }
@@ -178,7 +220,7 @@ namespace PSWRDMGR.ViewModels
                 if (KeysDown[KeyInt(Key.S)] && EnableSaveAndLoad) SaveAccounts();
                 if (KeysDown[KeyInt(Key.E)]) ShowEditAccountWindow();
                 if (KeysDown[KeyInt(Key.L)] && EnableSaveAndLoad) LoadAccounts();
-                if (KeysDown[KeyInt(Key.K)]) ShowAccountContent();
+                if (KeysDown[KeyInt(Key.K)]) ShowContentPanel();
             }
             else
             {
@@ -272,36 +314,21 @@ namespace PSWRDMGR.ViewModels
         {
             if (account != null)
             {
-                EditAccountWndow.DataContext = account;
-                EditAccountWndow.Show();
-                EditAccountWndow.Focus();
+                SelectedAccountStructure = account;
             }
         }
 
         public void ShowEditAccountWindow()
         {
-            if (SelectedAccountStructure != null)
-            {
-                EditAccountWndow.DataContext = SelectedAccountStructure;
-                EditAccountWndow.Show();
-                EditAccountWndow.Focus();
-            }
-        }
-
-        public void ShowAccountContent()
-        {
-            AccountPresenter.DataContext = SelectedAccountStructure;
-            AccountPresenter.Show();
-            AccountPresenter.Focus();
+            UpdateSelectedItem();
         }
 
         public void ShowAccountContent(AccountModel account)
         {
             if (account != null)
             {
-                AccountPresenter.DataContext = account;
-                AccountPresenter.Show();
-                AccountPresenter.Focus();
+                ShowContentPanel();
+                SelectedAccountStructure = account;
             }
         }
 
@@ -380,11 +407,53 @@ namespace PSWRDMGR.ViewModels
 
         public void CloseAllWindows()
         {
-            AccountPresenter.Close();
             NewAccountWndow.Close();
-            EditAccountWndow.Close();
             ControlsWndow.Close();
             SearchWindow.Close();
+        }
+
+        public void SetContentPanelVisibility()
+        {
+            if (ContentPanelShowing)
+            {
+                HideContentPanel();
+            }
+            else
+            {
+                ShowContentPanel();
+            }
+        }
+
+        public void ShowContentPanel()
+        {
+            //UpdateSelectedItem();
+            //GetWindowVariables();
+            ContentPanelWidth = 500;
+            ContentPanelShowing = true;
+        }
+
+        public void HideContentPanel()
+        {
+            ContentPanelWidth = 0;
+            ContentPanelShowing = false;
+        }
+
+        public void CopyDetailsToClipboard(object detailsIndex)
+        {
+            AccountModel currSelectedAcc = SelectedAccountStructure;
+            switch (int.Parse(detailsIndex.ToString()))
+            {
+                case 0: Clipboard.SetText(currSelectedAcc.AccountName); break;
+                case 1: Clipboard.SetText(currSelectedAcc.Email); break;
+                case 2: Clipboard.SetText(currSelectedAcc.Username); break;
+                case 3: Clipboard.SetText(currSelectedAcc.Password); break;
+                case 4: Clipboard.SetText(currSelectedAcc.DateOfBirth); break;
+                case 5: Clipboard.SetText(currSelectedAcc.ExtraInfo1); break;
+                case 6: Clipboard.SetText(currSelectedAcc.ExtraInfo2); break;
+                case 7: Clipboard.SetText(currSelectedAcc.ExtraInfo3); break;
+                case 8: Clipboard.SetText(currSelectedAcc.ExtraInfo4); break;
+                case 9: Clipboard.SetText(currSelectedAcc.ExtraInfo5); break;
+            }
         }
 
         //public double GetCentralisedWindowTop(double windowheight) => WindowTop + ((WindowHeight - windowheight) / 2);

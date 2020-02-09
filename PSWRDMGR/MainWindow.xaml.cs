@@ -40,13 +40,13 @@ namespace PSWRDMGR
             CurrentApp.SetTheme(theme);
         }
 
-        //public void SetViewModelVariables()
-        //{
-        //    ViewModel.WindowHeight = this.ActualHeight;
-        //    ViewModel.WindowWidth = this.ActualWidth;
-        //    ViewModel.WindowTop = this.Top;
-        //    ViewModel.WindowLeft= this.Left;
-        //}
+        public void SetViewModelVariables()
+        {
+            //ViewModel.WindowHeight = this.ActualHeight;
+            //ViewModel.WindowWidth = this.ActualWidth;
+            //ViewModel.WindowTop = this.Top;
+            //ViewModel.WindowLeft= this.Left;
+        }
 
         public void ScrollIntoViewThingy()
         {
@@ -107,7 +107,6 @@ namespace PSWRDMGR
             }
 
             Properties.Settings.Default.IsDarkTheme = ViewModel.DarkThemeEnabled;
-
             Properties.Settings.Default.Save();
         }
 

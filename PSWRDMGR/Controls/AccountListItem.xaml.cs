@@ -1,4 +1,5 @@
-﻿using PSWRDMGR.Utilities;
+﻿using PSWRDMGR.AccountStructures;
+using PSWRDMGR.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
