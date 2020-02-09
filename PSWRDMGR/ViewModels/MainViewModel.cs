@@ -443,11 +443,11 @@ namespace PSWRDMGR.ViewModels
             AccountModel currSelectedAcc = SelectedAccountStructure;
             switch (int.Parse(detailsIndex.ToString()))
             {
-                case 0: Clipboard.SetText(currSelectedAcc.AccountName); break;
-                case 1: Clipboard.SetText(currSelectedAcc.Email); break;
-                case 2: Clipboard.SetText(currSelectedAcc.Username); break;
-                case 3: Clipboard.SetText(currSelectedAcc.Password); break;
-                case 4: Clipboard.SetText(currSelectedAcc.DateOfBirth); break;
+                case 0: Clipboard.SetText(currSelectedAcc.Email); break;
+                case 1: Clipboard.SetText(currSelectedAcc.Username); break;
+                case 2: Clipboard.SetText(currSelectedAcc.Password); break;
+                case 3: Clipboard.SetText(currSelectedAcc.DateOfBirth); break;
+                case 4: Clipboard.SetText(currSelectedAcc.SecurityInfo); break;
                 case 5: Clipboard.SetText(currSelectedAcc.ExtraInfo1); break;
                 case 6: Clipboard.SetText(currSelectedAcc.ExtraInfo2); break;
                 case 7: Clipboard.SetText(currSelectedAcc.ExtraInfo3); break;
