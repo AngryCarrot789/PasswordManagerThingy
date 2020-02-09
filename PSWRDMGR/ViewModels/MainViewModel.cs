@@ -251,6 +251,7 @@ namespace PSWRDMGR.ViewModels
             AccountListItem ali = new AccountListItem();
             ali.DataContext = accountContent;
             ali.ShowContentCallback = this.ShowAccountContent;
+            ali.EditContentCallback = this.ShowEditAccountWindow;
 
             AccountsList.Add(ali);
             NewAccountWndow.ResetAccountContext();
@@ -265,6 +266,16 @@ namespace PSWRDMGR.ViewModels
         {
             NewAccountWndow.Show();
             NewAccountWndow.Focus();
+        }
+
+        public void ShowEditAccountWindow(AccountModel account)
+        {
+            if (account != null)
+            {
+                EditAccountWndow.DataContext = account;
+                EditAccountWndow.Show();
+                EditAccountWndow.Focus();
+            }
         }
 
         public void ShowEditAccountWindow()

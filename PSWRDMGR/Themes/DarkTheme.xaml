@@ -569,7 +569,7 @@
         </Setter>
     </Style>
 
-    <!-- Buttons -->
+    <!-- Buttons Style -->
     <Style TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource ControlDefaultBackground}"/>

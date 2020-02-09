@@ -22,6 +22,7 @@ namespace PSWRDMGR.Controls
     public partial class AccountListItem : UserControl
     {
         public Action<AccountModel> ShowContentCallback { get; set; }
+        public Action<AccountModel> EditContentCallback { get; set; }
         public Action FocusCallback { get; set; }
         private AccountModel AccountContext { get => this.DataContext as AccountModel; }
         public AccountListItem()
@@ -38,6 +39,7 @@ namespace PSWRDMGR.Controls
                     case 1: Clipboard.SetText(AccountContext.Username); break;
                     case 2: Clipboard.SetText(AccountContext.Password); break;
                     case 3: Clipboard.SetText(AccountContext.Email); break;
+                    case 4: EditContentCallback?.Invoke(AccountContext); break;
                 }
             }
             catch(Exception ed) { MessageBox.Show($"Failed to copy information to clipboard. Error: {ed.Message}", "Err Clipboard Set"); }

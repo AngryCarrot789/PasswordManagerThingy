@@ -9,6 +9,8 @@
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
+                <MenuItem Uid="4" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Edit Account"/>
+                <Separator/>
                 <MenuItem Uid="3" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Email"/>
                 <MenuItem Uid="2" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Password"/>
                 <MenuItem Uid="1" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Username"/>
