@@ -100,7 +100,7 @@
                     <Grid Margin="0,0,0,65">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="500*"/>
-                            <ColumnDefinition Width="{Binding ContentPanelWidth, UpdateSourceTrigger=PropertyChanged}"/>
+                            <ColumnDefinition Width="500" x:Name="ContentPanelDefinition"/>
                         </Grid.ColumnDefinitions>
                         <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
                          x:Name="lBox"

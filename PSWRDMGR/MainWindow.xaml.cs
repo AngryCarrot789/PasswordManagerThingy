@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -30,6 +31,10 @@ namespace PSWRDMGR
             CurrentApp = currAp;
             InitializeComponent();
             ViewModel.ScrollIntoView = ScrollIntoViewThingy;
+            ViewModel.ShowContentPanel = this.ShowContentPanel;
+            ViewModel.HideContentPanel = this.HideContentPanel;
+
+            HideContentPanel();
 
             LoadSettings();
             //ViewModel.GetWindowVariables = SetViewModelVariables;
@@ -62,6 +67,40 @@ namespace PSWRDMGR
         {
             ViewModel.KeyDown(e.Key, false);
 
+        }
+
+        public void AnimateContentPanelWidth(double oldWidth, double newWidth)
+        {
+            Storyboard storyboard = new Storyboard();
+            
+            Duration duration = new Duration(TimeSpan.FromMilliseconds(200));
+            CubicEase ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+            
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.EasingFunction = ease;
+            animation.Duration = duration;
+            storyboard.Children.Add(animation);
+            animation.From = oldWidth;
+            animation.To = newWidth;
+            Storyboard.SetTarget(animation, ContentPanelDefinition);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(ColumnDefinition.MaxWidth)"));
+            
+            storyboard.Begin();
+            //
+            //MessageBox.Show($"{oldWidth}, {newWidth}");
+
+            //DoubleAnimation da = new DoubleAnimation(oldWidth, newWidth, TimeSpan.FromMilliseconds(250));
+            //ContentPanelDefinition.BeginAnimation(WidthProperty, da);
+        }
+
+        public void ShowContentPanel()
+        {
+            AnimateContentPanelWidth(0, 500);
+        }
+
+        public void HideContentPanel()
+        {
+            AnimateContentPanelWidth(500, 0);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

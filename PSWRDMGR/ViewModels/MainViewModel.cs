@@ -27,7 +27,6 @@ namespace PSWRDMGR.ViewModels
         private string themeName;
         private bool darkThemeEnabled;
         private bool contentPanelShowing;
-        private double contentPanelWidth;
         //Public Fields
         public NewAccountWindow NewAccountWndow { get; set; }
         public ControlsWindow ControlsWndow { get; set; }
@@ -91,11 +90,6 @@ namespace PSWRDMGR.ViewModels
             get => contentPanelShowing;
             set => RaisePropertyChanged(ref contentPanelShowing, value);
         }
-        public double ContentPanelWidth
-        {
-            get => contentPanelWidth;
-            set => RaisePropertyChanged(ref contentPanelWidth, value);
-        }
         private void UpdateSelectedItem()
         {
             if (SelectedAccountItem != null && SelectedAccountItem.DataContext != null)
@@ -115,6 +109,9 @@ namespace PSWRDMGR.ViewModels
             set => RaisePropertyChanged(ref _selectedAccStr, value);
         }
         //public AccountModel SelectedAccountStructure { get { try { return SelectedAccountItem.DataContext as AccountModel; } catch { return null; } } }
+
+        public Action ShowContentPanel { get; set; }
+        public Action HideContentPanel { get; set; }
 
         public Action ScrollIntoView { get; set; }
         public Action<bool> SetThemeDark { get; set; }
@@ -164,7 +161,6 @@ namespace PSWRDMGR.ViewModels
             NewAccountWndow = new NewAccountWindow();
             ControlsWndow = new ControlsWindow();
             SearchWindow = new SearchResultsWindow();
-            ContentPanelWidth = 0;
             AutosaveWhenClosing = true;
             DarkThemeEnabled = true;
 
@@ -327,7 +323,7 @@ namespace PSWRDMGR.ViewModels
         {
             if (account != null)
             {
-                ShowContentPanel();
+                if(!ContentPanelShowing) ShowContentPanelFunc();
                 SelectedAccountStructure = account;
             }
         }
@@ -416,25 +412,23 @@ namespace PSWRDMGR.ViewModels
         {
             if (ContentPanelShowing)
             {
-                HideContentPanel();
+                HideContentPanelFunc();
             }
             else
             {
-                ShowContentPanel();
+                ShowContentPanelFunc();
             }
         }
 
-        public void ShowContentPanel()
+        public void ShowContentPanelFunc()
         {
-            //UpdateSelectedItem();
-            //GetWindowVariables();
-            ContentPanelWidth = 500;
+            ShowContentPanel?.Invoke();
             ContentPanelShowing = true;
         }
 
-        public void HideContentPanel()
+        public void HideContentPanelFunc()
         {
-            ContentPanelWidth = 0;
+            HideContentPanel?.Invoke();
             ContentPanelShowing = false;
         }
 
