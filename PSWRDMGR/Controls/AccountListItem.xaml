@@ -17,13 +17,13 @@
             </ContextMenu>
         </Grid.ContextMenu>
         <Label Content="{Binding AccountName}" 
-               Margin="7,2,242,0" 
+               Margin="7,2,280,0" 
                VerticalAlignment="Top" FontSize="20"/>
         <Label Content="{Binding Email}" 
-               Margin="7,37,242,0" 
+               Margin="7,37,280,0" 
                VerticalAlignment="Top" FontSize="15"/>
-        <Grid HorizontalAlignment="Right" Width="242">
-            <Grid Margin="5,5,112,5">
+        <Grid HorizontalAlignment="Right" Width="280">
+            <Grid Margin="130,3,2,3">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -31,7 +31,7 @@
                 <Button Uid="1" Margin="0,0,0,1" Content="Copy Username" FontSize="16" Click="Button_Click"/>
                 <Button Uid="2" Content="Copy Password" FontSize="16" Click="Button_Click" Grid.Row="1" Margin="0,1,0,0"/>
             </Grid>
-            <Button Uid="3" Content="Copy Email"    Margin="0,5,5,5" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="105" />
+            <Button Uid="3" Content="Copy Email"    Margin="0,3,152,3" FontSize="16" Click="Button_Click" HorizontalAlignment="Right" Width="123" />
         </Grid>
     </Grid>
 </UserControl>
