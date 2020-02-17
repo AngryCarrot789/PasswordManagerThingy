@@ -88,16 +88,17 @@
                                 <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,9,4"/>
                             </Grid>
                         </Button>
-                        <Expander ExpandDirection="Up" Header="Extra Tools" Height="125" Margin="10,-100,10,0" VerticalAlignment="Top">
-                            <Grid>
-                                <Grid.BitmapEffect>
-                                    <DropShadowBitmapEffect ShadowDepth="3" Softness="0.36"/>
-                                </Grid.BitmapEffect>
-                                <Border Background="{DynamicResource ControlDarkerBackground}" BorderThickness="1" BorderBrush="{DynamicResource ControlDarkerBorderBrush}"/>
-                                <CheckBox Content="Enable Load, Save and Backup" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="10,0,0,10"/>
-                                <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="10,0,0,34"/>
-                                <CheckBox Content="{Binding ThemeName}" IsChecked="{Binding DarkThemeEnabled, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="24" FontSize="14" Margin="10,10,0,0"/>
-                            </Grid>
+                        <Expander x:Name="expander" ExpandDirection="Down" Header="Extra Tools" Margin="10,2,10,0" VerticalAlignment="Top">
+                            <Popup PlacementTarget="{Binding ElementName=expander}" 
+                                   Placement="Bottom"
+                                   IsOpen="{Binding IsExpanded, ElementName=expander}">
+                                <Grid Height="100" Width="230">
+                                    <Border Background="{DynamicResource ControlDarkerBackground}" BorderThickness="1" BorderBrush="{DynamicResource ControlDarkerBorderBrush}"/>
+                                    <CheckBox Content="Enable Load, Save and Backup" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="10,0,0,10"/>
+                                    <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="10,0,0,34"/>
+                                    <CheckBox Content="{Binding ThemeName}" IsChecked="{Binding DarkThemeEnabled, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="24" FontSize="14" Margin="10,10,0,0"/>
+                                </Grid>
+                            </Popup>
                         </Expander>
                     </Grid>
                 </Grid>
