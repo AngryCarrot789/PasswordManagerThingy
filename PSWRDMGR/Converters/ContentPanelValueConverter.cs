@@ -14,11 +14,11 @@ namespace PSWRDMGR.Converters
         {
             if ((bool)value)
             {
-                return "Hide";
+                return "Hide Account Information";
             }
             else
             {
-                return "Show";
+                return "Show Account Information";
             }
         }
 

@@ -9,7 +9,7 @@
     <SolidColorBrush x:Key="ControlDarkerBackground"  Color="#FFC8C8C8" />
     <SolidColorBrush x:Key="ControlDarkerBorderBrush" Color="#FF646464" />
 
-    <SolidColorBrush x:Key="ControlDefaultBackground"  Color="#FFE0E0E0" />
+    <SolidColorBrush x:Key="ControlDefaultBackground"  Color="#ff212121" />
     <SolidColorBrush x:Key="ControlDefaultBorderBrush" Color="#FF848484" />
     <SolidColorBrush x:Key="ControlDefaultForeground"  Color="#FF050505" />
 
