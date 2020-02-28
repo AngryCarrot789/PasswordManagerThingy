@@ -211,5 +211,10 @@
     <Resource Include="Resources\maximizeRestoreWindow.png" />
     <Resource Include="Resources\minimizeWindow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\closeWindowBlack.png" />
+    <Resource Include="Resources\maximizeRestoreWindowBlack.png" />
+    <Resource Include="Resources\minimizeWindowBlack.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
