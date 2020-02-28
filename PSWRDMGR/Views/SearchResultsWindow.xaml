@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels" ResizeMode="NoResize"
-        mc:Ignorable="d"  Closing="Window_Closing" KeyDown="Window_KeyDown"
-        Title="Search Results" Height="500" Width="800" Background="{DynamicResource BackgroundColour}">
+        mc:Ignorable="d"  Closing="Window_Closing" KeyDown="Window_KeyDown" 
+        Title="Search Results" Height="500" Width="800">
     <Window.DataContext>
         <viewmodels:SearchViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Grid Background="{DynamicResource ContainerBackground}">
         <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" 
                  SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Stretch" 
                  HorizontalContentAlignment="Stretch"
-                 FontFamily="Segoe UI Light" Margin="0,0,0,60"/>
-        <Button Content="Clear &amp; Close" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="40" Click="Button_Click"/>
+                 FontFamily="Segoe UI Light" Margin="10,10,10,65"/>
+        <Button Content="Clear &amp; Close" VerticalAlignment="Bottom" Height="45" Click="Button_Click" FontSize="16" Margin="10,0,10,10"/>
     </Grid>
 </Window>
