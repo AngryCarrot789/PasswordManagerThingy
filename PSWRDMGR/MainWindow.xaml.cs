@@ -162,5 +162,35 @@ namespace PSWRDMGR
                 WindowState = WindowState.Maximized;
             }
         }
+
+        public void CloseWindow()
+        {
+            //WindowStyle = WindowStyle.SingleBorderWindow;
+            this.Close();
+        }
+
+        public void MaximizeRestore()
+        {
+            //WindowChrome chrome = WindowChrome.GetWindowChrome(this);
+            //chrome.ResizeBorderThickness = new Thickness(10, 10, 10, 10);
+            if (this.WindowState == WindowState.Maximized)
+            {
+                //WindowStyle = WindowStyle.SingleBorderWindow;
+                WindowState = WindowState.Normal;
+                //WindowStyle = WindowStyle.None;
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                //WindowStyle = WindowStyle.SingleBorderWindow;
+                WindowState = WindowState.Maximized;
+                //WindowStyle = WindowStyle.None;
+            }
+        }
+
+        public void Minimize()
+        {
+            //WindowStyle = WindowStyle.SingleBorderWindow;
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

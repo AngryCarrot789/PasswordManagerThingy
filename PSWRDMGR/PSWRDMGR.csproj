@@ -124,8 +124,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\LightTheme.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ControlsWindow.xaml">
       <SubType>Designer</SubType>
@@ -206,6 +206,10 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\closeWindow.png" />
+    <Resource Include="Resources\maximizeRestoreWindow.png" />
+    <Resource Include="Resources\minimizeWindow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,6 +3,9 @@
                     xmlns:local="clr-namespace:PSWRDMGR.Themes"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <SolidColorBrush x:Key="BackgroundColour"  Color="#FF171717" />
+    <SolidColorBrush x:Key="WindowBorderColour"  Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="WindowTitleColour"  Color="#FF1B1B1B" />
+
     <SolidColorBrush x:Key="ContainerBackground" Color="#FF1B1B1B"/>
     <SolidColorBrush x:Key="ContainerBorder" Color="#FF1E1E1E"/>
 
@@ -111,7 +114,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!--  List Box  -->
 
     <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
@@ -159,7 +162,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type ListBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Padding" Value="4,1"/>
@@ -263,7 +266,7 @@
     </ControlTemplate>
     <SolidColorBrush x:Key="SliderThumb.Track.Border" Color="#FFD6D6D6"/>
     <SolidColorBrush x:Key="SliderThumb.Track.Background" Color="Red"/>
-    
+
     <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="Background" Value="{StaticResource ControlDefaultBackground}"/>
@@ -311,7 +314,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
     <ControlTemplate x:Key="SliderHorizontal" TargetType="{x:Type Slider}">
         <Border x:Name="border" SnapsToDevicePixels="True">
             <Grid>
@@ -496,7 +499,7 @@
     </Style>
 
     <!--  Checkbox  -->
-    
+
     <Style TargetType="{x:Type CheckBox}">
         <Setter Property="MinHeight" Value="24"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
@@ -623,6 +626,45 @@
         </Setter>
     </Style>
 
+    <ControlTemplate x:Key="CloseWindowButton" TargetType="{x:Type Button}">
+        <Border x:Name="border" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    Background="{TemplateBinding Background}" 
+                                    SnapsToDevicePixels="true"
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch">
+            <!-- <Border.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0.7" ShadowDepth="4" Opacity="0.5" />
+                        </Border.BitmapEffect>-->
+            <ContentPresenter x:Name="contentPresenter" 
+                                                  Focusable="False" 
+                                                  Margin="{TemplateBinding Padding}" 
+                                                  RecognizesAccessKey="True" 
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDefaulted" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlMouseOverBorderBrush}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" TargetName="border" Value="#e81123"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#e81123"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background" TargetName="border" Value="DarkRed"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="DarkRed"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" TargetName="border" Value="{StaticResource ControlBrightDefaultBackground}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlBrightDefaultBorderBrush}"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ControlDisabledGlythColour}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <!-- Tooltip -->
 
     <Style TargetType="{x:Type ToolTip}">
@@ -632,7 +674,7 @@
     </Style>
 
     <!-- Textbox -->
-    
+
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource  ContainerBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ControlDefaultBorderBrush}"/>
@@ -649,7 +691,7 @@
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" 
                             BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        <ScrollViewer Template="{DynamicResource MainScrollViewerTemplate}" x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
@@ -1549,7 +1591,7 @@
     </Style>
 
     <!-- ScrollViewer -->
-    
+
     <ControlTemplate x:Key="MainScrollViewerTemplate" TargetType="{x:Type ScrollViewer}">
         <Grid x:Name="Grid" Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
@@ -1566,9 +1608,9 @@
             <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
         </Grid>
     </ControlTemplate>
-    
+
     <!-- Separator -->
-    
+
     <Style TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{StaticResource ControlBrightDefaultBackground}"/>
         <Setter Property="Margin" Value="0,2,0,2"/>
@@ -1581,7 +1623,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-        <Style x:Key="SeparatorStyle1" TargetType="{x:Type Separator}">
+    <Style x:Key="SeparatorStyle1" TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{StaticResource ControlBrightDefaultBorderBrush}"/>
         <Setter Property="Margin" Value="0,2,0,2"/>
         <Setter Property="Focusable" Value="false"/>
@@ -1593,9 +1635,9 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- Menu -->
-    
+
     <Style TargetType="{x:Type Menu}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
@@ -1711,7 +1753,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- DropDownMenu MenuItem -->
 
     <ControlTemplate x:Key="DropDownMenuItemTemplate" TargetType="{x:Type MenuItem}">
@@ -1826,9 +1868,11 @@
     </ControlTemplate>
 
     <!-- WindowTemplates -->
-    
+
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Window}">
-        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}" 
+                Background="{TemplateBinding Background}">
             <Grid>
                 <AdornerDecorator>
                     <ContentPresenter/>
@@ -1866,9 +1910,90 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
+    <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="BorderBrush" Value="{StaticResource ContainerBackground}" />
+        <Setter Property="Background" Value="{StaticResource BackgroundColour}" />
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CornerRadius="5" 
+                              CaptionHeight="39"
+                              ResizeBorderThickness="5"
+                              GlassFrameThickness="2"/>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="12,42,12,13">
+                            <AdornerDecorator>
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Border>
+
+                        <Grid Height="32"
+                              Background="{StaticResource WindowTitleColour}"
+                            VerticalAlignment="Top" Margin="7,7,7,0">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="20" Margin="6" Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon}"  />
+                            <TextBlock Margin="5,0,0,0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="16"
+                                       Foreground="{DynamicResource ControlDefaultForeground}"
+                                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}"   
+                                       Grid.Column="1"/>
+
+
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Column="2">
+                                <Button x:Name="btnMinimize"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Width="50"
+                                        VerticalContentAlignment="Bottom"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" Command="{Binding MinimizeWindowCommand}">
+                                    <Image Source="/Resources/minimizeWindow.png" Margin="7"/>
+                                </Button>
+
+                                <Button x:Name="btnRestore"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Width="50"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" Command="{Binding MaximizeRestoreCommand}">
+                                    <Image Source="/Resources/maximizeRestoreWindow.png" Margin="7"/>
+                                </Button>
+                                <Button x:Name="btnClose"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Template="{DynamicResource CloseWindowButton}"
+                                        Width="50"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" Command="{Binding CloseWindowCommand}">
+                                    <Image Source="/Resources/closeWindow.png" Margin="7"/>
+                                </Button>
+
+                            </StackPanel>
+                        </Grid>
+
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- GridSplitter -->
-    
+
     <Style x:Key="GridSplitterPreviewStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -1884,7 +2009,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridSplitter}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"/>
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -2069,9 +2196,9 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- Expander -->
-    
+
     <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Foreground" Value="{DynamicResource ControlDefaultForeground}"/>
         <Setter Property="Template">
@@ -2327,9 +2454,9 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- ProgressBar -->
-    
+
     <Style TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="{StaticResource ControlPrimarySpecialColour}"/>
         <Setter Property="Background" Value="{StaticResource ControlDefaultBackground}"/>
@@ -2390,9 +2517,9 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- ComboBox -->
-    
+
     <Style x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="IsTabStop" Value="false"/>
@@ -2576,7 +2703,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <ControlTemplate x:Key="ComboBoxEditableTemplate" TargetType="{x:Type ComboBox}">
         <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
             <Grid.ColumnDefinitions>
@@ -2642,7 +2769,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
     <!-- MainComboBoxStyle -->
 
     <Style TargetType="{x:Type ComboBox}">
@@ -2746,5 +2873,18 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+    <Style x:Key="VerticalSeparator" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{StaticResource ControlBrightDefaultBackground}"/>
+        <Setter Property="Width" Value="2"/>
+        <Setter Property="Margin" Value="2,0,2,0"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Height="Auto" SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

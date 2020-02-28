@@ -134,6 +134,10 @@ namespace PSWRDMGR.ViewModels
         public ICommand CreateCustomDirectoryCommand { get; set; }
         public ICommand LoadCustomDirectoryCommand { get; set; }
         public ICommand SaveCustomDirectoryCommand { get; set; }
+
+        public ICommand CloseWindowCommand { get; set; }
+        public ICommand MaximizeRestoreCommand { get; set; }
+        public ICommand MinimizeWindowCommand { get; set; }
         #endregion
 
         private void SetupCommandBindings()
@@ -153,7 +157,15 @@ namespace PSWRDMGR.ViewModels
             CreateCustomDirectoryCommand = new Command(AccountFileCreator.CreateAccountsDirectoryAndFiles);
             LoadCustomDirectoryCommand = new Command(LoadCustomAccounts);
             SaveCustomDirectoryCommand = new Command(SaveCustomAccounts);
+
+            CloseWindowCommand = new Command(CloseWindow);
+            MaximizeRestoreCommand = new Command(MaximRestre);
+            MinimizeWindowCommand = new Command(MinimWindow);
         }
+
+        private void CloseWindow() { (Application.Current.MainWindow as MainWindow).CloseWindow(); }
+        private void MaximRestre() { (Application.Current.MainWindow as MainWindow).MaximizeRestore(); }
+        private void MinimWindow() { (Application.Current.MainWindow as MainWindow).Minimize(); }
 
         public MainViewModel()
         {
