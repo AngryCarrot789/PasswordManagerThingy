@@ -328,6 +328,7 @@ namespace PSWRDMGR.ViewModels
 
         public void ShowEditAccountWindow()
         {
+            ShowAccountContent(SelectedAccountStructure);
             UpdateSelectedItem();
         }
 

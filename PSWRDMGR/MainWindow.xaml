@@ -26,39 +26,39 @@
             </Grid>
             <Grid Margin="0,60,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="235" MinWidth="0" MaxWidth="400"/>
-                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="230" MinWidth="0" MaxWidth="400"/>
+                    <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
                 <Grid>
                     <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1"/>
                     <Border Background="{DynamicResource ContainerBackground}"/>
                     <Grid>
-                        <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,0,8,0" Height="70" FontFamily="Segoe UI">
+                        <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="70" FontFamily="Segoe UI">
                             <Grid Width="172">
                                 <Image Source="Resources/Images/plus-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                                 <TextBlock Text="Add Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                             </Grid>
                         </Button>
-                        <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,75,8,0" Height="70" FontFamily="Segoe UI">
+                        <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,75,0,0" Height="70" FontFamily="Segoe UI">
                             <Grid Width="172">
                                 <Image Source="Resources/Images/edit-11-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                                 <TextBlock Text="Edit Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,10,4"/>
                             </Grid>
                         </Button>
-                        <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,150,8,0" Height="70" FontFamily="Segoe UI">
+                        <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,150,0,0" Height="70" FontFamily="Segoe UI">
                             <Grid Width="172">
                                 <Image Source="Resources/Images/delete-2-64.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                                 <TextBlock TextWrapping="Wrap" Text="Delete Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                             </Grid>
                         </Button>
-                        <Button Command="{Binding AutoShowContentPanelCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,225,8,0" Height="70" FontFamily="Segoe UI">
+                        <Button Command="{Binding AutoShowContentPanelCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,225,0,0" Height="70" FontFamily="Segoe UI">
                             <Grid Width="172">
                                 <Image Source="Resources/Images/product-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                                 <TextBlock Text="{Binding ContentPanelShowing, Converter={StaticResource ContentPanelConverter}}" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,10,5" TextAlignment="Center" Width="130"/>
                             </Grid>
                         </Button>
-                        <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="0,321,8,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Press enter to search for an account">
+                        <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="0,321,0,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Press enter to search for an account">
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Enter" Command="{Binding SearchAccountCommand}"/>
                             </TextBox.InputBindings>
@@ -67,25 +67,25 @@
                     </Grid>
                     <Grid Height="204" VerticalAlignment="Bottom">
                         <Border Background="{DynamicResource ContainerBackground}"/>
-                        <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,8,0" Height="56" FontFamily="Segoe UI">
+                        <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="56" FontFamily="Segoe UI">
                             <Grid Width="160">
                                 <Image Source="Resources/Images/save-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                                 <TextBlock Text="Save Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                             </Grid>
                         </Button>
-                        <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,8,61" Height="56" FontFamily="Segoe UI">
+                        <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,0,61" Height="56" FontFamily="Segoe UI">
                             <Grid Width="160">
                                 <Image Source="Resources/Images/download-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                                 <TextBlock Text="Load Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                             </Grid>
                         </Button>
-                        <Button Command="{Binding BackupAccountsCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,8,122" Height="56" FontFamily="Segoe UI">
+                        <Button Command="{Binding BackupAccountsCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,0,122" Height="56" FontFamily="Segoe UI">
                             <Grid Width="160">
                                 <Image Source="Resources/Images/data-transfer-upload-128.ico" Height="32" Width="32" HorizontalAlignment="Left"/>
                                 <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,9,4"/>
                             </Grid>
                         </Button>
-                        <Expander x:Name="expander" ExpandDirection="Down" Header="Extra Tools" Margin="0,0,8,0" VerticalAlignment="Top">
+                        <Expander x:Name="expander" ExpandDirection="Down" Header="Extra Tools" VerticalAlignment="Top">
                             <Popup PlacementTarget="{Binding ElementName=expander}" 
                                    Placement="Bottom"
                                    IsOpen="{Binding IsExpanded, ElementName=expander}">
