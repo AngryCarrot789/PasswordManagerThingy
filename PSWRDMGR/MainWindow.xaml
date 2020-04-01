@@ -15,7 +15,7 @@
         Icon="Resources/Images/padlockIcon.ico" 
         Height="720" Width="1280" 
         Style="{DynamicResource CustomWindowStyle}" 
-        Background="{DynamicResource ContainerBackground}">
+        Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ControlBrightDefaultBackground}">
     <Window.DataContext>
         <viewmodels:MainViewModel/>
     </Window.DataContext>
