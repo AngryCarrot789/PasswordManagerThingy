@@ -5,16 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR" Closing="Window_Closing"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
-        xmlns:converters="clr-namespace:PSWRDMGR.Converters" ResizeMode="CanResizeWithGrip"
-        mc:Ignorable="d" BorderThickness="0" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"  WindowStyle="SingleBorderWindow"
-        Title="Password/Account Manager" Icon="lock-unlocked-128.ico" Height="720" Width="1280" Style="{DynamicResource CustomWindowStyle}">
+        xmlns:converters="clr-namespace:PSWRDMGR.Converters" 
+        ResizeMode="CanResizeWithGrip"
+        mc:Ignorable="d"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"  
+        WindowStyle="SingleBorderWindow"
+        Title="Password/Account Manager" 
+        Icon="Resources/Images/padlockIcon.ico" 
+        Height="720" Width="1280" 
+        Style="{DynamicResource CustomWindowStyle}" 
+        Background="{DynamicResource ContainerBackground}">
     <Window.DataContext>
         <viewmodels:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <converters:ContentPanelValueConverter x:Key="ContentPanelConverter"/>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="5">
         <Grid>
             <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
                 <Grid>
@@ -114,7 +122,7 @@
                          BorderThickness="1 1 0 1"
                          Grid.Row="0"
                          SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
-                         BorderBrush="{DynamicResource ControlDefaultBorderBrush}"/>
+                         BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Background="{DynamicResource BackgroundColour}"/>
                         <Grid Grid.Column="1">
                             <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 0 0 0" Background="{DynamicResource ContainerBackground}"/>
                             <Label Content="Email" HorizontalAlignment="Left"         Margin="5,52,0,0" VerticalAlignment="Top" FontSize="20"/>

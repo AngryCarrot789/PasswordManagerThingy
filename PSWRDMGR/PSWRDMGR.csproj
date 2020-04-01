@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>lock-unlocked-128.ico</ApplicationIcon>
+    <ApplicationIcon>padlockIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'n|AnyCPU'">
     <OutputPath>bin\n\</OutputPath>
@@ -183,12 +183,6 @@
     <Resource Include="Resources\Images\download-128.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\lock-unlocked-128.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="lock-unlocked-128.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\data-transfer-upload-128.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +209,12 @@
     <Resource Include="Resources\closeWindowBlack.png" />
     <Resource Include="Resources\maximizeRestoreWindowBlack.png" />
     <Resource Include="Resources\minimizeWindowBlack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\padlockIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="padlockIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
