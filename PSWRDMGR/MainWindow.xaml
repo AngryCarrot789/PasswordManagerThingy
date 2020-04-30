@@ -10,19 +10,16 @@
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
         KeyUp="Window_KeyUp"  
-        WindowStyle="SingleBorderWindow"
         Title="Password/Account Manager" 
         Icon="Resources/Images/padlockIcon.ico" 
         Height="720" Width="1280" 
         Style="{DynamicResource CustomWindowStyle}" 
-        Background="{DynamicResource ContainerBackground}" BorderBrush="{DynamicResource ControlBrightDefaultBackground}">
-    <Window.DataContext>
-        <viewmodels:MainViewModel/>
-    </Window.DataContext>
+        Background="{DynamicResource ContainerBackground}" 
+        BorderBrush="{DynamicResource ControlBrightDefaultBackground}">
     <Window.Resources>
         <converters:ContentPanelValueConverter x:Key="ContentPanelConverter"/>
     </Window.Resources>
-    <Grid Margin="5">
+    <Grid Margin="10">
         <Grid>
             <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Top">
                 <Grid>
@@ -96,7 +93,7 @@
                         <Expander x:Name="expander" ExpandDirection="Down" Header="Extra Tools" VerticalAlignment="Top">
                             <Popup PlacementTarget="{Binding ElementName=expander}" 
                                    Placement="Bottom"
-                                   IsOpen="{Binding IsExpanded, ElementName=expander}">
+                                   IsOpen="{Binding IsExpanded, ElementName=expander}" PopupAnimation="Scroll" StaysOpen="False">
                                 <Grid Height="100" Width="230">
                                     <Border Background="{DynamicResource ControlDarkerBackground}" BorderThickness="1" BorderBrush="{DynamicResource ControlDarkerBorderBrush}"/>
                                     <CheckBox Content="Enable Load, Save and Backup" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="10,0,0,10"/>
@@ -111,20 +108,9 @@
                 <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource ContainerBackground}"/>
 
                 <Grid Grid.Column="2" Margin="0,0,0,0">
-                    <Grid Margin="0,0,0,60">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="500*"/>
-                            <ColumnDefinition Width="500" x:Name="ContentPanelDefinition"/>
-                        </Grid.ColumnDefinitions>
-                        <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
-                         x:Name="lBox"
-                         HorizontalContentAlignment="Stretch"
-                         BorderThickness="1 1 0 1"
-                         Grid.Row="0"
-                         SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
-                         BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Background="{DynamicResource BackgroundColour}"/>
-                        <Grid Grid.Column="1">
-                            <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="1 0 0 0" Background="{DynamicResource ContainerBackground}"/>
+                    <DockPanel Margin="0,0,0,60">
+                        <Grid x:Name="AccountPanel" Width="0" DockPanel.Dock="Right">
+                            <Border Background="{DynamicResource ContainerBackground}"/>
                             <Label Content="Email" HorizontalAlignment="Left"         Margin="5,52,0,0" VerticalAlignment="Top" FontSize="20"/>
                             <Label Content="Username" HorizontalAlignment="Left"      Margin="5,94,0,0" VerticalAlignment="Top" FontSize="20"/>
                             <Label Content="Password" HorizontalAlignment="Left"      Margin="5,136,0,0" VerticalAlignment="Top" FontSize="20"/>
@@ -136,7 +122,7 @@
                             <Label Content="Extra Info 4" HorizontalAlignment="Left"  Margin="5,0,0,52" VerticalAlignment="Bottom" FontSize="20"/>
                             <Label Content="Extra Info 5" HorizontalAlignment="Left"  Margin="5,0,0,10" VerticalAlignment="Bottom" FontSize="20"/>
                             <Grid DataContext="{Binding SelectedAccountStructure, UpdateSourceTrigger=PropertyChanged}">
-                                <Border VerticalAlignment="Top" Height="47" Background="{DynamicResource ContainerBackground}" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource ControlDefaultBorderBrush}">
+                                <Border VerticalAlignment="Top" Height="47" Background="{DynamicResource ContainerBackground}">
                                     <TextBox Text="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Padding="3"/>
                                 </Border>
                                 <TextBox Text="{Binding Email,        UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Email,        UpdateSourceTrigger=PropertyChanged}" ToolTipService.Placement="MousePoint" Height="37" Margin="154,52,68,0"  VerticalAlignment="Top" FontSize="20" Padding="3"  IsReadOnly="False"/>
@@ -161,7 +147,13 @@
                             <Button Command="{Binding CopyDetailsCommand}" CommandParameter="8" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,52" VerticalAlignment="Bottom" Width="69" Height="37" FontSize="16"/>
                             <Button Command="{Binding CopyDetailsCommand}" CommandParameter="9" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="69" Height="37" FontSize="16"/>
                         </Grid>
-                    </Grid>
+                        <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="lBox"
+                                 HorizontalContentAlignment="Stretch"
+                                 BorderThickness="1"
+                                 SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
+                                 BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Background="{DynamicResource BackgroundColour}"/>
+                    </DockPanel>
 
                     <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Bottom">
                         <Border/>

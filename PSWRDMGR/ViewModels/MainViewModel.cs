@@ -18,8 +18,23 @@ namespace PSWRDMGR.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        public ICommand ShowAddAccountWindowCommand { get; set; }
+        public ICommand ShowEditAccountWindowCommand { get; set; }
+        public ICommand DeleteAccountCommand { get; set; }
+        public ICommand SaveAccountCommand { get; set; }
+        public ICommand LoadAccountCommand { get; set; }
+        public ICommand BackupAccountsCommand { get; set; }
+        public ICommand SearchAccountCommand { get; set; }
+        public ICommand MoveAccountPositionCommand { get; set; }
+        public ICommand ShowHelpWindowCommand { get; set; }
+        public ICommand AutoShowContentPanelCommand { get; set; }
+        public ICommand CopyDetailsCommand { get; set; }
+
+        public ICommand CreateCustomDirectoryCommand { get; set; }
+        public ICommand LoadCustomDirectoryCommand { get; set; }
+        public ICommand SaveCustomDirectoryCommand { get; set; }
+
         //Private fields
-        private ObservableCollection<AccountListItem> list = new ObservableCollection<AccountListItem>();
         private int selectedIndex;
         private bool enableSaveLoad;
         private string srchAccText;
@@ -27,6 +42,7 @@ namespace PSWRDMGR.ViewModels
         private string themeName;
         private bool darkThemeEnabled;
         private bool contentPanelShowing;
+
         //Public Fields
         public NewAccountWindow NewAccountWndow { get; set; }
         public ControlsWindow ControlsWndow { get; set; }
@@ -37,19 +53,9 @@ namespace PSWRDMGR.ViewModels
         public bool AccountsArePresent => AccountsList.Count > 0;
         public bool AccountIsSelected { get => SelectedIndex > -1; }
 
-        //public Action GetWindowVariables { get; set; }
-        //public double WindowTop { get; set; }
-        //public double WindowLeft { get; set; }
-        //public double WindowWidth { get; set; }
-        //public double WindowHeight { get; set; }
-
         #region Public Fields
 
-        public ObservableCollection<AccountListItem> AccountsList
-        {
-            get => list;
-            set => RaisePropertyChanged(ref list, value);
-        }
+        public ObservableCollection<AccountListItem> AccountsList { get; set; }
         public bool AutosaveWhenClosing
         {
             get => autoSave;
@@ -58,7 +64,7 @@ namespace PSWRDMGR.ViewModels
         public int SelectedIndex
         {
             get => selectedIndex;
-            set { RaisePropertyChanged(ref selectedIndex, value); UpdateSelectedItem(); }
+            set { RaisePropertyChanged(ref selectedIndex, value, UpdateSelectedItem); }
         }
         public bool EnableSaveAndLoad
         {
@@ -100,7 +106,15 @@ namespace PSWRDMGR.ViewModels
 
         #endregion
 
-        public AccountListItem SelectedAccountItem { get { try { return AccountsList[SelectedIndex]; } catch { return null; } } }
+        public AccountListItem SelectedAccountItem
+        {
+            get
+            {
+                if (AccountsList != null && (AccountsList.Count - 1) >= SelectedIndex)
+                    return AccountsList[SelectedIndex];
+                return null;
+            }
+        }
 
         private AccountModel _selectedAccStr = new AccountModel();
         public AccountModel SelectedAccountStructure
@@ -116,29 +130,19 @@ namespace PSWRDMGR.ViewModels
         public Action ScrollIntoView { get; set; }
         public Action<bool> SetThemeDark { get; set; }
 
-        //Commands
-
-        #region ICommands
-        public ICommand ShowAddAccountWindowCommand { get; set; }
-        public ICommand ShowEditAccountWindowCommand { get; set; }
-        public ICommand DeleteAccountCommand { get; set; }
-        public ICommand SaveAccountCommand { get; set; }
-        public ICommand LoadAccountCommand { get; set; }
-        public ICommand BackupAccountsCommand { get; set; }
-        public ICommand SearchAccountCommand { get; set; }
-        public ICommand MoveAccountPositionCommand { get; set; }
-        public ICommand ShowHelpWindowCommand { get; set; }
-        public ICommand AutoShowContentPanelCommand { get; set; }
-        public ICommand CopyDetailsCommand { get; set; }
-
-        public ICommand CreateCustomDirectoryCommand { get; set; }
-        public ICommand LoadCustomDirectoryCommand { get; set; }
-        public ICommand SaveCustomDirectoryCommand { get; set; }
-
-        public ICommand CloseWindowCommand { get; set; }
-        public ICommand MaximizeRestoreCommand { get; set; }
-        public ICommand MinimizeWindowCommand { get; set; }
-        #endregion
+        public MainViewModel()
+        {
+            SetupCommandBindings();
+            AccountsList = new ObservableCollection<AccountListItem>();
+            NewAccountWndow = new NewAccountWindow();
+            ControlsWndow = new ControlsWindow();
+            SearchWindow = new SearchResultsWindow();
+            AutosaveWhenClosing = true;
+            DarkThemeEnabled = true;
+            NewAccountWndow.AddAccountCallback = this.AddAccount;
+            LoadAccounts();
+            UpdateSelectedItem();
+        }
 
         private void SetupCommandBindings()
         {
@@ -157,30 +161,6 @@ namespace PSWRDMGR.ViewModels
             CreateCustomDirectoryCommand = new Command(AccountFileCreator.CreateAccountsDirectoryAndFiles);
             LoadCustomDirectoryCommand = new Command(LoadCustomAccounts);
             SaveCustomDirectoryCommand = new Command(SaveCustomAccounts);
-
-            CloseWindowCommand = new Command(CloseWindow);
-            MaximizeRestoreCommand = new Command(MaximRestre);
-            MinimizeWindowCommand = new Command(MinimWindow);
-        }
-
-        private void CloseWindow() { (Application.Current.MainWindow as MainWindow).CloseWindow(); }
-        private void MaximRestre() { (Application.Current.MainWindow as MainWindow).MaximizeRestore(); }
-        private void MinimWindow() { (Application.Current.MainWindow as MainWindow).Minimize(); }
-
-        public MainViewModel()
-        {
-            SetupCommandBindings();
-            NewAccountWndow = new NewAccountWindow();
-            ControlsWndow = new ControlsWindow();
-            SearchWindow = new SearchResultsWindow();
-            AutosaveWhenClosing = true;
-            DarkThemeEnabled = true;
-
-            NewAccountWndow.AddAccountCallback = this.AddAccount;
-
-            LoadAccounts();
-
-            UpdateSelectedItem();
         }
 
         public void SearchAccount()
@@ -228,12 +208,13 @@ namespace PSWRDMGR.ViewModels
                 if (KeysDown[KeyInt(Key.S)] && EnableSaveAndLoad) SaveAccounts();
                 if (KeysDown[KeyInt(Key.E)]) ShowEditAccountWindow();
                 if (KeysDown[KeyInt(Key.L)] && EnableSaveAndLoad) LoadAccounts();
-                if (KeysDown[KeyInt(Key.K)]) ShowContentPanel();
+                if (KeysDown[KeyInt(Key.K)]) SetContentPanelVisibility();
             }
             else
             {
                 //CTRL Released
                 if (KeysDown[KeyInt(Key.Delete)]) DeleteSelectedAccount();
+                if (KeysDown[KeyInt(Key.Left)]) SetContentPanelVisibility();
             }
         }
 
@@ -435,14 +416,20 @@ namespace PSWRDMGR.ViewModels
 
         public void ShowContentPanelFunc()
         {
-            ShowContentPanel?.Invoke();
-            ContentPanelShowing = true;
+            if (!ContentPanelShowing)
+            {
+                ShowContentPanel?.Invoke();
+                ContentPanelShowing = true;
+            }
         }
 
         public void HideContentPanelFunc()
         {
-            HideContentPanel?.Invoke();
-            ContentPanelShowing = false;
+            if (ContentPanelShowing)
+            {
+                HideContentPanel?.Invoke();
+                ContentPanelShowing = false;
+            }
         }
 
         public void CopyDetailsToClipboard(object detailsIndex)

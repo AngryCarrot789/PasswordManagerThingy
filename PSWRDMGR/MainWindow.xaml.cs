@@ -25,11 +25,13 @@ namespace PSWRDMGR
     public partial class MainWindow : Window
     {
         private static App CurrentApp;
-        public MainViewModel ViewModel { get => DataContext as MainViewModel; }
+        public MainViewModel ViewModel { get; set; }
         public MainWindow(App currAp)
         {
             CurrentApp = currAp;
             InitializeComponent();
+            ViewModel = new MainViewModel();
+            this.DataContext = ViewModel;
             ViewModel.ScrollIntoView = ScrollIntoViewThingy;
             ViewModel.ShowContentPanel = this.ShowContentPanel;
             ViewModel.HideContentPanel = this.HideContentPanel;
@@ -71,26 +73,12 @@ namespace PSWRDMGR
 
         public void AnimateContentPanelWidth(double oldWidth, double newWidth)
         {
-            Storyboard storyboard = new Storyboard();
-            
-            Duration duration = new Duration(TimeSpan.FromMilliseconds(200));
-            CubicEase ease = new CubicEase { EasingMode = EasingMode.EaseOut };
-            
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.EasingFunction = ease;
-            animation.Duration = duration;
-            storyboard.Children.Add(animation);
-            animation.From = oldWidth;
-            animation.To = newWidth;
-            Storyboard.SetTarget(animation, ContentPanelDefinition);
-            Storyboard.SetTargetProperty(animation, new PropertyPath("(ColumnDefinition.MaxWidth)"));
-            
-            storyboard.Begin();
-            //
-            //MessageBox.Show($"{oldWidth}, {newWidth}");
-
-            //DoubleAnimation da = new DoubleAnimation(oldWidth, newWidth, TimeSpan.FromMilliseconds(250));
-            //ContentPanelDefinition.BeginAnimation(WidthProperty, da);
+            DoubleAnimation da = new DoubleAnimation(oldWidth, newWidth, TimeSpan.FromSeconds(0.2))
+            {
+                AccelerationRatio = 0,
+                DecelerationRatio = 1,
+            };
+            AccountPanel.BeginAnimation(WidthProperty, da);
         }
 
         public void ShowContentPanel()
@@ -161,36 +149,6 @@ namespace PSWRDMGR
             {
                 WindowState = WindowState.Maximized;
             }
-        }
-
-        public void CloseWindow()
-        {
-            //WindowStyle = WindowStyle.SingleBorderWindow;
-            this.Close();
-        }
-
-        public void MaximizeRestore()
-        {
-            //WindowChrome chrome = WindowChrome.GetWindowChrome(this);
-            //chrome.ResizeBorderThickness = new Thickness(10, 10, 10, 10);
-            if (this.WindowState == WindowState.Maximized)
-            {
-                //WindowStyle = WindowStyle.SingleBorderWindow;
-                WindowState = WindowState.Normal;
-                //WindowStyle = WindowStyle.None;
-            }
-            else if (WindowState == WindowState.Normal)
-            {
-                //WindowStyle = WindowStyle.SingleBorderWindow;
-                WindowState = WindowState.Maximized;
-                //WindowStyle = WindowStyle.None;
-            }
-        }
-
-        public void Minimize()
-        {
-            //WindowStyle = WindowStyle.SingleBorderWindow;
-            this.WindowState = WindowState.Minimized;
         }
     }
 }

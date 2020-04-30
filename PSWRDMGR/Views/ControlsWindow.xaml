@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views"
-        mc:Ignorable="d" ResizeMode="NoResize" Closing="Window_Closing"
-        Title="ControlsWindow" Height="290" Width="580" Background="{DynamicResource ContainerBackground}">
+        mc:Ignorable="d" 
+        ResizeMode="NoResize" 
+        Closing="Window_Closing"
+        Title="ControlsWindow" 
+        Height="310" Width="580" 
+        Background="{DynamicResource ContainerBackground}"
+        Style="{DynamicResource CustomToolWindowStyle}">
     <Grid>
         <ListBox HorizontalAlignment="Left" Width="150" FontSize="16">
             <Label Content="Key Shortcuts"/>

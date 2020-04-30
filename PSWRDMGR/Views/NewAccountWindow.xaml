@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PSWRDMGR.Views" Closing="Window_Closing" Topmost="True"
-        mc:Ignorable="d" KeyDown="Window_KeyDown" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
-        Title="New Account" Height="740" Width="800" Background="{DynamicResource BackgroundColour}">
+        xmlns:local="clr-namespace:PSWRDMGR.Views" 
+        Closing="Window_Closing" Topmost="True"
+        mc:Ignorable="d" KeyDown="Window_KeyDown" 
+        ResizeMode="NoResize"
+        Title="New Account" 
+        Height="772" Width="800"
+        Style="{DynamicResource CustomToolWindowStyle}">
     <Grid>
         <Grid VerticalAlignment="Top" Height="50" Background="{DynamicResource ContainerBackground}">
             <Border BorderBrush="{DynamicResource ControlDefaultBorderBrush}" BorderThickness="0 0 0 1" Margin="159,0,0,0"/>

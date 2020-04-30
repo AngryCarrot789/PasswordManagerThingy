@@ -11,17 +11,17 @@ namespace PSWRDMGR.ViewModels
 {
     public class SearchViewModel : BaseViewModel
     {
-        private ObservableCollection<AccountListItem> list = new ObservableCollection<AccountListItem>();
         private int _selectedIndex;
-
-        public ObservableCollection<AccountListItem> AccountsList
-        {
-            get => list; set => RaisePropertyChanged(ref list, value);
-        }
+        public ObservableCollection<AccountListItem> AccountsList { get; set; }
 
         public int SelectedIndex
         {
             get => _selectedIndex; set => RaisePropertyChanged(ref _selectedIndex, value);
+        }
+
+        public SearchViewModel()
+        {
+            AccountsList = new ObservableCollection<AccountListItem>();
         }
 
         public void AddAccount(AccountListItem account)
