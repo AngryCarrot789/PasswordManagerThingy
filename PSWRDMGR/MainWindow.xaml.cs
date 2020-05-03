@@ -24,27 +24,18 @@ namespace PSWRDMGR
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static App CurrentApp;
+        public App CurrentApplication { get; set; }
         public MainViewModel ViewModel { get; set; }
-        public MainWindow(App currAp)
+        public MainWindow()
         {
-            CurrentApp = currAp;
             InitializeComponent();
             ViewModel = new MainViewModel();
             this.DataContext = ViewModel;
             ViewModel.ScrollIntoView = ScrollIntoViewThingy;
             ViewModel.ShowContentPanel = this.ShowContentPanel;
             ViewModel.HideContentPanel = this.HideContentPanel;
-
             HideContentPanel();
-
             LoadSettings();
-            //ViewModel.GetWindowVariables = SetViewModelVariables;
-        }
-
-        public static void SetTheme(Theme theme)
-        {
-            CurrentApp.SetTheme(theme);
         }
 
         public void SetViewModelVariables()
@@ -133,7 +124,7 @@ namespace PSWRDMGR
                 Properties.Settings.Default.Maximized = false;
             }
 
-            Properties.Settings.Default.IsDarkTheme = ViewModel.DarkThemeEnabled;
+            //Properties.Settings.Default.IsDarkTheme = ViewModel.DarkThemeEnabled;
             Properties.Settings.Default.Save();
         }
 
@@ -143,12 +134,28 @@ namespace PSWRDMGR
             this.Left = Properties.Settings.Default.Left;
             this.Height = Properties.Settings.Default.Height;
             this.Width = Properties.Settings.Default.Width;
-            ViewModel.DarkThemeEnabled =  Properties.Settings.Default.IsDarkTheme;
+            //ViewModel.DarkThemeEnabled =  Properties.Settings.Default.IsDarkTheme;
             // Very quick and dirty - but it does the job
             if (Properties.Settings.Default.Maximized)
             {
                 WindowState = WindowState.Maximized;
             }
+        }
+
+        private void ChangeTheme(object sender, RoutedEventArgs e)
+        {
+            switch (int.Parse(((MenuItem)sender).Uid))
+            {
+                // light
+                case 0: CurrentApplication.SetTheme(App.Theme.Light); break;
+                // colourful light
+                case 1: CurrentApplication.SetTheme(App.Theme.ColourfulLight); break;
+                // dark
+                case 2: CurrentApplication.SetTheme(App.Theme.Dark); break;
+                // colourful dark
+                case 3: CurrentApplication.SetTheme(App.Theme.ColourfulDark); break;
+            }
+            e.Handled = true;
         }
     }
 }

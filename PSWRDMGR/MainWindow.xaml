@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR" Closing="Window_Closing"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
-        xmlns:converters="clr-namespace:PSWRDMGR.Converters" 
+        xmlns:converters="clr-namespace:PSWRDMGR.Converters" xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
         ResizeMode="CanResizeWithGrip"
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
@@ -18,6 +18,8 @@
         BorderBrush="{DynamicResource ControlBrightDefaultBackground}">
     <Window.Resources>
         <converters:ContentPanelValueConverter x:Key="ContentPanelConverter"/>
+        <DropShadowBitmapEffect x:Key="NormalShadow" ShadowDepth="2" Softness="0.2" Opacity="0.64"/>
+
     </Window.Resources>
     <Grid Margin="10">
         <Grid>
@@ -70,7 +72,44 @@
                         </TextBox>
                         <Label Content="Search for an account" HorizontalAlignment="Left" Margin="0,295,0,0" VerticalAlignment="Top"/>
                     </Grid>
-                    <Grid Height="204" VerticalAlignment="Bottom">
+                    <Expander x:Name="expander" ExpandDirection="Up"
+                              Header="Extra Tools" VerticalAlignment="Bottom"
+                              Margin="0,0,0,183" Width="200"
+                              HorizontalAlignment="Left">
+                        <Grid>
+                            <Grid.BitmapEffect>
+                                <DropShadowBitmapEffect Color="Black" Softness="0.2" ShadowDepth="2"/>
+                            </Grid.BitmapEffect>
+                            <Border Background="{DynamicResource ControlDarkerBackground}" BorderThickness="1" BorderBrush="{DynamicResource ControlDarkerBorderBrush}"/>
+                            <StackPanel Margin="10">
+                                <Label Content="Theme"/>
+                                <MenuItem Header="Light" Template="{DynamicResource SingleDropDownMenuItem}" Click="ChangeTheme" Uid="0">
+                                    <MenuItem.Icon>
+                                        <Rectangle Stroke="#FF848484" Fill="#FFE8E8E8" StrokeThickness="2" StrokeLineJoin="Round" BitmapEffect="{StaticResource NormalShadow}"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Colourful Light" Template="{DynamicResource SingleDropDownMenuItem}" Click="ChangeTheme" Uid="1">
+                                    <MenuItem.Icon>
+                                        <Rectangle Stroke="#FF2C7FF5" Fill="#FFE8E8E8" StrokeThickness="2" StrokeLineJoin="Round" BitmapEffect="{StaticResource NormalShadow}"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Dark" Template="{DynamicResource SingleDropDownMenuItem}" Click="ChangeTheme" Uid="2">
+                                    <MenuItem.Icon>
+                                        <Rectangle Stroke="#FF404040" Fill="#FF1B1B1B" StrokeThickness="2" StrokeLineJoin="Round" BitmapEffect="{StaticResource NormalShadow}"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Colourful Dark" Template="{DynamicResource SingleDropDownMenuItem}" Click="ChangeTheme" Uid="3">
+                                    <MenuItem.Icon>
+                                        <Rectangle Stroke="#FF2C7FF5" Fill="#FF1B1B1B" StrokeThickness="2" StrokeLineJoin="Round" BitmapEffect="{StaticResource NormalShadow}"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="3 0 0 0"/>
+                                <CheckBox Content="Enable Controls Below" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="3 0 0 0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Expander>
+                    <Grid Height="178" VerticalAlignment="Bottom">
                         <Border Background="{DynamicResource ContainerBackground}"/>
                         <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="56" FontFamily="Segoe UI">
                             <Grid Width="160">
@@ -90,18 +129,6 @@
                                 <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,9,4"/>
                             </Grid>
                         </Button>
-                        <Expander x:Name="expander" ExpandDirection="Down" Header="Extra Tools" VerticalAlignment="Top">
-                            <Popup PlacementTarget="{Binding ElementName=expander}" 
-                                   Placement="Bottom"
-                                   IsOpen="{Binding IsExpanded, ElementName=expander}" PopupAnimation="Scroll" StaysOpen="False">
-                                <Grid Height="100" Width="230">
-                                    <Border Background="{DynamicResource ControlDarkerBackground}" BorderThickness="1" BorderBrush="{DynamicResource ControlDarkerBorderBrush}"/>
-                                    <CheckBox Content="Enable Load, Save and Backup" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="10,0,0,10"/>
-                                    <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="10,0,0,34"/>
-                                    <CheckBox Content="{Binding ThemeName}" IsChecked="{Binding DarkThemeEnabled, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="24" FontSize="14" Margin="10,10,0,0"/>
-                                </Grid>
-                            </Popup>
-                        </Expander>
                     </Grid>
                 </Grid>
 

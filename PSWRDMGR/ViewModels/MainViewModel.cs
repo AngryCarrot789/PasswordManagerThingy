@@ -39,8 +39,6 @@ namespace PSWRDMGR.ViewModels
         private bool enableSaveLoad;
         private string srchAccText;
         private bool autoSave;
-        private string themeName;
-        private bool darkThemeEnabled;
         private bool contentPanelShowing;
 
         //Public Fields
@@ -75,21 +73,6 @@ namespace PSWRDMGR.ViewModels
         {
             get => srchAccText;
             set => RaisePropertyChanged(ref srchAccText, value);
-        }
-        public string ThemeName
-        {
-            get => themeName;
-            set => RaisePropertyChanged(ref themeName, value);
-        }
-        public bool DarkThemeEnabled
-        {
-            get => darkThemeEnabled;
-            set
-            {
-                RaisePropertyChanged(ref darkThemeEnabled, value);
-                MainWindow.SetTheme(value ? App.Theme.Dark : App.Theme.Light);
-                if (value) ThemeName = "Dark"; else ThemeName = "Light";
-            }
         }
         public bool ContentPanelShowing
         {
@@ -138,7 +121,6 @@ namespace PSWRDMGR.ViewModels
             ControlsWndow = new ControlsWindow();
             SearchWindow = new SearchResultsWindow();
             AutosaveWhenClosing = true;
-            DarkThemeEnabled = true;
             NewAccountWndow.AddAccountCallback = this.AddAccount;
             LoadAccounts();
             UpdateSelectedItem();

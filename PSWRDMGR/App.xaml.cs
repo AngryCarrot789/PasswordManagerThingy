@@ -15,12 +15,28 @@ namespace PSWRDMGR
     {
         public enum Theme
         {
-            Dark, Light
+            Light, ColourfulLight,
+            Dark, ColourfulDark
+        }
+        private ResourceDictionary ThemeDictionary
+        {
+            // You could probably get it via its name with some query logic as well.
+            get { return Resources.MergedDictionaries[0]; }
+            set { Resources.MergedDictionaries[0] = value; }
+        }
+
+        private void ChangeTheme(Uri uri)
+        {
+            ThemeDictionary = new ResourceDictionary() { Source = uri };
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MainWindow mWind = new MainWindow(this);
+            MainWindow mWind = new MainWindow
+            {
+                CurrentApplication = this
+            };
+            this.MainWindow = mWind;
             mWind.Show();
         }
 
@@ -31,10 +47,16 @@ namespace PSWRDMGR
             {
                 case Theme.Dark: themeName = "DarkTheme"; break;
                 case Theme.Light: themeName = "LightTheme"; break;
+                case Theme.ColourfulDark: themeName = "ColourfulDarkTheme"; break;
+                case Theme.ColourfulLight: themeName = "ColourfulLightTheme"; break;
             }
 
-            if (!string.IsNullOrEmpty(themeName))
-                this.Resources.MergedDictionaries[0].Source = new Uri($"/Themes/{themeName}.xaml", UriKind.Relative);
+            try
+            {
+                if (!string.IsNullOrEmpty(themeName))
+                    ChangeTheme(new Uri($"Themes/{themeName}.xaml", UriKind.Relative));
+            }
+            catch { }
         }
     }
 }
