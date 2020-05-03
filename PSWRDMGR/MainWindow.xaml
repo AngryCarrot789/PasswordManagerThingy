@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR" Closing="Window_Closing"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
-        xmlns:converters="clr-namespace:PSWRDMGR.Converters" xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+        xmlns:utils="clr-namespace:PSWRDMGR.Utilities"
+        xmlns:converters="clr-namespace:PSWRDMGR.Converters" 
         ResizeMode="CanResizeWithGrip"
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
@@ -175,11 +176,13 @@
                             <Button Command="{Binding CopyDetailsCommand}" CommandParameter="9" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="69" Height="37" FontSize="16"/>
                         </Grid>
                         <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
+                                 SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
+                                 BorderBrush="{DynamicResource ControlDefaultBorderBrush}" 
+                                 Background="{DynamicResource BackgroundColour}"
+                                 utils:ScrollViewerHelper.ShiftWheelScrollsHorizontally="True"
                                  x:Name="lBox"
                                  HorizontalContentAlignment="Stretch"
-                                 BorderThickness="1"
-                                 SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
-                                 BorderBrush="{DynamicResource ControlDefaultBorderBrush}" Background="{DynamicResource BackgroundColour}"/>
+                                 BorderThickness="1"/>
                     </DockPanel>
 
                     <Grid Background="{DynamicResource ContainerBackground}" Height="60" VerticalAlignment="Bottom">
