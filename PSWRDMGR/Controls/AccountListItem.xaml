@@ -9,11 +9,11 @@
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Uid="4" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Edit Account"/>
+                <MenuItem Uid="4" Click="Button_Click" Template="{DynamicResource SingleDropDownMenuItem}" Header="Edit Account"/>
                 <Separator/>
-                <MenuItem Uid="3" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Email"/>
-                <MenuItem Uid="2" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Password"/>
-                <MenuItem Uid="1" Click="Button_Click" Template="{DynamicResource DropDownMenuItemTemplate}" Header="Copy Username"/>
+                <MenuItem Uid="3" Click="Button_Click" Template="{DynamicResource SingleDropDownMenuItem}" Header="Copy Email"/>
+                <MenuItem Uid="2" Click="Button_Click" Template="{DynamicResource SingleDropDownMenuItem}" Header="Copy Password"/>
+                <MenuItem Uid="1" Click="Button_Click" Template="{DynamicResource SingleDropDownMenuItem}" Header="Copy Username"/>
             </ContextMenu>
         </Grid.ContextMenu>
         <Label Content="{Binding AccountName}" 

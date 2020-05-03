@@ -189,27 +189,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\plus-64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\edit-11-64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\delete-2-64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\save-128.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\download-128.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\data-transfer-upload-128.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\product-128.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
@@ -226,6 +205,30 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="padlockIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\createDirectoryIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\loadDirectoryIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\saveDirectoryIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\saveBackupIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\addAccountIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\editAccountIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\deleteAccountIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\showAccountIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

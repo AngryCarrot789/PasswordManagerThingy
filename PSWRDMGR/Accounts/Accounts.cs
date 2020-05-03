@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PSWRDMGR.Accounts
 {
@@ -72,6 +73,21 @@ namespace PSWRDMGR.Accounts
 
             public static List<AccountModel> LoadFiles(string directoryLocation)
             {
+                if (!Directory.Exists(directoryLocation) || Directory.GetFiles(directoryLocation).Count() != 11)
+                {
+                    MessageBox.Show(
+                        $"{directoryLocation} isn't a valid directory. " +
+                        $"You can either create it, or load from another directory",
+                        $"Path doesn't exist. Couldn't load accounts");
+                    return new List<AccountModel>()
+                    {
+                        new AccountModel()
+                        {
+                            AccountName = "Failed to load accounts from the",
+                            Email = "main account directory."
+                        }
+                    };
+                }
                 List<string> accname = File.ReadAllLines(Path.Combine(directoryLocation, AccNameName)).ToList();
                 List<string> emailss = File.ReadAllLines(Path.Combine(directoryLocation, EmailllName)).ToList();
                 List<string> usernam = File.ReadAllLines(Path.Combine(directoryLocation, UsernamName)).ToList();
