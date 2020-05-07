@@ -19,7 +19,7 @@
         BorderBrush="{DynamicResource ControlBrightDefaultBackground}">
     <Window.Resources>
         <converters:ContentPanelValueConverter x:Key="ContentPanelConverter"/>
-        <DropShadowBitmapEffect x:Key="NormalShadow" ShadowDepth="3" Softness="0.3" Opacity="0.4"/>
+        <DropShadowBitmapEffect x:Key="NormalShadow" ShadowDepth="3" Softness="0.2" Opacity="0.5"/>
 
     </Window.Resources>
     <Grid Margin="10">
@@ -44,29 +44,31 @@
                     <Grid>
                         <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="70" FontFamily="Segoe UI">
                             <StackPanel Orientation="Horizontal" Width="180" Height="40">
-                                <Image Source="Resources/addAccountIcon.png" Width="36" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                <Image Source="Resources/addAccountIcon.png" Width="28" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                 <TextBlock Margin="15 0 0 0" Text="Add Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             </StackPanel>
                         </Button>
                         <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,75,0,0" Height="70" FontFamily="Segoe UI">
                             <StackPanel Orientation="Horizontal" Width="180" Height="40">
-                                <Image Source="Resources/editAccountIcon.png" Width="36" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                <Image Source="Resources/editAccountIcon.png" Width="28" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                 <TextBlock Margin="15 0 0 0" Text="Edit Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             </StackPanel>
                         </Button>
                         <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,150,0,0" Height="70" FontFamily="Segoe UI">
                             <StackPanel Orientation="Horizontal" Width="180" Height="40">
-                                <Image Width="36" Source="Resources/deleteAccountIcon.png" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                <Image Width="28" Source="Resources/deleteAccountIcon.png" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                 <TextBlock Margin="15 0 0 0" Text="Delete Account" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             </StackPanel>
                         </Button>
                         <Button Command="{Binding AutoShowContentPanelCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,225,0,0" Height="70" FontFamily="Segoe UI">
                             <StackPanel Width="180" Orientation="Horizontal" Height="40">
-                                <Image Source="Resources/showAccountIcon.png" Width="36" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                <Image Source="Resources/showAccountIcon.png" Width="28" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                 <TextBlock Margin="15 0 0 0" Text="{Binding ContentPanelShowing, Converter={StaticResource ContentPanelConverter}}" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center" Width="130"/>
                             </StackPanel>
                         </Button>
-                        <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Padding="3" Height="32" Margin="0,321,0,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Press enter to search for an account">
+                        <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" 
+                                 FontSize="16" Padding="3" Height="32" Margin="0,321,0,0" TextWrapping="Wrap"
+                                 VerticalAlignment="Top" ToolTip="Press enter to search for an account">
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Enter" Command="{Binding SearchAccountCommand}"/>
                             </TextBox.InputBindings>
@@ -114,19 +116,19 @@
                         <Border Background="{DynamicResource ContainerBackground}"/>
                         <Button Command="{Binding BackupAccountsCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,0,122" Height="56" FontFamily="Segoe UI">
                             <StackPanel Orientation="Horizontal" Width="175">
-                                <Image Source="Resources/saveBackupIcon.png" Width="36" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                <Image Source="Resources/saveBackupIcon.png" Width="32" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                 <TextBlock Text="Save Backup" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0"/>
                             </StackPanel>
                         </Button>
                         <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,0,61" Height="56" FontFamily="Segoe UI">
                             <StackPanel Orientation="Horizontal" Width="175">
-                                <Image Source="Resources/loadDirectoryIcon.png" Width="36" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                <Image Source="Resources/loadDirectoryIcon.png" Width="32" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                 <TextBlock Text="Load Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
                             </StackPanel>
                         </Button>
                         <Button Command="{Binding SaveAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="56" FontFamily="Segoe UI">
                             <StackPanel Orientation="Horizontal" Width="175">
-                                <Image Source="Resources/saveDirectoryIcon.png" Width="36" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                <Image Source="Resources/saveDirectoryIcon.png" Width="32" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                 <TextBlock Text="Save Accounts" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
                             </StackPanel>
                         </Button>
@@ -200,19 +202,19 @@
                             </Grid.ColumnDefinitions>
                             <Button Command="{Binding CreateCustomDirectoryCommand}" Margin="0 0 1 0">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/createDirectoryIcon.png" Width="32" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                    <Image Source="Resources/createDirectoryIcon.png" Width="24" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                     <TextBlock Margin="6 0 0 0" Text="Create" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Button>
-                            <Button Command="{Binding LoadCustomDirectoryCommand}" Margin="1 0 1 0" Grid.Column="1">
+                            <Button Command="{Binding LoadCustomDirectoryCommand}" Margin="2 0 1 0" Grid.Column="1">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/loadDirectoryIcon.png" Width="32" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                    <Image Source="Resources/loadDirectoryIcon.png" Width="24"  HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                     <TextBlock Margin="6 0 0 0" Text="Load" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Button>
-                            <Button Command="{Binding SaveCustomDirectoryCommand}" Grid.Column="2" Margin="1 0 0 0">
+                            <Button Command="{Binding SaveCustomDirectoryCommand}" Grid.Column="2" Margin="2,0,0,0">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/saveDirectoryIcon.png" Width="32" HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
+                                    <Image Source="Resources/saveDirectoryIcon.png" Width="24"  HorizontalAlignment="Left" BitmapEffect="{StaticResource NormalShadow}"/>
                                     <TextBlock Margin="6 0 0 0" Text="Save" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Button>

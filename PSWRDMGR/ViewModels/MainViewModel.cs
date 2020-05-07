@@ -6,52 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 using static PSWRDMGR.Accounts.Accounts;
 
 namespace PSWRDMGR.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        public ICommand ShowAddAccountWindowCommand { get; set; }
-        public ICommand ShowEditAccountWindowCommand { get; set; }
-        public ICommand DeleteAccountCommand { get; set; }
-        public ICommand SaveAccountCommand { get; set; }
-        public ICommand LoadAccountCommand { get; set; }
-        public ICommand BackupAccountsCommand { get; set; }
-        public ICommand SearchAccountCommand { get; set; }
-        public ICommand MoveAccountPositionCommand { get; set; }
-        public ICommand ShowHelpWindowCommand { get; set; }
-        public ICommand AutoShowContentPanelCommand { get; set; }
-        public ICommand CopyDetailsCommand { get; set; }
-
-        public ICommand CreateCustomDirectoryCommand { get; set; }
-        public ICommand LoadCustomDirectoryCommand { get; set; }
-        public ICommand SaveCustomDirectoryCommand { get; set; }
-
         //Private fields
         private int selectedIndex;
         private bool enableSaveLoad;
         private string srchAccText;
         private bool autoSave;
         private bool contentPanelShowing;
-
-        //Public Fields
-        public NewAccountWindow NewAccountWndow { get; set; }
-        public ControlsWindow ControlsWndow { get; set; }
-        public SearchResultsWindow SearchWindow { get; set; }
-
-        //Some helpers
-        public bool[] KeysDown = new bool[200];
-        public bool AccountsArePresent => AccountsList.Count > 0;
-        public bool AccountIsSelected { get => SelectedIndex > -1; }
-
-        #region Public Fields
 
         public ObservableCollection<AccountListItem> AccountsList { get; set; }
         public bool AutosaveWhenClosing
@@ -87,16 +55,9 @@ namespace PSWRDMGR.ViewModels
             }
         }
 
-        #endregion
-
         public AccountListItem SelectedAccountItem
         {
-            get
-            {
-                if (AccountsList != null && (AccountsList.Count - 1) >= SelectedIndex)
-                    return AccountsList[SelectedIndex];
-                return null;
-            }
+            get => AccountsList != null && (AccountsList.Count - 1) >= SelectedIndex ? AccountsList[SelectedIndex] : null;
         }
 
         private AccountModel _selectedAccStr = new AccountModel();
@@ -105,13 +66,36 @@ namespace PSWRDMGR.ViewModels
             get => _selectedAccStr;
             set => RaisePropertyChanged(ref _selectedAccStr, value);
         }
-        //public AccountModel SelectedAccountStructure { get { try { return SelectedAccountItem.DataContext as AccountModel; } catch { return null; } } }
+
+        public ICommand ShowAddAccountWindowCommand { get; set; }
+        public ICommand ShowEditAccountWindowCommand { get; set; }
+        public ICommand DeleteAccountCommand { get; set; }
+        public ICommand SaveAccountCommand { get; set; }
+        public ICommand LoadAccountCommand { get; set; }
+        public ICommand BackupAccountsCommand { get; set; }
+        public ICommand SearchAccountCommand { get; set; }
+        public ICommand MoveAccountPositionCommand { get; set; }
+        public ICommand ShowHelpWindowCommand { get; set; }
+        public ICommand AutoShowContentPanelCommand { get; set; }
+        public ICommand CopyDetailsCommand { get; set; }
+
+        public ICommand CreateCustomDirectoryCommand { get; set; }
+        public ICommand LoadCustomDirectoryCommand { get; set; }
+        public ICommand SaveCustomDirectoryCommand { get; set; }
+
+        //Some helpers
+        public bool[] KeysDown = new bool[200];
+        public bool AccountsArePresent => AccountsList.Count > 0;
+        public bool AccountIsSelected { get => SelectedIndex > -1; }
+
+        //this isnt technically very mvmv-ey... but eh
+        public NewAccountWindow NewAccountWndow { get; set; }
+        public ControlsWindow ControlsWndow { get; set; }
+        public SearchResultsWindow SearchWindow { get; set; }
 
         public Action ShowContentPanel { get; set; }
         public Action HideContentPanel { get; set; }
-
         public Action ScrollIntoView { get; set; }
-        public Action<bool> SetThemeDark { get; set; }
 
         public MainViewModel()
         {
@@ -158,14 +142,14 @@ namespace PSWRDMGR.ViewModels
                 {
                     if (account.AccountName.ToLower().Contains(SearchAccountText.ToLower()))
                     {
-                        AccountListItem ali = new AccountListItem();
-                        ali.DataContext = account;//AccountModel.Duplicate(account);
-                        ali.ShowContentCallback = this.ShowAccountContent;
-                        ali.EditContentCallback = this.ShowEditAccountWindow;
+                        AccountListItem ali = new AccountListItem
+                        {
+                            DataContext = account,
+                            ShowContentCallback = this.ShowAccountContent,
+                            EditContentCallback = this.ShowEditAccountWindow
+                        };
 
                         SearchWindow.AddAccount(ali);
-                        //SelectedIndex = index;
-                        //ScrollIntoView?.Invoke();
                     }
                 }
                 index++;
@@ -299,7 +283,7 @@ namespace PSWRDMGR.ViewModels
         {
             if (account != null)
             {
-                if(!ContentPanelShowing) ShowContentPanelFunc();
+                if (!ContentPanelShowing) ShowContentPanelFunc();
                 SelectedAccountStructure = account;
             }
         }
@@ -387,13 +371,9 @@ namespace PSWRDMGR.ViewModels
         public void SetContentPanelVisibility()
         {
             if (ContentPanelShowing)
-            {
                 HideContentPanelFunc();
-            }
             else
-            {
                 ShowContentPanelFunc();
-            }
         }
 
         public void ShowContentPanelFunc()

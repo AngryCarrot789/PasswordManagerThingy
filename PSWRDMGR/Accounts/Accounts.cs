@@ -65,7 +65,11 @@ namespace PSWRDMGR.Accounts
                 else
                     return new List<AccountModel>()
                     {
-                        new AccountModel() { AccountName = "Failed to load accounts from a", Email = "custom directory." }
+                        new AccountModel() 
+                        { 
+                            AccountName = "Failed to load accounts from a", 
+                            Email = "custom directory."
+                        }
                     };
             }
 
@@ -88,6 +92,7 @@ namespace PSWRDMGR.Accounts
                         }
                     };
                 }
+
                 List<string> accname = File.ReadAllLines(Path.Combine(directoryLocation, AccNameName)).ToList();
                 List<string> emailss = File.ReadAllLines(Path.Combine(directoryLocation, EmailllName)).ToList();
                 List<string> usernam = File.ReadAllLines(Path.Combine(directoryLocation, UsernamName)).ToList();
@@ -106,17 +111,17 @@ namespace PSWRDMGR.Accounts
                 {
                     AccountModel am = new AccountModel()
                     {
-                        AccountName = accname[i],
-                        Email = emailss[i],
-                        Username = usernam[i],
-                        Password = passwrd[i],
-                        DateOfBirth = dofbrth[i],
+                        AccountName  = accname[i],
+                        Email        = emailss[i],
+                        Username     = usernam[i],
+                        Password     = passwrd[i],
+                        DateOfBirth  = dofbrth[i],
                         SecurityInfo = scrtyin[i],
-                        ExtraInfo1 = extinf1[i],
-                        ExtraInfo2 = extinf2[i],
-                        ExtraInfo3 = extinf3[i],
-                        ExtraInfo4 = extinf4[i],
-                        ExtraInfo5 = extinf5[i]
+                        ExtraInfo1   = extinf1[i],
+                        ExtraInfo2   = extinf2[i],
+                        ExtraInfo3   = extinf3[i],
+                        ExtraInfo4   = extinf4[i],
+                        ExtraInfo5   = extinf5[i]
                     };
                     accounts.Add(am);
                 }
@@ -128,8 +133,10 @@ namespace PSWRDMGR.Accounts
         {
             public static void SaveCustomFiles(List<AccountModel> accounts)
             {
-                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog();
-                fbd.RootFolder = Environment.SpecialFolder.MyDocuments;
+                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog
+                {
+                    RootFolder = Environment.SpecialFolder.MyDocuments
+                };
 
                 if (fbd.ShowDialog() == true)
                 {
@@ -139,18 +146,6 @@ namespace PSWRDMGR.Accounts
             public static void SaveFiles(List<AccountModel> accounts) { SaveFiles(accounts, FolderPath); }
             public static void SaveFiles(List<AccountModel> accounts, string directoryLocation)
             {
-                //List<string> accname = File.ReadAllLines(AccNameLocation).ToList();
-                //List<string> emailss = File.ReadAllLines(EmailllLocation).ToList();
-                //List<string> usernam = File.ReadAllLines(UsernamLocation).ToList();
-                //List<string> passwrd = File.ReadAllLines(PasswrdLocation).ToList();
-                //List<string> dofbrth = File.ReadAllLines(DofBrthLocation).ToList();
-                //List<string> scrtyin = File.ReadAllLines(ScrtyInLocation).ToList();
-                //List<string> extinf1 = File.ReadAllLines(ExtrIn1Location).ToList();
-                //List<string> extinf2 = File.ReadAllLines(ExtrIn2Location).ToList();
-                //List<string> extinf3 = File.ReadAllLines(ExtrIn3Location).ToList();
-                //List<string> extinf4 = File.ReadAllLines(ExtrIn4Location).ToList();
-                //List<string> extinf5 = File.ReadAllLines(ExtrIn5Location).ToList();
-
                 List<string> NEWaccname = new List<string>();
                 List<string> NEWemailss = new List<string>();
                 List<string> NEWusernam = new List<string>();
@@ -220,17 +215,17 @@ namespace PSWRDMGR.Accounts
                     NEWextinf5.Add(accounts[i].ExtraInfo5);
                 }
 
-                File.WriteAllLines(@"E:\stuff\backupthingy\accName.txt", NEWaccname);
-                File.WriteAllLines(@"E:\stuff\backupthingy\email.txt", NEWemailss);
-                File.WriteAllLines(@"E:\stuff\backupthingy\usrName.txt", NEWusernam);
-                File.WriteAllLines(@"E:\stuff\backupthingy\pssWrd.txt", NEWpasswrd);
-                File.WriteAllLines(@"E:\stuff\backupthingy\DtoBrth.txt", NEWdofbrth);
+                File.WriteAllLines(@"E:\stuff\backupthingy\accName.txt",  NEWaccname);
+                File.WriteAllLines(@"E:\stuff\backupthingy\email.txt",     NEWemailss);
+                File.WriteAllLines(@"E:\stuff\backupthingy\usrName.txt",   NEWusernam);
+                File.WriteAllLines(@"E:\stuff\backupthingy\pssWrd.txt",    NEWpasswrd);
+                File.WriteAllLines(@"E:\stuff\backupthingy\DtoBrth.txt",   NEWdofbrth);
                 File.WriteAllLines(@"E:\stuff\backupthingy\ScrtyInfo.txt", NEWscrtyin);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf1.txt", NEWextinf1);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf2.txt", NEWextinf2);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf3.txt", NEWextinf3);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf4.txt", NEWextinf4);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf5.txt", NEWextinf5);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf1.txt",   NEWextinf1);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf2.txt",   NEWextinf2);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf3.txt",   NEWextinf3);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf4.txt",   NEWextinf4);
+                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf5.txt",   NEWextinf5);
             }
         }
     }
