@@ -1,4 +1,5 @@
-﻿using PSWRDMGR.ViewModels;
+﻿using PSWRDMGR.Themes;
+using PSWRDMGR.ViewModels;
 using PSWRDMGR.Views;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,6 @@ namespace PSWRDMGR
     /// </summary>
     public partial class MainWindow : Window
     {
-        public App CurrentApplication { get; set; }
         public MainViewModel ViewModel { get; set; }
         public MainWindow()
         {
@@ -146,14 +146,10 @@ namespace PSWRDMGR
         {
             switch (int.Parse(((MenuItem)sender).Uid))
             {
-                // light
-                case 0: CurrentApplication.SetTheme(App.Theme.Light); break;
-                // colourful light
-                case 1: CurrentApplication.SetTheme(App.Theme.ColourfulLight); break;
-                // dark
-                case 2: CurrentApplication.SetTheme(App.Theme.Dark); break;
-                // colourful dark
-                case 3: CurrentApplication.SetTheme(App.Theme.ColourfulDark); break;
+                case 0: ThemesController.SetTheme(ThemeTypes.Light); break;
+                case 1: ThemesController.SetTheme(ThemeTypes.ColourfulLight); break;
+                case 2: ThemesController.SetTheme(ThemeTypes.Dark); break;
+                case 3: ThemesController.SetTheme(ThemeTypes.ColourfulDark); break;
             }
             e.Handled = true;
         }

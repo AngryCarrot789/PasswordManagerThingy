@@ -30,8 +30,10 @@ namespace PSWRDMGR.Accounts
         {
             public static void CreateAccountsDirectoryAndFiles()
             {
-                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog();
-                fbd.RootFolder = Environment.SpecialFolder.MyDocuments;
+                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog
+                {
+                    RootFolder = Environment.SpecialFolder.MyDocuments
+                };
 
                 if (fbd.ShowDialog() == true)
                 {
@@ -63,14 +65,16 @@ namespace PSWRDMGR.Accounts
                 }
 
                 else
+                {
                     return new List<AccountModel>()
                     {
-                        new AccountModel() 
-                        { 
-                            AccountName = "Failed to load accounts from a", 
+                        new AccountModel()
+                        {
+                            AccountName = "Failed to load accounts from a",
                             Email = "custom directory."
                         }
                     };
+                }
             }
 
             public static List<AccountModel> LoadFiles() { return LoadFiles(FolderPath); }
@@ -215,7 +219,7 @@ namespace PSWRDMGR.Accounts
                     NEWextinf5.Add(accounts[i].ExtraInfo5);
                 }
 
-                File.WriteAllLines(@"E:\stuff\backupthingy\accName.txt",  NEWaccname);
+                File.WriteAllLines(@"E:\stuff\backupthingy\accName.txt",   NEWaccname);
                 File.WriteAllLines(@"E:\stuff\backupthingy\email.txt",     NEWemailss);
                 File.WriteAllLines(@"E:\stuff\backupthingy\usrName.txt",   NEWusernam);
                 File.WriteAllLines(@"E:\stuff\backupthingy\pssWrd.txt",    NEWpasswrd);

@@ -18,24 +18,20 @@ namespace PSWRDMGR
             Light, ColourfulLight,
             Dark, ColourfulDark
         }
-        private ResourceDictionary ThemeDictionary
+
+        private void SetThemeDictionary(ResourceDictionary value)
         {
-            // You could probably get it via its name with some query logic as well.
-            get { return Resources.MergedDictionaries[0]; }
-            set { Resources.MergedDictionaries[0] = value; }
+            Resources.MergedDictionaries[0] = value;
         }
 
         private void ChangeTheme(Uri uri)
         {
-            ThemeDictionary = new ResourceDictionary() { Source = uri };
+            SetThemeDictionary(new ResourceDictionary() { Source = uri });
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MainWindow mWind = new MainWindow
-            {
-                CurrentApplication = this
-            };
+            MainWindow mWind = new MainWindow();
             this.MainWindow = mWind;
             mWind.Show();
         }

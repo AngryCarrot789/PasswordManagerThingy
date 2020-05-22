@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using static PSWRDMGR.Accounts.Accounts;
@@ -20,6 +21,7 @@ namespace PSWRDMGR.ViewModels
         private string srchAccText;
         private bool autoSave;
         private bool contentPanelShowing;
+        private AccountModel _selectedAccStr = new AccountModel();
 
         public ObservableCollection<AccountListItem> AccountsList { get; set; }
         public bool AutosaveWhenClosing
@@ -54,13 +56,10 @@ namespace PSWRDMGR.ViewModels
                 SelectedAccountStructure = SelectedAccountItem.DataContext as AccountModel;
             }
         }
-
         public AccountListItem SelectedAccountItem
         {
             get => AccountsList != null && (AccountsList.Count - 1) >= SelectedIndex ? AccountsList[SelectedIndex] : null;
         }
-
-        private AccountModel _selectedAccStr = new AccountModel();
         public AccountModel SelectedAccountStructure
         {
             get => _selectedAccStr;
@@ -99,11 +98,11 @@ namespace PSWRDMGR.ViewModels
 
         public MainViewModel()
         {
-            SetupCommandBindings();
             AccountsList = new ObservableCollection<AccountListItem>();
             NewAccountWndow = new NewAccountWindow();
             ControlsWndow = new ControlsWindow();
             SearchWindow = new SearchResultsWindow();
+            SetupCommandBindings();
             AutosaveWhenClosing = true;
             NewAccountWndow.AddAccountCallback = this.AddAccount;
             LoadAccounts();
@@ -157,7 +156,7 @@ namespace PSWRDMGR.ViewModels
         }
 
         //helper. converts the "index" of a Key to an int. e.g, A = 1, c = 3.
-        private int KeyInt(Key key) => Convert.ToInt32(key);
+        private int KeyInt(Key key) => (int)key;
 
         public void KeyDown(Key key, bool keyIsDown)
         {
@@ -294,40 +293,10 @@ namespace PSWRDMGR.ViewModels
             ControlsWndow.Focus();
         }
 
-        /// <summary>
-        /// //////////////////////
-        /// </summary>
         public void ShowSearchWindow()
         {
             SearchWindow.Show();
             SearchWindow.Focus();
-
-            //double DesktopScreenWidth =  SystemParameters.PrimaryScreenWidth;
-            //double DesktopScreenHeight = SystemParameters.PrimaryScreenHeight;
-            //
-            //double WindowFromLeft = WindowLeft;
-            //double WindowFromTop = WindowTop;
-            //double WindowFromRight = DesktopScreenWidth - WindowFromLeft;
-            //double WindowFromBottom = DesktopScreenHeight - WindowFromTop;
-            //
-            //double leftOffset = 0;
-            //double topOffset = 26;
-            //26 is the height of the title bar for the mainwindow.
-            //trying to make the searchwindow contents in the direct centre... well
-            //the searchwindow and mainwindow title bar heights cancel eachother out
-            //so the content is in the centre (if you include title bars) without an offset but eh.
-
-            //double SearchWindowLeft = WindowLeft + ((WindowWidth - SearchWindow.Width) / 2) + leftOffset;
-            //double SearchWindowTop = WindowTop + ((WindowHeight - SearchWindow.Height) / 2) + topOffset;
-
-            //double windowCentreLeft = WindowWidth / 2;
-            //double windowCentreTop = WindowHeight / 2;
-
-            //double width = (screenWidth / 2) - (SearchWindowLeft / 2);
-            //double height = (screenHeight / 2) - (SearchWindowTop / 2);
-
-            //SearchWindow.Left = SearchWindowLeft;
-            //SearchWindow.Top = SearchWindowTop;
         }
 
         #endregion
@@ -411,8 +380,5 @@ namespace PSWRDMGR.ViewModels
                 case 9: Clipboard.SetText(currSelectedAcc.ExtraInfo5); break;
             }
         }
-
-        //public double GetCentralisedWindowTop(double windowheight) => WindowTop + ((WindowHeight - windowheight) / 2);
-        //public double GetCentralisedWindowLeft(double windowwidth) => WindowLeft + ((WindowWidth - windowwidth) / 2);
     }
 }

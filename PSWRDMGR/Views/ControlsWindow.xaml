@@ -3,32 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PSWRDMGR.Views"
+        xmlns:local="clr-namespace:PSWRDMGR.Views" xmlns:controls="clr-namespace:PSWRDMGR.Controls" xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d" 
         ResizeMode="NoResize" 
         Closing="Window_Closing"
         Title="ControlsWindow" 
         Height="310" Width="580" 
         Background="{DynamicResource ContainerBackground}"
-        Style="{DynamicResource CustomToolWindowStyle}">
+        Style="{DynamicResource CustomToolWindowStyle}"
+        FontFamily="Consolas">
     <Grid>
-        <ListBox HorizontalAlignment="Left" Width="150" FontSize="16">
-            <Label Content="Key Shortcuts"/>
-            <Label Content="CTRL + A"/>
-            <Label Content="CTRL + S"/>
-            <Label Content="CTRL + E"/>
-            <Label Content="CTRL + L"/>
-            <Separator/>
-            <Label Content="Delete"/>
-        </ListBox>
-        <ListBox Margin="150,0,0,0" FontSize="16">
-            <Label Content="Description"/>
-            <Label Content="Opens the Add Account window"/>
-            <Label Content="Saves the account to the default location"/>
-            <Label Content="Shows the edit account window"/>
-            <Label Content="Loads the account from the default location"/>
-            <Separator/>
-            <Label Content="Deletes the selected account"/>
+        <ListBox FontSize="16" VerticalAlignment="Top">
+            <Label Content="CTRL + A -- Opens the Add Account window"/>
+            <Label Content="CTRL + S -- Saves the account to the default location"/>
+            <Label Content="CTRL + E -- Shows the edit account window"/>
+            <Label Content="CTRL + L -- Loads the account from the default location"/>
+            <Label Content="Del Key  -- Deletes selected account"/>
         </ListBox>
     </Grid>
 </Window>
