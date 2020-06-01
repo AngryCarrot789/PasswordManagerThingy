@@ -74,12 +74,12 @@ namespace PSWRDMGR
 
         public void ShowContentPanel()
         {
-            AnimateContentPanelWidth(0, 500);
+            AnimateContentPanelWidth(0, 450);
         }
 
         public void HideContentPanel()
         {
-            AnimateContentPanelWidth(500, 0);
+            AnimateContentPanelWidth(450, 0);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -12,8 +12,6 @@ namespace PSWRDMGR.Accounts
 {
     public static class Accounts
     {
-        public static string FolderPath = @"E:\pwrds";
-
         public static string AccNameName = "accName.txt";
         public static string EmailllName = "email.txt";
         public static string UsernamName = "usrName.txt";
@@ -25,6 +23,21 @@ namespace PSWRDMGR.Accounts
         public static string ExtrIn3Name = "ExtInf3.txt";
         public static string ExtrIn4Name = "ExtInf4.txt";
         public static string ExtrIn5Name = "ExtInf5.txt";
+
+        public static List<AccountModel> AccountFailure
+        {
+            get
+            {
+                return new List<AccountModel>()
+                {
+                    new AccountModel()
+                    {
+                        AccountName = "Failed to load accounts from the",
+                        Email = "main account directory."
+                    }
+                };
+            }
+        }
 
         public static class AccountFileCreator
         {
@@ -56,8 +69,12 @@ namespace PSWRDMGR.Accounts
         {
             public static List<AccountModel> LoadCustomAccounts()
             {
-                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog();
-                fbd.RootFolder = Environment.SpecialFolder.MyDocuments;
+                VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog
+                {
+                    RootFolder = Environment.SpecialFolder.MyDocuments,
+                    UseDescriptionForTitle = true,
+                    Description = "Select location of accounts"
+                };
 
                 if (fbd.ShowDialog() == true)
                 {
@@ -77,7 +94,30 @@ namespace PSWRDMGR.Accounts
                 }
             }
 
-            public static List<AccountModel> LoadFiles() { return LoadFiles(FolderPath); }
+            public static List<AccountModel> LoadFiles()
+            {
+                if (!Directory.Exists(Properties.Settings.Default.MainAccountPath))
+                {
+                    VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog
+                    {
+                        RootFolder = Environment.SpecialFolder.MyDocuments,
+                        UseDescriptionForTitle = true,
+                        Description = "Select location of accounts"
+                    };
+                    if (fbd.ShowDialog() == true)
+                    {
+                        if (Directory.Exists(fbd.SelectedPath))
+                        {
+                            Properties.Settings.Default.MainAccountPath = fbd.SelectedPath;
+                            Properties.Settings.Default.Save();
+                            return LoadFiles(fbd.SelectedPath);
+                        }
+                        else return AccountFailure;
+                    }
+                    else return AccountFailure;
+                }
+                else return LoadFiles(Properties.Settings.Default.MainAccountPath);
+            }
 
             public static List<AccountModel> LoadFiles(string directoryLocation)
             {
@@ -87,14 +127,7 @@ namespace PSWRDMGR.Accounts
                         $"{directoryLocation} isn't a valid directory. " +
                         $"You can either create it, or load from another directory",
                         $"Path doesn't exist. Couldn't load accounts");
-                    return new List<AccountModel>()
-                    {
-                        new AccountModel()
-                        {
-                            AccountName = "Failed to load accounts from the",
-                            Email = "main account directory."
-                        }
-                    };
+                    return AccountFailure;
                 }
 
                 List<string> accname = File.ReadAllLines(Path.Combine(directoryLocation, AccNameName)).ToList();
@@ -139,7 +172,9 @@ namespace PSWRDMGR.Accounts
             {
                 VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog
                 {
-                    RootFolder = Environment.SpecialFolder.MyDocuments
+                    RootFolder = Environment.SpecialFolder.MyDocuments,
+                    UseDescriptionForTitle = true,
+                    Description = "Select location to save accounts"
                 };
 
                 if (fbd.ShowDialog() == true)
@@ -147,7 +182,30 @@ namespace PSWRDMGR.Accounts
                     SaveFiles(accounts, fbd.SelectedPath);
                 }
             }
-            public static void SaveFiles(List<AccountModel> accounts) { SaveFiles(accounts, FolderPath); }
+            public static void SaveFiles(List<AccountModel> accounts)
+            {
+                if (!Directory.Exists(Properties.Settings.Default.MainAccountPath))
+                {
+                    VistaFolderBrowserDialog fbd = new VistaFolderBrowserDialog
+                    {
+                        RootFolder = Environment.SpecialFolder.MyDocuments,
+                        UseDescriptionForTitle = true,
+                        Description = "Select location to save accounts"
+                    };
+                    if (fbd.ShowDialog() == true)
+                    {
+                        if (Directory.Exists(fbd.SelectedPath))
+                        {
+                            Properties.Settings.Default.MainAccountPath = fbd.SelectedPath;
+                            Properties.Settings.Default.Save();
+                            SaveFiles(accounts, Properties.Settings.Default.MainAccountPath);
+                        }
+                        else SaveFiles(accounts, Properties.Settings.Default.MainAccountPath);
+                    }
+                }
+                else
+                    SaveFiles(accounts, Properties.Settings.Default.MainAccountPath);
+            }
             public static void SaveFiles(List<AccountModel> accounts, string directoryLocation)
             {
                 List<string> NEWaccname = new List<string>();
@@ -188,48 +246,6 @@ namespace PSWRDMGR.Accounts
                 File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn3Name), NEWextinf3);
                 File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn4Name), NEWextinf4);
                 File.WriteAllLines(Path.Combine(directoryLocation, ExtrIn5Name), NEWextinf5);
-            }
-
-            public static void SaveBackupFiles(List<AccountModel> accounts)
-            {
-                List<string> NEWaccname = new List<string>();
-                List<string> NEWemailss = new List<string>();
-                List<string> NEWusernam = new List<string>();
-                List<string> NEWpasswrd = new List<string>();
-                List<string> NEWdofbrth = new List<string>();
-                List<string> NEWscrtyin = new List<string>();
-                List<string> NEWextinf1 = new List<string>();
-                List<string> NEWextinf2 = new List<string>();
-                List<string> NEWextinf3 = new List<string>();
-                List<string> NEWextinf4 = new List<string>();
-                List<string> NEWextinf5 = new List<string>();
-
-                for (int i = 0; i < accounts.Count; i++)
-                {
-                    NEWaccname.Add(accounts[i].AccountName);
-                    NEWemailss.Add(accounts[i].Email);
-                    NEWusernam.Add(accounts[i].Username);
-                    NEWpasswrd.Add(accounts[i].Password);
-                    NEWdofbrth.Add(accounts[i].DateOfBirth);
-                    NEWscrtyin.Add(accounts[i].SecurityInfo);
-                    NEWextinf1.Add(accounts[i].ExtraInfo1);
-                    NEWextinf2.Add(accounts[i].ExtraInfo2);
-                    NEWextinf3.Add(accounts[i].ExtraInfo3);
-                    NEWextinf4.Add(accounts[i].ExtraInfo4);
-                    NEWextinf5.Add(accounts[i].ExtraInfo5);
-                }
-
-                File.WriteAllLines(@"E:\stuff\backupthingy\accName.txt",   NEWaccname);
-                File.WriteAllLines(@"E:\stuff\backupthingy\email.txt",     NEWemailss);
-                File.WriteAllLines(@"E:\stuff\backupthingy\usrName.txt",   NEWusernam);
-                File.WriteAllLines(@"E:\stuff\backupthingy\pssWrd.txt",    NEWpasswrd);
-                File.WriteAllLines(@"E:\stuff\backupthingy\DtoBrth.txt",   NEWdofbrth);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ScrtyInfo.txt", NEWscrtyin);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf1.txt",   NEWextinf1);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf2.txt",   NEWextinf2);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf3.txt",   NEWextinf3);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf4.txt",   NEWextinf4);
-                File.WriteAllLines(@"E:\stuff\backupthingy\ExtInf5.txt",   NEWextinf5);
             }
         }
     }

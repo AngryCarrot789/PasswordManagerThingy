@@ -28,14 +28,6 @@ namespace PSWRDMGR
         {
             SetThemeDictionary(new ResourceDictionary() { Source = uri });
         }
-
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            MainWindow mWind = new MainWindow();
-            this.MainWindow = mWind;
-            mWind.Show();
-        }
-
         public void SetTheme(Theme theme)
         {
             string themeName = null;

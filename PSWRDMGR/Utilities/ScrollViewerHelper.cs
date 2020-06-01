@@ -32,9 +32,13 @@ namespace PSWRDMGR.Utilities
             if (Keyboard.Modifiers != ModifierKeys.Shift)
                 return;
             if (args.Delta < 0)
+            {
                 scrollViewer.LineRight();
+            }
             else
+            {
                 scrollViewer.LineLeft();
+            }
             args.Handled = true;
         }
 

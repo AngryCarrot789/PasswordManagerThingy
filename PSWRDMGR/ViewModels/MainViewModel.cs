@@ -58,7 +58,7 @@ namespace PSWRDMGR.ViewModels
         }
         public AccountListItem SelectedAccountItem
         {
-            get => AccountsList != null && (AccountsList.Count - 1) >= SelectedIndex ? AccountsList[SelectedIndex] : null;
+            get => AccountsList != null && SelectedIndex >= 0 && AccountsList.Count > 0? AccountsList[SelectedIndex] : null;
         }
         public AccountModel SelectedAccountStructure
         {
@@ -71,7 +71,6 @@ namespace PSWRDMGR.ViewModels
         public ICommand DeleteAccountCommand { get; set; }
         public ICommand SaveAccountCommand { get; set; }
         public ICommand LoadAccountCommand { get; set; }
-        public ICommand BackupAccountsCommand { get; set; }
         public ICommand SearchAccountCommand { get; set; }
         public ICommand MoveAccountPositionCommand { get; set; }
         public ICommand ShowHelpWindowCommand { get; set; }
@@ -116,7 +115,6 @@ namespace PSWRDMGR.ViewModels
             DeleteAccountCommand = new Command(DeleteSelectedAccount);
             SaveAccountCommand = new Command(SaveAccounts);
             LoadAccountCommand = new Command(LoadAccounts);
-            BackupAccountsCommand = new Command(BackupAccounts);
             SearchAccountCommand = new Command(SearchAccount);
             MoveAccountPositionCommand = new CommandParam(MoveAccPos);
             ShowHelpWindowCommand = new Command(ShowHelpWindow);
@@ -205,17 +203,6 @@ namespace PSWRDMGR.ViewModels
                 oeoe.Add(m);
             }
             AccountSaver.SaveCustomFiles(oeoe);
-        }
-
-        public void BackupAccounts()
-        {
-            List<AccountModel> oeoe = new List<AccountModel>();
-            foreach (AccountListItem item in AccountsList)
-            {
-                AccountModel m = item.DataContext as AccountModel;
-                oeoe.Add(m);
-            }
-            AccountSaver.SaveBackupFiles(oeoe);
         }
 
         public void LoadAccounts()
