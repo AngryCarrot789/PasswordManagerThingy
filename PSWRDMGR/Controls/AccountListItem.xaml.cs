@@ -3,6 +3,7 @@ using PSWRDMGR.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,9 +23,8 @@ namespace PSWRDMGR.Controls
     /// </summary>
     public partial class AccountListItem : UserControl
     {
-        public Action<AccountModel> ShowContentCallback { get; set; }
+        public Action<AccountModel> AutoShowContentCallback { get; set; }
         public Action<AccountModel> EditContentCallback { get; set; }
-        public Action FocusCallback { get; set; }
         private AccountModel AccountContext { get => this.DataContext as AccountModel; }
         public AccountListItem()
         {
@@ -48,8 +48,17 @@ namespace PSWRDMGR.Controls
 
         private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ShowContentCallback?.Invoke(AccountContext);
-            FocusCallback?.Invoke();
+            AutoShowContentCallback?.Invoke(AccountContext);
+        }
+
+        public AccountListItem Duplicate()
+        {
+            return new AccountListItem()
+            {
+                AutoShowContentCallback = this.AutoShowContentCallback,
+                EditContentCallback = this.EditContentCallback,
+                DataContext = this.DataContext
+            };
         }
     }
 }

@@ -84,33 +84,7 @@
                             <TextBlock Margin="15 0 0 0" Text="{Binding ContentPanelShowing, Converter={StaticResource ContentPanelConverter}}" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Width="130"/>
                         </StackPanel>
                     </Button>
-                    <Label Content="Search for an account" HorizontalAlignment="Left" Margin="0,220,0,0" VerticalAlignment="Top"/>
-                    <TextBox Text="{Binding SearchAccountText, UpdateSourceTrigger=PropertyChanged}" 
-                            FontSize="14" Padding="3" Margin="0,246,0,0" TextWrapping="Wrap"
-                            VerticalAlignment="Top" ToolTip="Press enter to search for an account">
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="Enter" Command="{Binding SearchAccountCommand}"/>
-                        </TextBox.InputBindings>
-                    </TextBox>
-                    <Separator VerticalAlignment="Top" Height="1" Margin="0,283,0,0"/>
-                    <Button Command="{Binding CreateCustomDirectoryCommand}" Margin="0,0,0,226" Height="50" VerticalAlignment="Bottom">
-                        <StackPanel Orientation="Horizontal" Width="160" Height="40">
-                            <Image Source="Resources/createDirectoryIcon.png" Width="24" HorizontalAlignment="Left" />
-                            <TextBlock Margin="6 0 0 0" Text="Create Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding LoadCustomDirectoryCommand}" Margin="0,0,0,171" Height="50" VerticalAlignment="Bottom">
-                        <StackPanel Orientation="Horizontal" Width="160" Height="40">
-                            <Image Source="Resources/loadDirectoryIcon.png" Width="24" HorizontalAlignment="Left" />
-                            <TextBlock Text="Load Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding SaveCustomDirectoryCommand}" Margin="0,0,0,116" Height="50" VerticalAlignment="Bottom">
-                        <StackPanel Orientation="Horizontal" Width="160" Height="40">
-                            <Image Source="Resources/saveDirectoryIcon.png" Width="24"  HorizontalAlignment="Left" />
-                            <TextBlock Margin="6 0 0 0" Text="Save Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        </StackPanel>
-                    </Button>
+                    <Button Content="Search for Account" Command="{Binding SearchAccountCommand}" Margin="0,220,0,0" Height="40" VerticalAlignment="Top"/>
                     <Separator VerticalAlignment="Bottom" Height="1" Margin="0,0,0,110"/>
                     <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,0,55" Height="50" FontFamily="Segoe UI">
                         <StackPanel Orientation="Horizontal" Width="160" Height="40">
@@ -185,6 +159,26 @@
                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Move Selected Account Position" Width="93"/>
                         <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up"   Margin="98,0,0,0" FontSize="16" HorizontalAlignment="Left" Width="75"/>
                         <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="178,0,0,0" FontSize="16" HorizontalAlignment="Left" Width="75"/>
+                        <StackPanel Orientation="Horizontal" Margin="258,0,67,0">
+                            <Button Command="{Binding CreateCustomDirectoryCommand}" Width="160">
+                                <StackPanel Orientation="Horizontal" Width="148" Height="32">
+                                    <Image Source="Resources/createDirectoryIcon.png" Width="24" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="6 0 0 0" Text="Create Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Command="{Binding LoadCustomDirectoryCommand}" Width="160" Margin="5 0 0 0">
+                                <StackPanel Orientation="Horizontal" Width="140" Height="32">
+                                    <Image Source="Resources/loadDirectoryIcon.png" Width="24" HorizontalAlignment="Left" />
+                                    <TextBlock Text="Load Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Command="{Binding SaveCustomDirectoryCommand}" Width="160" Margin="5 0 0 0">
+                                <StackPanel Orientation="Horizontal" Width="140" Height="32">
+                                    <Image Source="Resources/saveDirectoryIcon.png" Width="24"  HorizontalAlignment="Left" />
+                                    <TextBlock Margin="6 0 0 0" Text="Save Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
                         <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontSize="16" Margin="0,0,72,0" Width="35"/>
                         <Label Content="Accounts" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Margin="0"/>
                     </Grid>

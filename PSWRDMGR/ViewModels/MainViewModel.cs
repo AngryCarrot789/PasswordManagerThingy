@@ -18,7 +18,6 @@ namespace PSWRDMGR.ViewModels
         //Private fields
         private int selectedIndex;
         private bool enableSaveLoad;
-        private string srchAccText;
         private bool autoSave;
         private bool contentPanelShowing;
         private AccountModel _selectedAccStr = new AccountModel();
@@ -38,11 +37,6 @@ namespace PSWRDMGR.ViewModels
         {
             get => enableSaveLoad;
             set => RaisePropertyChanged(ref enableSaveLoad, value);
-        }
-        public string SearchAccountText
-        {
-            get => srchAccText;
-            set => RaisePropertyChanged(ref srchAccText, value);
         }
         public bool ContentPanelShowing
         {
@@ -101,6 +95,7 @@ namespace PSWRDMGR.ViewModels
             NewAccountWndow = new NewAccountWindow();
             ControlsWndow = new ControlsWindow();
             SearchWindow = new SearchResultsWindow();
+            SearchWindow.SearchContext.GetAccountItems = SetSearchAccountItems;
             SetupCommandBindings();
             AutosaveWhenClosing = true;
             NewAccountWndow.AddAccountCallback = this.AddAccount;
@@ -126,31 +121,17 @@ namespace PSWRDMGR.ViewModels
             SaveCustomDirectoryCommand = new Command(SaveCustomAccounts);
         }
 
-        public void SearchAccount()
+        private void SetSearchAccountItems()
         {
-            SearchWindow.SearchContext.ClearAccountsList();
-            ShowSearchWindow();
-            //SearchAccountText
-            int index = 0;
             foreach (AccountListItem accItem in AccountsList)
             {
-                AccountModel account = accItem.DataContext as AccountModel;
-                if (!string.IsNullOrEmpty(SearchAccountText))
-                {
-                    if (account.AccountName.ToLower().Contains(SearchAccountText.ToLower()))
-                    {
-                        AccountListItem ali = new AccountListItem
-                        {
-                            DataContext = account,
-                            ShowContentCallback = this.ShowAccountContent,
-                            EditContentCallback = this.ShowEditAccountWindow
-                        };
-
-                        SearchWindow.AddAccount(ali);
-                    }
-                }
-                index++;
+                SearchWindow.AddRealAccount(accItem.Duplicate());
             }
+        }
+
+        public void SearchAccount()
+        {
+            ShowSearchWindow();
         }
 
         //helper. converts the "index" of a Key to an int. e.g, A = 1, c = 3.
@@ -231,13 +212,20 @@ namespace PSWRDMGR.ViewModels
         public void AddAccount(AccountModel accountContent)
         {
             //e
-            AccountListItem ali = new AccountListItem();
-            ali.DataContext = accountContent;
-            ali.ShowContentCallback = this.ShowAccountContent;
-            ali.EditContentCallback = this.ShowEditAccountWindow;
+            AccountListItem ali = CreateAccountItem(accountContent);
 
             AccountsList.Add(ali);
             NewAccountWndow.ResetAccountContext();
+        }
+
+        public AccountListItem CreateAccountItem(AccountModel model)
+        {
+            return new AccountListItem
+            {
+                DataContext = model,
+                AutoShowContentCallback = this.ShowAccountContent,
+                EditContentCallback = this.ShowEditAccountWindow
+            };
         }
 
         public void DeleteSelectedAccount()

@@ -1,4 +1,6 @@
-﻿using PSWRDMGR.Controls;
+﻿using PSWRDMGR.AccountStructures;
+using PSWRDMGR.Controls;
+using PSWRDMGR.Search;
 using PSWRDMGR.Utilities;
 using PSWRDMGR.ViewModels;
 using System;
@@ -24,20 +26,19 @@ namespace PSWRDMGR.Views
     public partial class SearchResultsWindow : Window
     {
         public SearchViewModel SearchContext { get => this.DataContext as SearchViewModel; }
-
         public SearchResultsWindow()
         {
             InitializeComponent();
         }
 
-        public void AddAccount(AccountListItem account)
+        public void AddRealAccount(AccountListItem account)
         {
-            SearchContext.AddAccount(account);
+            SearchContext.AddRealAccount(account);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Search()
         {
-            this.Close();
+            SearchContext.Search();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

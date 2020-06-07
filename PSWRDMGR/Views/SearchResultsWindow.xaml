@@ -5,21 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views"
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels" 
+        xmlns:converters="clr-namespace:PSWRDMGR.Converters"
         ResizeMode="NoResize"
         mc:Ignorable="d" Closing="Window_Closing" 
         KeyDown="Window_KeyDown" 
         Title="Search Results" 
-        Height="500" Width="800"
+        Height="500" Width="900"
         Style="{DynamicResource CustomToolWindowStyle}">
     <Window.DataContext>
         <viewmodels:SearchViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <converters:RadioToEnumConverter x:Key="RadioToEnum"/>
+    </Window.Resources>
     <Grid Background="{DynamicResource ContainerBackground}">
+        <Border HorizontalAlignment="Left" Width="117" Margin="10,10,0,52" BorderBrush="{DynamicResource ControlBrightDefaultBorderBrush}" BorderThickness="1">
+            <StackPanel>
+                <Label Content="Sort by:"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=AccountName}" Content="Account Name" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=Email}" Content="Email" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=Username}" Content="Username" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=Password}" Content="Password" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=DateOfBirth}" Content="Date Of Birth" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=SecurityInfo}" Content="Security Info" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=ExtraInfo1}" Content="Extra Info 1" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=ExtraInfo2}" Content="Extra Info 2" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=ExtraInfo3}" Content="Extra Info 3" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=ExtraInfo4}" Content="Extra Info 4" Margin="3 0 0 5" Height="18"/>
+                <RadioButton IsChecked="{Binding Path=Filter, Converter={StaticResource RadioToEnum}, ConverterParameter=ExtraInfo5}" Content="Extra Info 5" Margin="3 0 0 5" Height="18"/>
+            </StackPanel>
+        </Border>
+
         <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}" 
                  SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Stretch" 
                  HorizontalContentAlignment="Stretch"
-                 FontFamily="Segoe UI Light" Margin="10,10,10,65"/>
-        <Button Content="Clear &amp; Close" VerticalAlignment="Bottom" Height="45" Click="Button_Click" FontSize="16" Margin="10,0,10,10"/>
+                 FontFamily="Segoe UI Light" Margin="137,10,10,52"/>
+        <TextBox Text="{Binding SearchFor, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Height="32" Margin="10,0,110,10" TextWrapping="Wrap" VerticalAlignment="Bottom">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding SearchCommand}" Key="Enter"/>
+            </TextBox.InputBindings>
+        </TextBox>
+        <Button Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="90" Height="32"/>
     </Grid>
 </Window>

@@ -88,6 +88,8 @@
       <DependentUpon>LabelledItemSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ContentPanelValueConverter.cs" />
+    <Compile Include="Converters\RadioToEnumConverter.cs" />
+    <Compile Include="Search\SearchFindTypes.cs" />
     <Compile Include="Themes\ColourfulDarkTheme.xaml.cs">
       <DependentUpon>ColourfulDarkTheme.xaml</DependentUpon>
     </Compile>
