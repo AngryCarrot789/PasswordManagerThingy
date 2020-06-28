@@ -22,10 +22,6 @@
     </Window.Resources>
     <Grid>
         <Menu VerticalAlignment="Top">
-            <MenuItem Header="File">
-                <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="3 0 0 0" Width="200"/>
-                <CheckBox Content="Enable Controls Below" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Height="24" FontSize="14" Margin="3 0 0 0" Width="200"/>
-            </MenuItem>
             <MenuItem Header="Themes">
                 <MenuItem Header="Light" Template="{DynamicResource SingleDropDownMenuItem}" Click="ChangeTheme" Uid="0">
                     <MenuItem.Icon>
@@ -59,34 +55,43 @@
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
-                <Grid>
-                    <Button Command="{Binding ShowAddAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="50" FontFamily="Segoe UI">
-                        <StackPanel Orientation="Horizontal" Width="160" Height="40">
-                            <Image Source="Resources/addAccountIcon.png" Width="28" HorizontalAlignment="Left" />
-                            <TextBlock Margin="15 0 0 0" Text="Add Account" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding ShowEditAccountWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,55,0,0" Height="50" FontFamily="Segoe UI">
-                        <StackPanel Orientation="Horizontal" Width="160" Height="40">
-                            <Image Source="Resources/editAccountIcon.png" Width="28" HorizontalAlignment="Left" />
-                            <TextBlock Margin="15 0 0 0" Text="Edit Account" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding DeleteAccountCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,110,0,0" Height="50" FontFamily="Segoe UI">
-                        <StackPanel Orientation="Horizontal" Width="160" Height="40">
-                            <Image Width="28" Source="Resources/deleteAccountIcon.png" HorizontalAlignment="Left" />
-                            <TextBlock Margin="15 0 0 0" Text="Delete Account" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding AutoShowContentPanelCommand}" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="0,165,0,0" Height="50" FontFamily="Segoe UI">
-                        <StackPanel Width="160" Orientation="Horizontal" Height="40">
-                            <Image Source="Resources/showAccountIcon.png" Width="28" HorizontalAlignment="Left" />
-                            <TextBlock Margin="15 0 0 0" Text="{Binding ContentPanelShowing, Converter={StaticResource ContentPanelConverter}}" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Width="130"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Content="Search for Account" Command="{Binding SearchAccountCommand}" Margin="0,220,0,0" Height="40" VerticalAlignment="Top"/>
-                    <Separator VerticalAlignment="Bottom" Height="1" Margin="0,0,0,110"/>
-                    <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"  Margin="0,0,0,55" Height="50" FontFamily="Segoe UI">
+
+                <Grid Margin="0,46,0,0">
+                    <StackPanel>
+                        <Button Command="{Binding ShowAddAccountWindowCommand}" Margin="0 0 0 5" Height="56" FontFamily="Segoe UI">
+                            <StackPanel Orientation="Horizontal" Width="160" Height="40">
+                                <Image Source="Resources/addAccountIcon.png" Width="28" HorizontalAlignment="Left" />
+                                <TextBlock Margin="15 0 0 0" Text="Add Account" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding ShowEditAccountWindowCommand}" Margin="0 0 0 5" Height="56" FontFamily="Segoe UI">
+                            <StackPanel Orientation="Horizontal" Width="160" Height="40">
+                                <Image Source="Resources/editAccountIcon.png" Width="28" HorizontalAlignment="Left" />
+                                <TextBlock Margin="15 0 0 0" Text="Edit Account" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding DeleteAccountCommand}" Margin="0 0 0 5" Height="56" FontFamily="Segoe UI">
+                            <StackPanel Orientation="Horizontal" Width="160" Height="40">
+                                <Image Width="28" Source="Resources/deleteAccountIcon.png" HorizontalAlignment="Left" />
+                                <TextBlock Margin="15 0 0 0" Text="Delete Account" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding AutoShowContentPanelCommand}" Margin="0 0 0 5" Height="56" FontFamily="Segoe UI">
+                            <StackPanel Width="160" Orientation="Horizontal" Height="40">
+                                <Image Source="Resources/showAccountIcon.png" Width="28" HorizontalAlignment="Left" />
+                                <TextBlock Margin="15 0 0 0" Text="{Binding ContentPanelShowing, Converter={StaticResource ContentPanelConverter}}" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Width="130"/>
+                            </StackPanel>
+                        </Button>
+                        <TextBox Margin="0 0 0 5" Padding="5" Text="{Binding SearchWindow.SearchContext.SearchFor, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter" Command="{Binding SearchAccountCommand}"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Button Content="Search for Account" Command="{Binding SearchAccountCommand}" Margin="0 0 0 5" Height="40"/>
+                        <CheckBox Content="Autosave when closing" IsChecked="{Binding AutosaveWhenClosing, UpdateSourceTrigger=PropertyChanged}" Height="24" FontSize="14"/>
+                        <CheckBox Content="Enable Controls Below" IsChecked="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 5" Height="24" FontSize="14"/>
+                    </StackPanel>
+                    <Button Command="{Binding LoadAccountCommand}" IsEnabled="{Binding EnableSaveAndLoad, UpdateSourceTrigger=PropertyChanged}" Height="50" FontFamily="Segoe UI" Margin="0,0,0,55" VerticalAlignment="Bottom">
                         <StackPanel Orientation="Horizontal" Width="160" Height="40">
                             <Image Source="Resources/loadDirectoryIcon.png" Width="24" HorizontalAlignment="Left" />
                             <TextBlock Text="Load Main Accounts" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
@@ -103,7 +108,7 @@
                 <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource ContainerBackground}"/>
 
                 <Grid Grid.Column="2" Margin="0,0,0,0">
-                    <DockPanel Margin="0,0,0,50">
+                    <DockPanel Margin="0,0,0,55">
                         <Grid DockPanel.Dock="Right" Width="0" x:Name="AccountPanel">
                             <Grid Width="450">
                                 <Border Background="{DynamicResource ContainerBackground}"/>
@@ -144,45 +149,56 @@
                                 <Button Command="{Binding CopyDetailsCommand}" CommandParameter="9" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16"/>
                             </Grid>
                         </Grid>
-                        <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
-                            SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
-                            BorderBrush="{DynamicResource ControlDefaultBorderBrush}" 
-                            Background="{DynamicResource BackgroundColour}"
-                            utils:ScrollViewerHelper.ShiftWheelScrollsHorizontally="True"
-                            x:Name="lBox"
-                            HorizontalContentAlignment="Stretch"
-                            BorderThickness="1"/>
+                        <Grid>
+                            <Label Content="Accounts List" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5 0 0" FontSize="16"/>
+                            <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
+                                     SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
+                                     BorderBrush="{DynamicResource ControlDefaultBorderBrush}" 
+                                     Background="{DynamicResource BackgroundColour}"
+                                     utils:ScrollViewerHelper.ShiftWheelScrollsHorizontally="True"
+                                     x:Name="lBox"
+                                     HorizontalContentAlignment="Stretch"
+                                     BorderThickness="1" Margin="0,46,0,0"/>
+                        </Grid>
                     </DockPanel>
 
-                    <Grid Background="{DynamicResource ContainerBackground}" Height="40" VerticalAlignment="Bottom">
+                    <Grid Background="{DynamicResource ContainerBackground}" Height="45" VerticalAlignment="Bottom">
                         <Border/>
                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Move Selected Account Position" Width="93"/>
                         <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="0" Content="Up"   Margin="98,0,0,0" FontSize="16" HorizontalAlignment="Left" Width="75"/>
                         <Button Command="{Binding MoveAccountPositionCommand}" CommandParameter="1" Content="Down" Margin="178,0,0,0" FontSize="16" HorizontalAlignment="Left" Width="75"/>
-                        <StackPanel Orientation="Horizontal" Margin="258,0,67,0">
-                            <Button Command="{Binding CreateCustomDirectoryCommand}" Width="160">
-                                <StackPanel Orientation="Horizontal" Width="148" Height="32">
+                        <Grid Margin="258,0,112,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Command="{Binding CreateCustomDirectoryCommand}">
+                                <StackPanel Orientation="Horizontal" Width="100" Height="32">
                                     <Image Source="Resources/createDirectoryIcon.png" Width="24" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="6 0 0 0" Text="Create Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    <TextBlock Margin="6 0 0 0" Text="Create List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Button>
-                            <Button Command="{Binding LoadCustomDirectoryCommand}" Width="160" Margin="5 0 0 0">
-                                <StackPanel Orientation="Horizontal" Width="140" Height="32">
+                            <Button Command="{Binding LoadCustomDirectoryCommand}" Grid.Column="2">
+                                <StackPanel Orientation="Horizontal" Width="90" Height="32">
                                     <Image Source="Resources/loadDirectoryIcon.png" Width="24" HorizontalAlignment="Left" />
-                                    <TextBlock Text="Load Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
+                                    <TextBlock Text="Load List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 0 0"/>
                                 </StackPanel>
                             </Button>
-                            <Button Command="{Binding SaveCustomDirectoryCommand}" Width="160" Margin="5 0 0 0">
-                                <StackPanel Orientation="Horizontal" Width="140" Height="32">
+                            <Button Command="{Binding SaveCustomDirectoryCommand}" Grid.Column="4">
+                                <StackPanel Orientation="Horizontal" Width="90" Height="32">
                                     <Image Source="Resources/saveDirectoryIcon.png" Width="24"  HorizontalAlignment="Left" />
-                                    <TextBlock Margin="6 0 0 0" Text="Save Custom List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    <TextBlock Margin="6 0 0 0" Text="Save List" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Button>
-                        </StackPanel>
+                        </Grid>
                         <Label Content="{Binding AccountsList.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontSize="16" Margin="0,0,72,0" Width="35"/>
                         <Label Content="Accounts" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Margin="0"/>
                     </Grid>
                 </Grid>
+                <Label Content="ToolBox" HorizontalAlignment="Center" Margin="62,5,62,0" VerticalAlignment="Top" FontSize="16"/>
             </Grid>
         </Grid>
     </Grid>

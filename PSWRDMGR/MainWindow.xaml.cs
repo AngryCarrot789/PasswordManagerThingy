@@ -89,19 +89,23 @@ namespace PSWRDMGR
                 ViewModel.SaveAccounts();
             else
             {
-                if (MessageBox.Show("Do you want to save all accounts in the accounts list, to the default storage location? " +
-                    "(if you're debugging, this could replace all real accounts with a list of test accounts which would be bad)",
-                    "Save accounts to default/main accounts storage location?",
-                    MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                MessageBoxResult results = 
+                    MessageBox.Show(
+                        "Save all accounts in the default accounts list?",
+                        "Save accounts to default/main accounts storage location?",
+                        MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                if (results == MessageBoxResult.Yes)
                 {
                     ViewModel.SaveAccounts();
                 }
+                else if (results == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
             }
             ViewModel.CloseAllWindows();
-
             SaveSettings();
-            //this.Close();
-            //Environment.Exit(0);
         }
 
         public void SaveSettings()

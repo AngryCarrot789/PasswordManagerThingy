@@ -132,6 +132,8 @@ namespace PSWRDMGR.ViewModels
         public void SearchAccount()
         {
             ShowSearchWindow();
+            if (!string.IsNullOrEmpty(SearchWindow.SearchContext.SearchFor))
+                SearchWindow.Search();
         }
 
         //helper. converts the "index" of a Key to an int. e.g, A = 1, c = 3.

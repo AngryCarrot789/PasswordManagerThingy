@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -25,7 +26,11 @@ namespace PSWRDMGR.Views
     /// </summary>
     public partial class SearchResultsWindow : Window
     {
-        public SearchViewModel SearchContext { get => this.DataContext as SearchViewModel; }
+        public SearchViewModel SearchContext
+        {
+            get => this.DataContext as SearchViewModel;
+            set => this.DataContext = value;
+        }
         public SearchResultsWindow()
         {
             InitializeComponent();
