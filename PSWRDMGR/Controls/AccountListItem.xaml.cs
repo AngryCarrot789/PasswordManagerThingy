@@ -51,6 +51,14 @@ namespace PSWRDMGR.Controls
             AutoShowContentCallback?.Invoke(AccountContext);
         }
 
+        /// <summary>
+        /// WPF doesn't allow the same element to be in 2 different places,
+        /// i.e, you cant have the same accountlistitem in 2 different lists (due to
+        /// dependency objects and stuff i think, so
+        /// you need to duplicate it which only changes the internal 
+        /// "class UID" thingy idk, which WPF does allow :)
+        /// </summary>
+        /// <returns></returns>
         public AccountListItem Duplicate()
         {
             return new AccountListItem()

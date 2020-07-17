@@ -1,10 +1,13 @@
-﻿using System;
+﻿using PSWRDMGR.Views;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace PSWRDMGR
 {
@@ -45,6 +48,31 @@ namespace PSWRDMGR
                     ChangeTheme(new Uri($"Themes/{themeName}.xaml", UriKind.Relative));
             }
             catch { }
+        }
+
+        private LoginWindow LoginWindow { get; set; }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            LoginWindow = new LoginWindow();
+            LoginWindow.Login.TryLoginCallback = TryLogin;
+            LoginWindow.Show();
+        }
+
+        public void TryLogin(string pWrd)
+        {
+            // for now the password is just your username
+            if (pWrd == Environment.UserName)
+            {
+                MainWindow mw = new MainWindow();
+                mw.Show();
+                MainWindow = mw;
+                LoginWindow.Close();
+            }
+            else
+            {
+                MessageBox.Show("Password is wrong");
+            }
         }
     }
 }

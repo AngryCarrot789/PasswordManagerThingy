@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using static PSWRDMGR.Accounts.Accounts;
@@ -80,7 +79,8 @@ namespace PSWRDMGR.ViewModels
         public bool AccountsArePresent => AccountsList.Count > 0;
         public bool AccountIsSelected { get => SelectedIndex > -1; }
 
-        //this isnt technically very mvmv-ey... but eh
+        // this stuff below isn't very 'mvvm'-ey... but o well
+        // it works and that's what matters ;)
         public NewAccountWindow NewAccountWndow { get; set; }
         public ControlsWindow ControlsWndow { get; set; }
         public SearchResultsWindow SearchWindow { get; set; }
@@ -155,11 +155,11 @@ namespace PSWRDMGR.ViewModels
                 if (KeysDown[KeyInt(Key.E)]) ShowEditAccountWindow();
                 if (KeysDown[KeyInt(Key.L)] && EnableSaveAndLoad) LoadAccounts();
                 if (KeysDown[KeyInt(Key.K)]) SetContentPanelVisibility();
+                if (KeysDown[KeyInt(Key.Delete)]) DeleteSelectedAccount();
             }
             else
             {
                 //CTRL Released
-                if (KeysDown[KeyInt(Key.Delete)]) DeleteSelectedAccount();
                 if (KeysDown[KeyInt(Key.Left)]) SetContentPanelVisibility();
             }
         }

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace PSWRDMGR.ViewModels
+namespace PSWRDMGR.Search
 {
     public class SearchViewModel : BaseViewModel
     {
@@ -42,7 +42,10 @@ namespace PSWRDMGR.ViewModels
 
         public ICommand SearchCommand { get; private set; }
 
+        // i know this is a really bad way to do it
+        // but i programmed this late at night...
         public Action GetAccountItems { get; set; }
+
         public SearchViewModel()
         {
             AccountsList = new ObservableCollection<AccountListItem>();

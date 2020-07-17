@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views"
-        xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels" 
-        xmlns:converters="clr-namespace:PSWRDMGR.Converters"
+        xmlns:converters="clr-namespace:PSWRDMGR.Converters" 
+        xmlns:srch="clr-namespace:PSWRDMGR.Search"
         ResizeMode="NoResize"
         mc:Ignorable="d" Closing="Window_Closing" 
         KeyDown="Window_KeyDown" 
@@ -13,7 +13,7 @@
         Height="500" Width="900"
         Style="{DynamicResource CustomToolWindowStyle}">
     <Window.DataContext>
-        <viewmodels:SearchViewModel/>
+        <srch:SearchViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <converters:RadioToEnumConverter x:Key="RadioToEnum"/>

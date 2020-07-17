@@ -14,11 +14,11 @@
         FontFamily="Consolas">
     <Grid>
         <ListBox FontSize="16" VerticalAlignment="Top">
-            <Label Content="CTRL + A -- Opens the Add Account window"/>
-            <Label Content="CTRL + S -- Saves the account to the default location"/>
-            <Label Content="CTRL + E -- Shows the edit account window"/>
-            <Label Content="CTRL + L -- Loads the account from the default location"/>
-            <Label Content="Del Key  -- Deletes selected account"/>
+            <Label Content="CTRL + A    -- Opens the Add Account window"/>
+            <Label Content="CTRL + S    -- Saves the account to the default location"/>
+            <Label Content="CTRL + E    -- Shows the edit account window"/>
+            <Label Content="CTRL + L    -- Loads the account from the default location"/>
+            <Label Content="CTRL + Del  -- Deletes selected account"/>
         </ListBox>
     </Grid>
 </Window>
