@@ -7,6 +7,7 @@
         xmlns:viewmodels="clr-namespace:PSWRDMGR.ViewModels"
         xmlns:utils="clr-namespace:PSWRDMGR.Utilities"
         xmlns:converters="clr-namespace:PSWRDMGR.Converters" 
+        xmlns:controls="clr-namespace:PSWRDMGR.Controls" xmlns:system="clr-namespace:System;assembly=mscorlib"
         ResizeMode="CanResizeWithGrip"
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
@@ -112,7 +113,7 @@
                         <Grid DockPanel.Dock="Right" Width="0" x:Name="AccountPanel">
                             <Grid Width="450">
                                 <Border Background="{DynamicResource ContainerBackground}"/>
-                                <Grid DataContext="{Binding SelectedAccountStructure, UpdateSourceTrigger=PropertyChanged}">
+                                <Grid DataContext="{Binding SelectedAccount.Account, UpdateSourceTrigger=PropertyChanged}">
                                     <Border VerticalAlignment="Top" Height="47" Background="{DynamicResource ContainerBackground}">
                                         <TextBox Text="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Padding="3"/>
                                     </Border>
@@ -137,28 +138,77 @@
                                     <TextBox Text="{Binding ExtraInfo4, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding ExtraInfo4, UpdateSourceTrigger=PropertyChanged}" ToolTipService.Placement="MousePoint" Height="31" Margin="132,0,68,46"  VerticalAlignment="Bottom" FontSize="16" Padding="3" IsReadOnly="False"/>
                                     <TextBox Text="{Binding ExtraInfo5, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding ExtraInfo5, UpdateSourceTrigger=PropertyChanged}" ToolTipService.Placement="MousePoint" Height="31" Margin="132,0,68,10"  VerticalAlignment="Bottom" FontSize="16" Padding="3" IsReadOnly="False"/>
                                 </Grid>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="0" Content="Copy" HorizontalAlignment="Right" Margin="0,52,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="1" Content="Copy" HorizontalAlignment="Right" Margin="0,88,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="2" Content="Copy" HorizontalAlignment="Right" Margin="0,124,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="3" Content="Copy" HorizontalAlignment="Right" Margin="0,160,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="4" Content="Copy" HorizontalAlignment="Right" Margin="0,196,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="5" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,154" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="6" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,118" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="7" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,82" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="8" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,46" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16"/>
-                                <Button Command="{Binding CopyDetailsCommand}" CommandParameter="9" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16"/>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,52,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16">
+                                    <Button.CommandParameter>
+                                        <system:Int32>0</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,88,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"    >
+                                    <Button.CommandParameter>
+                                        <system:Int32>1</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,124,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"   >
+                                    <Button.CommandParameter>
+                                        <system:Int32>2</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,160,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"   >
+                                    <Button.CommandParameter>
+                                        <system:Int32>3</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,196,0,0" VerticalAlignment="Top" Width="69" Height="31" FontSize="16"   >
+                                    <Button.CommandParameter>
+                                        <system:Int32>4</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,154" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16">
+                                    <Button.CommandParameter>
+                                        <system:Int32>5</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,118" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16">
+                                    <Button.CommandParameter>
+                                        <system:Int32>6</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,82" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16" >
+                                    <Button.CommandParameter>
+                                        <system:Int32>7</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,46" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16" >
+                                    <Button.CommandParameter>
+                                        <system:Int32>8</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button Command="{Binding CopyDetailsCommand}" Content="Copy" HorizontalAlignment="Right" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="69" Height="31" FontSize="16" >
+                                    <Button.CommandParameter>
+                                        <system:Int32>9</system:Int32>
+                                    </Button.CommandParameter>
+                                </Button>
                             </Grid>
                         </Grid>
                         <Grid>
                             <Label Content="Accounts List" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5 0 0" FontSize="16"/>
                             <ListBox ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged}"
+                                     SelectedItem="{Binding SelectedAccount, UpdateSourceTrigger=PropertyChanged}" 
                                      SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" 
                                      BorderBrush="{DynamicResource ControlDefaultBorderBrush}" 
                                      Background="{DynamicResource BackgroundColour}"
                                      utils:ScrollViewerHelper.ShiftWheelScrollsHorizontally="True"
-                                     x:Name="lBox"
                                      HorizontalContentAlignment="Stretch"
-                                     BorderThickness="1" Margin="0,46,0,0"/>
+                                     ScrollViewer.CanContentScroll="False"
+                                     BorderThickness="1" 
+                                     Margin="0,46,0,0"
+                                     x:Name="lBox">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:AccountControl DataContext="{Binding}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </Grid>
                     </DockPanel>
 

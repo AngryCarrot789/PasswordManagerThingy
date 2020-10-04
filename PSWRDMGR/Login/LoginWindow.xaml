@@ -1,0 +1,25 @@
+﻿<Window x:Class="PSWRDMGR.Login.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSWRDMGR.Login"
+        mc:Ignorable="d"
+        Title="Login" 
+        x:Name="LoginWin"
+        Height="360" Width="600"
+        Style="{DynamicResource CustomToolWindowStyle}">
+    <Grid Margin="20">
+        <Label Content="Password Manager v1.5" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24"/>
+        <Grid Margin="0,42,0,102">
+            <Label Content="Enter Password:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24"/>
+            <PasswordBox Name="PasswordInput" VerticalContentAlignment="Center" VerticalAlignment="Center" 
+                         Padding="5" FontSize="22" Height="42" Margin="181,0,0,0">
+                <PasswordBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginWin}"/>
+                </PasswordBox.InputBindings>
+            </PasswordBox>
+        </Grid>
+        <Button Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginWin}" Content="Login" VerticalAlignment="Bottom" Height="80"/>
+    </Grid>
+</Window>

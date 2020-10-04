@@ -1,4 +1,4 @@
-﻿using PSWRDMGR.Themes;
+﻿using TheRThemes;
 using PSWRDMGR.ViewModels;
 using PSWRDMGR.Views;
 using System;
@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static PSWRDMGR.App;
+using static TheRThemes.ThemesController;
 
 namespace PSWRDMGR
 {
@@ -32,8 +33,8 @@ namespace PSWRDMGR
             ViewModel = new MainViewModel();
             this.DataContext = ViewModel;
             ViewModel.ScrollIntoView = ScrollIntoViewThingy;
-            ViewModel.ShowContentPanel = this.ShowContentPanel;
-            ViewModel.HideContentPanel = this.HideContentPanel;
+            ViewModel.ShowContentPanelCallback = this.ShowContentPanel;
+            ViewModel.HideContentPanelCallback = this.HideContentPanel;
             HideContentPanel();
             LoadSettings();
         }
@@ -150,10 +151,10 @@ namespace PSWRDMGR
         {
             switch (int.Parse(((MenuItem)sender).Uid))
             {
-                case 0: ThemesController.SetTheme(ThemeTypes.Light); break;
-                case 1: ThemesController.SetTheme(ThemeTypes.ColourfulLight); break;
-                case 2: ThemesController.SetTheme(ThemeTypes.Dark); break;
-                case 3: ThemesController.SetTheme(ThemeTypes.ColourfulDark); break;
+                case 0: SetTheme(ThemeTypes.Light); break;
+                case 1: SetTheme(ThemeTypes.ColourfulLight); break;
+                case 2: SetTheme(ThemeTypes.Dark); break;
+                case 3: SetTheme(ThemeTypes.ColourfulDark); break;
             }
             e.Handled = true;
         }

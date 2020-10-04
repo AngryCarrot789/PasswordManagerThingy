@@ -1,17 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
-namespace PSWRDMGR.Themes
+namespace TheRThemes
 {
     public static class ThemesController
     {
+        public enum ThemeTypes
+        {
+            Light, ColourfulLight,
+            Dark, ColourfulDark
+        }
+
+        public static ThemeTypes CurrentTheme { get; set; }
+
         private static ResourceDictionary ThemeDictionary
         {
-            // You could probably get it via its name with some query logic as well.
             get { return Application.Current.Resources.MergedDictionaries[0]; }
             set { Application.Current.Resources.MergedDictionaries[0] = value; }
         }
@@ -23,6 +26,7 @@ namespace PSWRDMGR.Themes
         public static void SetTheme(ThemeTypes theme)
         {
             string themeName = null;
+            CurrentTheme = theme;
             switch (theme)
             {
                 case ThemeTypes.Dark: themeName = "DarkTheme"; break;

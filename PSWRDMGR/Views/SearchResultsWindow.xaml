@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSWRDMGR.Views"
         xmlns:converters="clr-namespace:PSWRDMGR.Converters" 
-        xmlns:srch="clr-namespace:PSWRDMGR.Search"
+        xmlns:srch="clr-namespace:PSWRDMGR.Search" xmlns:controls="clr-namespace:PSWRDMGR.Controls"
         ResizeMode="NoResize"
         mc:Ignorable="d" Closing="Window_Closing" 
         KeyDown="Window_KeyDown" 
@@ -40,7 +40,15 @@
                  SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Stretch" 
                  HorizontalContentAlignment="Stretch"
-                 FontFamily="Segoe UI Light" Margin="137,10,10,52"/>
+                 ScrollViewer.CanContentScroll="False"
+                 FontFamily="Segoe UI Light" 
+                 Margin="137,10,10,52">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <controls:AccountControl DataContext="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <TextBox Text="{Binding SearchFor, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Height="32" Margin="10,0,110,10" TextWrapping="Wrap" VerticalAlignment="Bottom">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding SearchCommand}" Key="Enter"/>

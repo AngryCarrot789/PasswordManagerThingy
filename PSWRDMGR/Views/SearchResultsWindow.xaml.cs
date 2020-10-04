@@ -20,9 +20,9 @@ namespace PSWRDMGR.Views
             InitializeComponent();
         }
 
-        public void AddRealAccount(AccountListItem account)
+        public void AddRealAccount(AccountControlViewModel account)
         {
-            SearchContext.AddRealAccount(account);
+            SearchContext.AddTempItem(account);
         }
 
         public void Search()

@@ -1,13 +1,7 @@
-﻿using PSWRDMGR.Views;
+﻿using PSWRDMGR.Login;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Security.Principal;
-using System.Threading.Tasks;
+using System.Security;
 using System.Windows;
-using System.Windows.Input;
 
 namespace PSWRDMGR
 {
@@ -59,19 +53,20 @@ namespace PSWRDMGR
             LoginWindow.Show();
         }
 
-        public void TryLogin(string pWrd)
+        public void TryLogin(SecureString pWrd)
         {
             // for now the password is just your username
-            if (pWrd == Environment.UserName)
+            if (pWrd.GetUnsecure() == Environment.UserName)
             {
                 MainWindow mw = new MainWindow();
                 mw.Show();
                 MainWindow = mw;
                 LoginWindow.Close();
+                MainWindow = mw;
             }
             else
             {
-                MessageBox.Show("Password is wrong");
+                MessageBox.Show("wrong :((");
             }
         }
     }

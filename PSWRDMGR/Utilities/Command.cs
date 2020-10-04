@@ -3,10 +3,17 @@ using System.Windows.Input;
 
 namespace PSWRDMGR.Utilities
 {
+    /// <summary>
+    /// An always executable command
+    /// </summary>
     public class Command : ICommand
     {
         private readonly Action _action;
 
+        /// <summary>
+        /// Creates a command that can always execute
+        /// </summary>
+        /// <param name="action">The method to be executed</param>
         public Command(Action action)
         {
             _action = action;
@@ -14,7 +21,7 @@ namespace PSWRDMGR.Utilities
 
         public void Execute(object parameter)
         {
-            _action();
+            _action?.Invoke();
         }
 
         public bool CanExecute(object parameter)
@@ -22,8 +29,6 @@ namespace PSWRDMGR.Utilities
             return true;
         }
 
-#pragma warning disable 67
         public event EventHandler CanExecuteChanged { add { } remove { } }
-#pragma warning restore 67
     }
 }

@@ -56,6 +56,7 @@
     <OutputPath>bin\n\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL">
       <HintPath>..\packages\Ookii.Dialogs.1.0\lib\net35\Ookii.Dialogs.Wpf.dll</HintPath>
     </Reference>
@@ -84,11 +85,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Accounts\Accounts.cs" />
+    <Compile Include="Controls\AccountControlViewModel.cs" />
     <Compile Include="Controls\LabelledItemSelector.xaml.cs">
       <DependentUpon>LabelledItemSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ContentPanelValueConverter.cs" />
     <Compile Include="Converters\RadioToEnumConverter.cs" />
+    <Compile Include="Login\IPassword.cs" />
+    <Compile Include="Login\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\SecureStringHelper.cs" />
     <Compile Include="Search\SearchFindTypes.cs" />
     <Compile Include="Themes\ColourfulDarkTheme.xaml.cs">
       <DependentUpon>ColourfulDarkTheme.xaml</DependentUpon>
@@ -103,19 +110,15 @@
       <DependentUpon>LightTheme.xaml</DependentUpon>
     </Compile>
     <Compile Include="Themes\ThemesController.cs" />
-    <Compile Include="Themes\ThemeTypes.cs" />
     <Compile Include="Utilities\BaseViewModel.cs" />
     <Compile Include="Utilities\Command.cs" />
     <Compile Include="Utilities\CommandParam.cs" />
     <Compile Include="Utilities\ScrollViewerHelper.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Search\SearchViewModel.cs" />
     <Compile Include="Views\ControlsWindow.xaml.cs">
       <DependentUpon>ControlsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewAccountWindow.xaml.cs">
       <DependentUpon>NewAccountWindow.xaml</DependentUpon>
@@ -123,7 +126,7 @@
     <Compile Include="Views\SearchResultsWindow.xaml.cs">
       <DependentUpon>SearchResultsWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\AccountListItem.xaml">
+    <Page Include="Controls\AccountControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,17 +134,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Login\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AccountStructures\AccountModel.cs" />
+    <Compile Include="AccountStructures\AccountViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\AccountListItem.xaml.cs">
-      <DependentUpon>AccountListItem.xaml</DependentUpon>
+    <Compile Include="Controls\AccountControl.xaml.cs">
+      <DependentUpon>AccountControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -164,10 +171,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ControlsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

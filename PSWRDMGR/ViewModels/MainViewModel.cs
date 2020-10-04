@@ -19,44 +19,38 @@ namespace PSWRDMGR.ViewModels
         private bool enableSaveLoad;
         private bool autoSave;
         private bool contentPanelShowing;
-        private AccountModel _selectedAccStr = new AccountModel();
+        private AccountControlViewModel _selectedAccount;
 
-        public ObservableCollection<AccountListItem> AccountsList { get; set; }
+        public ObservableCollection<AccountControlViewModel> AccountsList { get; set; }
+
         public bool AutosaveWhenClosing
         {
             get => autoSave;
             set => RaisePropertyChanged(ref autoSave, value);
         }
+
         public int SelectedIndex
         {
             get => selectedIndex;
-            set { RaisePropertyChanged(ref selectedIndex, value, UpdateSelectedItem); }
+            set { RaisePropertyChanged(ref selectedIndex, value); }
         }
+
         public bool EnableSaveAndLoad
         {
             get => enableSaveLoad;
             set => RaisePropertyChanged(ref enableSaveLoad, value);
         }
+
         public bool ContentPanelShowing
         {
             get => contentPanelShowing;
             set => RaisePropertyChanged(ref contentPanelShowing, value);
         }
-        private void UpdateSelectedItem()
+
+        public AccountControlViewModel SelectedAccount
         {
-            if (SelectedAccountItem != null && SelectedAccountItem.DataContext != null)
-            {
-                SelectedAccountStructure = SelectedAccountItem.DataContext as AccountModel;
-            }
-        }
-        public AccountListItem SelectedAccountItem
-        {
-            get => AccountsList != null && SelectedIndex >= 0 && AccountsList.Count > 0? AccountsList[SelectedIndex] : null;
-        }
-        public AccountModel SelectedAccountStructure
-        {
-            get => _selectedAccStr;
-            set => RaisePropertyChanged(ref _selectedAccStr, value);
+            get => _selectedAccount;
+            set => RaisePropertyChanged(ref _selectedAccount, value);
         }
 
         public ICommand ShowAddAccountWindowCommand { get; set; }
@@ -79,19 +73,17 @@ namespace PSWRDMGR.ViewModels
         public bool AccountsArePresent => AccountsList.Count > 0;
         public bool AccountIsSelected { get => SelectedIndex > -1; }
 
-        // this stuff below isn't very 'mvvm'-ey... but o well
-        // it works and that's what matters ;)
         public NewAccountWindow NewAccountWndow { get; set; }
         public ControlsWindow ControlsWndow { get; set; }
         public SearchResultsWindow SearchWindow { get; set; }
 
-        public Action ShowContentPanel { get; set; }
-        public Action HideContentPanel { get; set; }
+        public Action ShowContentPanelCallback { get; set; }
+        public Action HideContentPanelCallback { get; set; }
         public Action ScrollIntoView { get; set; }
 
         public MainViewModel()
         {
-            AccountsList = new ObservableCollection<AccountListItem>();
+            AccountsList = new ObservableCollection<AccountControlViewModel>();
             NewAccountWndow = new NewAccountWindow();
             ControlsWndow = new ControlsWindow();
             SearchWindow = new SearchResultsWindow();
@@ -100,7 +92,6 @@ namespace PSWRDMGR.ViewModels
             AutosaveWhenClosing = true;
             NewAccountWndow.AddAccountCallback = this.AddAccount;
             LoadAccounts();
-            UpdateSelectedItem();
         }
 
         private void SetupCommandBindings()
@@ -111,10 +102,10 @@ namespace PSWRDMGR.ViewModels
             SaveAccountCommand = new Command(SaveAccounts);
             LoadAccountCommand = new Command(LoadAccounts);
             SearchAccountCommand = new Command(SearchAccount);
-            MoveAccountPositionCommand = new CommandParam(MoveAccPos);
+            MoveAccountPositionCommand = new CommandParam<object>(MoveAccPos);
             ShowHelpWindowCommand = new Command(ShowHelpWindow);
-            AutoShowContentPanelCommand = new Command(SetContentPanelVisibility);
-            CopyDetailsCommand = new CommandParam(CopyDetailsToClipboard);
+            AutoShowContentPanelCommand = new Command(AutoSetContentPanelVisibility);
+            CopyDetailsCommand = new CommandParam<int>(CopyDetailsToClipboard);
 
             CreateCustomDirectoryCommand = new Command(AccountFileCreator.CreateAccountsDirectoryAndFiles);
             LoadCustomDirectoryCommand = new Command(LoadCustomAccounts);
@@ -123,22 +114,21 @@ namespace PSWRDMGR.ViewModels
 
         private void SetSearchAccountItems()
         {
-            foreach (AccountListItem accItem in AccountsList)
+            SearchWindow.SearchContext.TempItems.Clear();
+            foreach (AccountControlViewModel accItem in AccountsList)
             {
-                SearchWindow.AddRealAccount(accItem.Duplicate());
+                SearchWindow.AddRealAccount(accItem);
             }
         }
 
         public void SearchAccount()
         {
             ShowSearchWindow();
-            if (!string.IsNullOrEmpty(SearchWindow.SearchContext.SearchFor))
-                SearchWindow.Search();
+            SearchWindow.Search();
         }
 
         //helper. converts the "index" of a Key to an int. e.g, A = 1, c = 3.
         private int KeyInt(Key key) => (int)key;
-
         public void KeyDown(Key key, bool keyIsDown)
         {
             KeysDown[KeyInt(key)] = keyIsDown;
@@ -154,13 +144,13 @@ namespace PSWRDMGR.ViewModels
                 if (KeysDown[KeyInt(Key.S)] && EnableSaveAndLoad) SaveAccounts();
                 if (KeysDown[KeyInt(Key.E)]) ShowEditAccountWindow();
                 if (KeysDown[KeyInt(Key.L)] && EnableSaveAndLoad) LoadAccounts();
-                if (KeysDown[KeyInt(Key.K)]) SetContentPanelVisibility();
+                if (KeysDown[KeyInt(Key.K)]) AutoSetContentPanelVisibility();
                 if (KeysDown[KeyInt(Key.Delete)]) DeleteSelectedAccount();
             }
             else
             {
                 //CTRL Released
-                if (KeysDown[KeyInt(Key.Left)]) SetContentPanelVisibility();
+                if (KeysDown[KeyInt(Key.Left)]) AutoSetContentPanelVisibility();
             }
         }
 
@@ -168,30 +158,30 @@ namespace PSWRDMGR.ViewModels
 
         public void SaveAccounts()
         {
-            List<AccountModel> oeoe = new List<AccountModel>();
-            foreach (AccountListItem item in AccountsList)
+            List<AccountViewModel> tempAccounts = new List<AccountViewModel>();
+            foreach (AccountControlViewModel item in AccountsList)
             {
-                AccountModel m = item.DataContext as AccountModel;
-                oeoe.Add(m);
+                if (item.Account != null)
+                    tempAccounts.Add(item.Account);
             }
-            AccountSaver.SaveFiles(oeoe);
+            AccountSaver.SaveFiles(tempAccounts);
         }
 
         public void SaveCustomAccounts()
         {
-            List<AccountModel> oeoe = new List<AccountModel>();
-            foreach (AccountListItem item in AccountsList)
+            List<AccountViewModel> tempAccounts = new List<AccountViewModel>();
+            foreach (AccountControlViewModel item in AccountsList)
             {
-                AccountModel m = item.DataContext as AccountModel;
-                oeoe.Add(m);
+                if (item.Account != null)
+                    tempAccounts.Add(item.Account);
             }
-            AccountSaver.SaveCustomFiles(oeoe);
+            AccountSaver.SaveCustomFiles(tempAccounts);
         }
 
         public void LoadAccounts()
         {
             ClearAccountsList();
-            foreach (AccountModel accounts in AccountLoader.LoadFiles())
+            foreach (AccountViewModel accounts in AccountLoader.LoadFiles())
             {
                 AddAccount(accounts);
             }
@@ -199,10 +189,14 @@ namespace PSWRDMGR.ViewModels
 
         public void LoadCustomAccounts()
         {
-            ClearAccountsList();
-            foreach (AccountModel accounts in AccountLoader.LoadCustomAccounts())
+            List<AccountViewModel> accounts = AccountLoader.LoadCustomAccounts();
+            if (accounts.Count > 0)
             {
-                AddAccount(accounts);
+                ClearAccountsList();
+                foreach (AccountViewModel account in accounts)
+                {
+                    AddAccount(account);
+                }
             }
         }
 
@@ -211,23 +205,31 @@ namespace PSWRDMGR.ViewModels
         #region Adding, Editing and Deleting Accounts
 
         public void AddAccount() { AddAccount(NewAccountWndow.AccountModel); }
-        public void AddAccount(AccountModel accountContent)
+        public void AddAccount(AccountViewModel accountContent)
         {
             //e
-            AccountListItem ali = CreateAccountItem(accountContent);
+            AccountControlViewModel account = CreateAccountItem(accountContent);
 
-            AccountsList.Add(ali);
+            AddAccount(account);
             NewAccountWndow.ResetAccountContext();
         }
 
-        public AccountListItem CreateAccountItem(AccountModel model)
+        public void AddAccount(AccountControlViewModel account)
         {
-            return new AccountListItem
-            {
-                DataContext = model,
-                AutoShowContentCallback = this.ShowAccountContent,
-                EditContentCallback = this.ShowEditAccountWindow
-            };
+            AccountsList.Add(account);
+        }
+
+        public AccountControlViewModel CreateAccountItem(AccountViewModel accountDetails)
+        {
+            AccountControlViewModel account = new AccountControlViewModel();
+            account.Account = accountDetails;
+            SetupAccountItemCallbacks(account);
+            return account;
+        }
+
+        public void SetupAccountItemCallbacks(AccountControlViewModel item)
+        {
+            item.AutoShowContentCallback = ShowAccountContent;
         }
 
         public void DeleteSelectedAccount()
@@ -241,26 +243,17 @@ namespace PSWRDMGR.ViewModels
             NewAccountWndow.Focus();
         }
 
-        public void ShowEditAccountWindow(AccountModel account)
-        {
-            if (account != null)
-            {
-                SelectedAccountStructure = account;
-            }
-        }
-
         public void ShowEditAccountWindow()
         {
-            ShowAccountContent(SelectedAccountStructure);
-            UpdateSelectedItem();
+            ShowAccountContent(SelectedAccount);
         }
 
-        public void ShowAccountContent(AccountModel account)
+        public void ShowAccountContent(AccountControlViewModel account)
         {
-            if (account != null)
+            if (account?.Account != null)
             {
-                if (!ContentPanelShowing) ShowContentPanelFunc();
-                SelectedAccountStructure = account;
+                if (!ContentPanelShowing) ShowContentPanel();
+                SelectedAccount = account;
             }
         }
 
@@ -314,47 +307,46 @@ namespace PSWRDMGR.ViewModels
             SearchWindow.Close();
         }
 
-        public void SetContentPanelVisibility()
+        public void AutoSetContentPanelVisibility()
         {
             if (ContentPanelShowing)
-                HideContentPanelFunc();
+                HideContentPanel();
             else
-                ShowContentPanelFunc();
+                ShowContentPanel();
         }
 
-        public void ShowContentPanelFunc()
+        public void ShowContentPanel()
         {
             if (!ContentPanelShowing)
             {
-                ShowContentPanel?.Invoke();
+                ShowContentPanelCallback?.Invoke();
                 ContentPanelShowing = true;
             }
         }
 
-        public void HideContentPanelFunc()
+        public void HideContentPanel()
         {
             if (ContentPanelShowing)
             {
-                HideContentPanel?.Invoke();
+                HideContentPanelCallback?.Invoke();
                 ContentPanelShowing = false;
             }
         }
 
-        public void CopyDetailsToClipboard(object detailsIndex)
+        public void CopyDetailsToClipboard(int detailsIndex)
         {
-            AccountModel currSelectedAcc = SelectedAccountStructure;
-            switch (int.Parse(detailsIndex.ToString()))
+            switch (detailsIndex)
             {
-                case 0: Clipboard.SetText(currSelectedAcc.Email); break;
-                case 1: Clipboard.SetText(currSelectedAcc.Username); break;
-                case 2: Clipboard.SetText(currSelectedAcc.Password); break;
-                case 3: Clipboard.SetText(currSelectedAcc.DateOfBirth); break;
-                case 4: Clipboard.SetText(currSelectedAcc.SecurityInfo); break;
-                case 5: Clipboard.SetText(currSelectedAcc.ExtraInfo1); break;
-                case 6: Clipboard.SetText(currSelectedAcc.ExtraInfo2); break;
-                case 7: Clipboard.SetText(currSelectedAcc.ExtraInfo3); break;
-                case 8: Clipboard.SetText(currSelectedAcc.ExtraInfo4); break;
-                case 9: Clipboard.SetText(currSelectedAcc.ExtraInfo5); break;
+                case 0: Clipboard.SetText(SelectedAccount.Account.Email); break;
+                case 1: Clipboard.SetText(SelectedAccount.Account.Username); break;
+                case 2: Clipboard.SetText(SelectedAccount.Account.Password); break;
+                case 3: Clipboard.SetText(SelectedAccount.Account.DateOfBirth); break;
+                case 4: Clipboard.SetText(SelectedAccount.Account.SecurityInfo); break;
+                case 5: Clipboard.SetText(SelectedAccount.Account.ExtraInfo1); break;
+                case 6: Clipboard.SetText(SelectedAccount.Account.ExtraInfo2); break;
+                case 7: Clipboard.SetText(SelectedAccount.Account.ExtraInfo3); break;
+                case 8: Clipboard.SetText(SelectedAccount.Account.ExtraInfo4); break;
+                case 9: Clipboard.SetText(SelectedAccount.Account.ExtraInfo5); break;
             }
         }
     }

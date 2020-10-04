@@ -36,9 +36,8 @@ namespace PSWRDMGR.Search
             get => _selectedIndex; set => RaisePropertyChanged(ref _selectedIndex, value);
         }
 
-        public List<AccountListItem> RealItems { get; set; }
-
-        public ObservableCollection<AccountListItem> AccountsList { get; set; }
+        public List<AccountControlViewModel> TempItems { get; set; }
+        public ObservableCollection<AccountControlViewModel> AccountsList { get; set; }
 
         public ICommand SearchCommand { get; private set; }
 
@@ -48,15 +47,20 @@ namespace PSWRDMGR.Search
 
         public SearchViewModel()
         {
-            AccountsList = new ObservableCollection<AccountListItem>();
-            RealItems = new List<AccountListItem>();
+            AccountsList = new ObservableCollection<AccountControlViewModel>();
+            TempItems = new List<AccountControlViewModel>();
             SearchCommand = new Command(Search);
             Filter = SearchFindTypes.AccountName;
         }
 
-        public void AddRealAccount(AccountListItem account)
+        public void AddTempItem(AccountControlViewModel account)
         {
-            RealItems.Add(account);
+            TempItems.Add(account);
+        }
+
+        public void AddAccount(AccountControlViewModel account)
+        {
+            AccountsList.Add(account);
         }
 
         public void RemoveSelectedAccount()
@@ -68,72 +72,71 @@ namespace PSWRDMGR.Search
         {
             SelectedIndex = 0;
             AccountsList.Clear();
-            RealItems.Clear();
         }
 
         public void Search()
         {
             ClearAccountsList();
             GetAccountItems?.Invoke();
-            List<AccountListItem> items = new List<AccountListItem>();
+            List<AccountControlViewModel> items = new List<AccountControlViewModel>();
             SearchFor.Trim();
             string searchFor = SearchFor.ToLower();
-            foreach (AccountListItem acc in RealItems)
+            foreach (AccountControlViewModel accountItm in TempItems)
             {
-                if (acc.DataContext != null && !string.IsNullOrEmpty(searchFor))
+                if (accountItm?.Account != null && !string.IsNullOrEmpty(searchFor))
                 {
-                    AccountModel account = acc.DataContext as AccountModel;
+                    AccountViewModel account = accountItm.Account;
                     switch (Filter)
                     {
                         case SearchFindTypes.AccountName:
                             if (account.AccountName.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.Email:
                             if (account.Email.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.Username:
                             if (account.Username.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.Password:
                             if (account.Password.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.DateOfBirth:
                             if (account.DateOfBirth.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.SecurityInfo:
                             if (account.SecurityInfo.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.ExtraInfo1:
                             if (account.ExtraInfo1.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.ExtraInfo2:
                             if (account.ExtraInfo2.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.ExtraInfo3:
                             if (account.ExtraInfo3.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.ExtraInfo4:
                             if (account.ExtraInfo4.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                         case SearchFindTypes.ExtraInfo5:
                             if (account.ExtraInfo5.ToLower().Contains(searchFor))
-                                items.Add(acc);
+                                items.Add(accountItm);
                             break;
                     }
                     AccountsList.Clear();
-                    foreach(AccountListItem accItem in items)
+                    foreach(AccountControlViewModel accountItem in items)
                     {
-                        AccountsList.Add(accItem);
+                        AddAccount(accountItem);
                     }
                 }
             }

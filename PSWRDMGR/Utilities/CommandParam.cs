@@ -3,47 +3,46 @@ using System.Windows.Input;
 
 namespace PSWRDMGR.Utilities
 {
-    public class CommandParam : ICommand
+    /// <summary>
+    /// A command capiable of passing parameters and capiable of being executable or not
+    /// </summary>
+    /// <typeparam name="Parameter">The parameter type (<see cref="string"/>, <see cref="int"/>, etc)</typeparam>
+    public class CommandParam<Parameter> : ICommand
     {
-        #region Fields
-
-        readonly Action<object> _execute;
-        readonly Predicate<object> _canExecute;
-
-        #endregion // Fields
-
-        #region Constructors
+        readonly Action<Parameter> _execute;
+        readonly Predicate<Parameter> _canExecute;
 
         /// <summary>
         /// Creates a new command that can always execute.
         /// </summary>
-        /// <param name="execute">The execution logic.</param>
-        public CommandParam(Action<object> execute) : this(execute, null)
-        {
-        }
+        /// <param name="execute">The method to execute</param>
+        public CommandParam(Action<Parameter> execute) : this(execute, null) { }
 
         /// <summary>
         /// Creates a new command.
         /// </summary>
-        /// <param name="execute">The execution logic.</param>
-        /// <param name="canExecute">The execution status logic.</param>
-        public CommandParam(Action<object> execute, Predicate<object> canExecute)
+        /// <param name="execute">The method to execute</param>
+        /// <param name="canExecute">can execute or not</param>
+        public CommandParam(Action<Parameter> execute, Predicate<Parameter> canExecute)
         {
             if (execute == null)
-                throw new ArgumentNullException("execute");
+                return;
 
             _execute = execute;
             _canExecute = canExecute;
         }
 
-        #endregion // Constructors
-
-        #region ICommand Members
-
+        public void Execute(object parameter)
+        {
+            if (parameter is Parameter p)
+                _execute?.Invoke(p);
+        }
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute(parameter);
+            if (parameter is Parameter p)
+                return _canExecute == null ? true : _canExecute(p);
+            return false;
         }
 
         public event EventHandler CanExecuteChanged
@@ -51,12 +50,5 @@ namespace PSWRDMGR.Utilities
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-
-        public void Execute(object parameter)
-        {
-            _execute(parameter);
-        }
-
-        #endregion // ICommand Members
     }
 }
